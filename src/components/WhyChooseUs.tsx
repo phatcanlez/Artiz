@@ -1,0 +1,47 @@
+import React from 'react';
+
+const WhyChooseUs = () => {
+  return (
+    <section className="w-full px-4 md:px-8 mt-12 md:mt-20">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
+          {/* Left Image */}
+          <div className="hidden lg:block">
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/cd7e1aa2e5f0d7f7a83ad12730fd581cbff6680b?placeholderIfAbsent=true"
+              className="w-full h-auto object-contain"
+              alt="Why choose us illustration left"
+            />
+          </div>
+          
+          {/* Center Content */}
+          <div className="lg:col-span-2 text-center">
+            <h2 className="text-5xl md:text-6xl lg:text-8xl font-bold text-foreground">
+              Why Choose Us
+            </h2>
+            <p className="text-sm text-muted-foreground mt-4 max-w-lg mx-auto leading-relaxed">
+              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
+              Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.
+            </p>
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/07cd44eea2fc282efe1888d012fd8ae29308783b?placeholderIfAbsent=true"
+              className="w-full h-auto mt-10 md:mt-16"
+              alt="Why choose us features showcase"
+            />
+          </div>
+          
+          {/* Right Image */}
+          <div className="hidden lg:block">
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/19762ec7b6824bd30931d0938ad04642d1ffba5a?placeholderIfAbsent=true"
+              className="w-full h-auto object-contain"
+              alt="Why choose us illustration right"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default WhyChooseUs;
