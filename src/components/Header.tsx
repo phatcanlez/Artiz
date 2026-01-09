@@ -1,54 +1,112 @@
-import React, { useState } from 'react';
-import { Search, User } from 'lucide-react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Header = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+const Header: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Search query:", searchQuery);
+  };
 
   return (
-    <header className="relative w-full">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a3e] via-[#0f0f2a] to-transparent opacity-90" />
-      
-      <div className="relative z-10 flex flex-col items-center px-6 md:px-20 py-4">
-        {/* Top Navigation */}
-        <nav className="flex items-center gap-6 md:gap-8 text-base md:text-lg font-medium text-foreground/90">
-          <a href="#about" className="hover:text-accent transition-colors">About Us</a>
-          <a href="#scan-ai" className="hover:text-accent transition-colors">Scan Ai</a>
-          <a href="#shop" className="hover:text-accent transition-colors">Shop</a>
-          <a href="#news" className="hover:text-accent transition-colors">News</a>
-          <a href="#contact" className="hover:text-accent transition-colors">Contact</a>
-        </nav>
-        
-        {/* Logo and Search Row */}
-        <div className="flex items-center justify-between w-full mt-6 gap-8">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/257e6b1f1a0724634d46e02ccfafc11633c2ec57?placeholderIfAbsent=true"
-              className="h-16 md:h-20 w-auto object-contain"
-              alt="Artiz Studio Logo"
+    <header className="flex relative min-h-[145px] w-full items-center gap-5 flex-wrap justify-between pt-2 pb-[21px] px-20 max-md:max-w-full max-md:px-5">
+      <img
+        src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/4c11a6d9b200871333d8ba8a7080c464c36a4cb5?placeholderIfAbsent=true"
+        className="absolute h-full w-full object-cover inset-0"
+        alt="Header background"
+      />
+      <nav className="relative self-stretch flex items-center gap-[33px] text-xl text-black font-medium my-auto max-md:max-w-full">
+        <Link
+          to="/about"
+          className="self-stretch my-auto hover:opacity-80 transition-opacity"
+        >
+          About Us
+        </Link>
+        <a
+          href="#scan-ai"
+          className="self-stretch my-auto hover:opacity-80 transition-opacity"
+        >
+          Scan Ai
+        </a>
+        <a
+          href="/products"
+          className="self-stretch my-auto hover:opacity-80 transition-opacity"
+        >
+          Shop
+        </a>
+        <Link
+          to="/news"
+          className="self-stretch my-auto hover:opacity-80 transition-opacity"
+        >
+          News
+        </Link>
+        <Link
+          to="/contact"
+          className="self-stretch my-auto hover:opacity-80 transition-opacity"
+        >
+          Contact
+        </Link>
+      </nav>
+      <Link to="/" className="relative">
+        <img
+          src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/257e6b1f1a0724634d46e02ccfafc11633c2ec57?placeholderIfAbsent=true"
+          className="aspect-[1.78] object-contain w-[206px] self-stretch shrink-0 max-w-full relative hover:opacity-80 transition-opacity cursor-pointer"
+          alt="Company logo"
+        />
+      </Link>
+      <div className="relative flex items-center gap-4">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="bg-[rgba(89,89,89,1)] flex text-base text-[rgba(207,205,205,1)] font-normal px-6 py-[18px] rounded-[33px] max-md:px-5"
+        >
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Tìm kiếm"
+            className="bg-transparent outline-none placeholder-[rgba(207,205,205,1)] w-24"
+            aria-label="Search products"
+          />
+        </form>
+        <Link
+          to="/cart"
+          className="hover:opacity-80 transition-opacity relative"
+          aria-label="Shopping cart"
+        >
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="text-black"
+          >
+            <path
+              d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 17.9 19 19 19C20.1 19 21 18.1 21 17V13M9 19.5C9.8 19.5 10.5 20.2 10.5 21C10.5 21.8 9.8 22.5 9 22.5C8.2 22.5 7.5 21.8 7.5 21C7.5 20.2 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21C21.5 21.8 20.8 22.5 20 22.5C19.2 22.5 18.5 21.8 18.5 21C18.5 20.2 19.2 19.5 20 19.5Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
-          </div>
-          
-          {/* Search Bar */}
-          <div className="flex-1 max-w-md">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Tìm kiếm"
-                className="w-full bg-secondary/80 text-foreground placeholder-muted-foreground rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-primary transition-all"
-              />
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            </div>
-          </div>
-          
-          {/* User Icon */}
-          <button className="p-2 rounded-full hover:bg-muted transition-colors">
-            <User className="w-8 h-8 text-foreground" />
-          </button>
-        </div>
+          </svg>
+          {/* Cart badge - optional, show when items > 0 */}
+          {/* Uncomment and add logic to show badge when cart has items */}
+          {/* <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+            0
+          </span> */}
+        </Link>
+        <Link
+          to="/login"
+          className="hover:opacity-80 transition-opacity"
+          aria-label="User account"
+        >
+          <img
+            src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/803e0dc27e3fd13db1c7a0ee9b3c237a628cd5c7?placeholderIfAbsent=true"
+            className="aspect-[1] object-contain w-9"
+            alt="User account icon"
+          />
+        </Link>
       </div>
     </header>
   );
