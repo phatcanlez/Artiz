@@ -6,7 +6,7 @@ const SocialProof: React.FC = () => {
       <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
         <div className="w-[33%] max-md:w-full max-md:ml-0">
           <img
-            src="/public/images/left2.png"
+            src="/images/left2.png"
             className="aspect-[0.55] object-contain w-full grow"
             alt="Social proof image 1"
           />
@@ -58,7 +58,7 @@ const SocialProof: React.FC = () => {
         </div>
         <div className="w-[33%] ml-5 max-md:w-full max-md:ml-0">
           <img
-            src="/public/images/right2.png"
+            src="/images/right2.png"
             className="aspect-[0.56] object-contain w-full grow"
             alt="Social proof image 2"
           />

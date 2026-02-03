@@ -22,13 +22,8 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full min-h-[145px] grid grid-cols-[1fr_auto_1fr] items-center gap-5 pt-2 pb-[21px] px-20 max-md:flex max-md:flex-col max-md:px-5">
-      <img
-        src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/4c11a6d9b200871333d8ba8a7080c464c36a4cb5?placeholderIfAbsent=true"
-        className="absolute h-full w-full object-cover inset-0 -z-10"
-        alt="Header background"
-      />
-      <nav className="relative flex items-center gap-[33px] text-xl text-white font-medium justify-self-start max-md:w-full max-md:justify-center max-md:flex-wrap">
+    <header className="relative w-full min-h-[145px] grid grid-cols-[1fr_auto_1fr] items-center gap-5 pt-2 pb-[21px] px-20 max-md:flex max-md:flex-col max-md:px-5 bg-white">
+      <nav className="relative flex items-center gap-[33px] text-xl text-black font-medium justify-self-start max-md:w-full max-md:justify-center max-md:flex-wrap">
         <Link to="/about" className="hover:opacity-80 transition-opacity">
           About Us
         </Link>
@@ -74,7 +69,7 @@ const Header: React.FC = () => {
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="text-white"
+            className="text-black"
           >
             <path
               d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 17.9 19 19 19C20.1 19 21 18.1 21 17V13M9 19.5C9.8 19.5 10.5 20.2 10.5 21C10.5 21.8 9.8 22.5 9 22.5C8.2 22.5 7.5 21.8 7.5 21C7.5 20.2 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21C21.5 21.8 20.8 22.5 20 22.5C19.2 22.5 18.5 21.8 18.5 21C18.5 20.2 19.2 19.5 20 19.5Z"
