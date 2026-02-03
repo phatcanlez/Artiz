@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "userId": 2,
+    "userName": "Nguyễn Văn A",
+    "totalAmount": 1250000,
+    "status": "Pending",
+    "createdAt": "2025-03-15T10:30:00Z",
+    "items": [
+      { "productId": 1, "productName": "Lunar Glow Necklace", "quantity": 1, "price": 490000 },
+      { "productId": 3, "productName": "Orbit Bracelet", "quantity": 1, "price": 590000 }
+    ]
+  },
+  {
+    "id": 102,
+    "userId": 3,
+    "userName": "Trần Thị B",
+    "totalAmount": 770000,
+    "status": "Processing",
+    "createdAt": "2025-03-16T14:15:00Z",
+    "items": [
+      { "productId": 2, "productName": "Nebula Ring", "quantity": 1, "price": 350000 },
+      { "productId": 4, "productName": "Stellar Earrings", "quantity": 1, "price": 420000 }
+    ]
+  },
+  {
+    "id": 103,
+    "userId": 2,
+    "userName": "Nguyễn Văn A",
+    "totalAmount": 350000,
+    "status": "Delivered",
+    "createdAt": "2025-03-10T08:45:00Z",
+    "items": [
+      { "productId": 2, "productName": "Nebula Ring", "quantity": 1, "price": 350000 }
+    ]
+  }
+]
+

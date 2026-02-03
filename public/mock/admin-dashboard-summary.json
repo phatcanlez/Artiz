@@ -1,0 +1,16 @@
+{
+  "totalUsers": 1280,
+  "totalActiveUsers": 842,
+  "totalProducts": 48,
+  "totalOrders": 312,
+  "totalRevenue": 185000000,
+  "monthlyRevenue": [
+    { "year": 2025, "month": 1, "revenue": 12000000, "ordersCount": 32 },
+    { "year": 2025, "month": 2, "revenue": 14500000, "ordersCount": 40 },
+    { "year": 2025, "month": 3, "revenue": 21500000, "ordersCount": 58 },
+    { "year": 2025, "month": 4, "revenue": 28000000, "ordersCount": 71 },
+    { "year": 2025, "month": 5, "revenue": 36500000, "ordersCount": 84 },
+    { "year": 2025, "month": 6, "revenue": 39500000, "ordersCount": 93 }
+  ]
+}
+

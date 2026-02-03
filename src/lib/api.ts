@@ -1,10 +1,3 @@
-import productsMock from "@/mock/products.json";
-import dashboardSummaryMock from "@/mock/admin-dashboard-summary.json";
-import adminUsersMock from "@/mock/admin-users.json";
-import adminOrdersMock from "@/mock/admin-orders.json";
-import adminBlogMock from "@/mock/admin-blog.json";
-import authMock from "@/mock/auth.json";
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -44,6 +37,28 @@ export interface Product {
   reviewCount: number;
 }
 
+// Load mock data from public folder to ensure it works in production builds
+async function loadMockData<T>(filename: string): Promise<T> {
+  try {
+    const response = await fetch(`/mock/${filename}`);
+    if (!response.ok) {
+      throw new Error(`Failed to load ${filename}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error loading mock data ${filename}:`, error);
+    throw error;
+  }
+}
+
+// Cache for loaded mock data
+let productsCache: Product[] | null = null;
+let dashboardSummaryCache: any = null;
+let adminUsersCache: any = null;
+let adminOrdersCache: any = null;
+let adminBlogCache: any = null;
+let authCache: any = null;
+
 class ApiClient {
   private getAuthToken(): string | null {
     return localStorage.getItem("authToken");
@@ -53,22 +68,31 @@ class ApiClient {
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     // Mock login: luôn trả về user mock, bỏ qua mật khẩu (chỉ dùng để demo giao diện)
     console.info("[MockAPI] login called with", credentials);
+    if (!authCache) {
+      authCache = await loadMockData<AuthResponse>("auth.json");
+    }
     return new Promise<AuthResponse>((resolve) => {
-      setTimeout(() => resolve(authMock as AuthResponse), 400);
+      setTimeout(() => resolve(authCache as AuthResponse), 400);
     });
   }
 
   async register(data: RegisterRequest): Promise<AuthResponse> {
     // Mock register: giả lập đăng ký thành công và trả về user mock
     console.info("[MockAPI] register called with", data);
+    if (!authCache) {
+      authCache = await loadMockData<AuthResponse>("auth.json");
+    }
     return new Promise<AuthResponse>((resolve) => {
-      setTimeout(() => resolve(authMock as AuthResponse), 400);
+      setTimeout(() => resolve(authCache as AuthResponse), 400);
     });
   }
 
   // Product endpoints
   async getProducts(search?: string): Promise<Product[]> {
-    let products = productsMock as Product[];
+    if (!productsCache) {
+      productsCache = await loadMockData<Product[]>("products.json");
+    }
+    let products = productsCache;
 
     if (search) {
       const lower = search.toLowerCase();
@@ -85,8 +109,10 @@ class ApiClient {
   }
 
   async getProduct(id: number): Promise<Product> {
-    const products = productsMock as Product[];
-    const found = products.find((p) => p.id === id);
+    if (!productsCache) {
+      productsCache = await loadMockData<Product[]>("products.json");
+    }
+    const found = productsCache.find((p) => p.id === id);
     if (!found) {
       throw new Error("Product not found in mock data");
     }
@@ -102,22 +128,31 @@ class ApiClient {
 
     // Dashboard summary
     if (endpoint === "/admin/dashboard/summary" && method === "GET") {
+      if (!dashboardSummaryCache) {
+        dashboardSummaryCache = await loadMockData("admin-dashboard-summary.json");
+      }
       return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(dashboardSummaryMock as T), 300);
+        setTimeout(() => resolve(dashboardSummaryCache as T), 300);
       });
     }
 
     // Admin users
     if (endpoint === "/admin/users" && method === "GET") {
+      if (!adminUsersCache) {
+        adminUsersCache = await loadMockData("admin-users.json");
+      }
       return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminUsersMock as T), 300);
+        setTimeout(() => resolve(adminUsersCache as T), 300);
       });
     }
 
     // Admin orders
     if (endpoint === "/admin/orders" && method === "GET") {
+      if (!adminOrdersCache) {
+        adminOrdersCache = await loadMockData("admin-orders.json");
+      }
       return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminOrdersMock as T), 300);
+        setTimeout(() => resolve(adminOrdersCache as T), 300);
       });
     }
 
@@ -131,19 +166,25 @@ class ApiClient {
 
     // Admin products
     if (endpoint === "/admin/products" && method === "GET") {
+      if (!productsCache) {
+        productsCache = await loadMockData<Product[]>("products.json");
+      }
       return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(productsMock as T), 300);
+        setTimeout(() => resolve(productsCache as T), 300);
       });
     }
 
     if (endpoint === "/admin/products" && method === "POST") {
       console.info("[MockAPI] create product", options.body);
+      if (!productsCache) {
+        productsCache = await loadMockData<Product[]>("products.json");
+      }
       const body = options.body
         ? (JSON.parse(options.body as string) as Partial<Product>)
         : {};
       const mockProduct: Product = {
         id:
-          (productsMock as Product[]).reduce(
+          productsCache.reduce(
             (max, p) => Math.max(max, p.id),
             0
           ) + 1,
@@ -206,17 +247,23 @@ class ApiClient {
 
     // Admin blog
     if (endpoint === "/admin/blog" && method === "GET") {
+      if (!adminBlogCache) {
+        adminBlogCache = await loadMockData("admin-blog.json");
+      }
       return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminBlogMock as T), 300);
+        setTimeout(() => resolve(adminBlogCache as T), 300);
       });
     }
 
     if (endpoint === "/admin/blog" && method === "POST") {
       console.info("[MockAPI] create blog", options.body);
+      if (!adminBlogCache) {
+        adminBlogCache = await loadMockData("admin-blog.json");
+      }
       const body = options.body ? JSON.parse(options.body as string) : {};
       const mockPost = {
         id:
-          (adminBlogMock as { id: number }[]).reduce(
+          (adminBlogCache as { id: number }[]).reduce(
             (max, p) => Math.max(max, p.id),
             0
           ) + 1,

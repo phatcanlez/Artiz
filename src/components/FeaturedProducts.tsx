@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
           {/* Best Seller Card */}
           <div className="relative group">
             <img
-              src="./public/images/left.png"
+              src="/public/images/left.png"
               className="w-full h-auto object-cover rounded-2xl"
               alt="Best seller product"
             />
@@ -58,7 +58,7 @@ const FeaturedProducts = () => {
               {/* Right Column */}
               <div className="relative">
                 <img
-                  src="./public/images/right.png"
+                  src="/public/images/right.png"
                   className="w-full h-auto object-cover rounded-2xl"
                   alt="Featured product display"
                 />

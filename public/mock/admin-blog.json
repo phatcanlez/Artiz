@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "title": "Tương lai của phụ kiện in 3D",
+    "slug": "tuong-lai-phu-kien-in-3d",
+    "summary": "Khám phá xu hướng mới trong thiết kế và sản xuất phụ kiện bằng công nghệ in 3D.",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1581092797591-8816c91ba350?w=800&q=80",
+    "createdAt": "2025-03-12T09:00:00Z",
+    "isPublished": true
+  },
+  {
+    "id": 2,
+    "title": "Cách Artiz tối ưu quy trình in 3D",
+    "slug": "cach-artiz-toi-uu-quy-trinh",
+    "summary": "Quy trình khép kín từ thiết kế, in 3D đến hoàn thiện sản phẩm tại Artiz Studio.",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=800&q=80",
+    "createdAt": "2025-03-18T16:30:00Z",
+    "isPublished": true
+  }
+]
+
