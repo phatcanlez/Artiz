@@ -32,9 +32,6 @@ const Header: React.FC = () => {
         <Link to="/about" className="hover:opacity-80 transition-opacity">
           About Us
         </Link>
-        <a href="#scan-ai" className="hover:opacity-80 transition-opacity">
-          Scan Ai
-        </a>
         <a href="/products" className="hover:opacity-80 transition-opacity">
           Shop
         </a>
