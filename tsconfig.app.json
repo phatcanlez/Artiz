@@ -24,7 +24,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Allow importing JSON mock files */
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }

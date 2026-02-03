@@ -6,8 +6,8 @@ const Test3D = () => {
     <div style={{ width: "100vw", height: "100vh", background: "#000" }}>
       <h1 style={{ color: "white", padding: "20px" }}>Test 3D Viewer</h1>
       <model-viewer
-        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-        alt="Astronaut"
+        src="/3d/hộp .glb"
+        alt="Hộp"
         auto-rotate
         camera-controls
         style={{

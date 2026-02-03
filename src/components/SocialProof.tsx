@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SocialProof: React.FC = () => {
   return (
@@ -6,7 +6,7 @@ const SocialProof: React.FC = () => {
       <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
         <div className="w-[33%] max-md:w-full max-md:ml-0">
           <img
-            src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/15e58cb16debd75ba1b3797d6ce971e513933447?placeholderIfAbsent=true"
+            src="../public/images/left2.png"
             className="aspect-[0.55] object-contain w-full grow"
             alt="Social proof image 1"
           />
@@ -22,11 +22,14 @@ const SocialProof: React.FC = () => {
               SOCIAL PROOF
             </h2>
             <p className="text-white text-sm font-normal text-center self-stretch mt-[9px]">
-              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
+              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
+              nhu cầu:
               <br />
-              Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.
+              Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh
+              tế, sẵn sàng giao ngay.
               <br />
-              Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.
+              Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô
+              hình, phụ kiện, đến vật dụng cá nhân hoá.
             </p>
             <img
               src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9c7480d2842ff3d62d9115a8cf40fb1f3db4249e?placeholderIfAbsent=true"
@@ -35,9 +38,7 @@ const SocialProof: React.FC = () => {
             />
             <div className="flex w-[396px] max-w-full items-stretch gap-1 mt-[13px]">
               <div className="flex flex-col items-stretch grow shrink-0 basis-0 w-fit">
-                <h3 className="text-white text-2xl font-bold">
-                  @_Phong2402_
-                </h3>
+                <h3 className="text-white text-2xl font-bold">@_Phong2402_</h3>
                 <div className="flex items-center">
                   <div className="border flex w-3.5 shrink-0 h-3.5 mt-[13px] rounded-full border-white border-solid" />
                   <img
@@ -57,7 +58,7 @@ const SocialProof: React.FC = () => {
         </div>
         <div className="w-[33%] ml-5 max-md:w-full max-md:ml-0">
           <img
-            src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/49db294d6fe4125f811f215804939c75ae23ef7b?placeholderIfAbsent=true"
+            src="../public/images/right2.png"
             className="aspect-[0.56] object-contain w-full grow"
             alt="Social proof image 2"
           />
@@ -68,4 +69,3 @@ const SocialProof: React.FC = () => {
 };
 
 export default SocialProof;
-

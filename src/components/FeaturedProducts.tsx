@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const FeaturedProducts = () => {
   return (
@@ -8,14 +8,16 @@ const FeaturedProducts = () => {
           {/* Best Seller Card */}
           <div className="relative group">
             <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/72bb40c5d65289d98a6f3118398762d1178884a5?placeholderIfAbsent=true"
+              src="./public/images/left.png"
               className="w-full h-auto object-cover rounded-2xl"
               alt="Best seller product"
             />
             <div className="absolute bottom-4 left-4 right-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">BEST SELLER</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                    BEST SELLER
+                  </h2>
                   <div className="w-3 h-3 rounded-full border-2 border-foreground mt-3" />
                 </div>
                 <img
@@ -26,7 +28,7 @@ const FeaturedProducts = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Featured Products Section */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -41,9 +43,10 @@ const FeaturedProducts = () => {
                   Featured Products
                 </h1>
                 <p className="text-sm text-muted-foreground mt-4 max-w-md leading-relaxed">
-                  Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
-                  Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.
-                  Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng.
+                  Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả
+                  hai nhu cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc
+                  quyền, thiết kế tinh tế, sẵn sàng giao ngay. Sản phẩm custom:
+                  Nhận thiết kế và in theo yêu cầu riêng.
                 </p>
                 <img
                   src="https://api.builder.io/api/v1/image/assets/TEMP/212d463d6368af99f7370d313361fed4f4639e06?placeholderIfAbsent=true"
@@ -51,21 +54,23 @@ const FeaturedProducts = () => {
                   alt="Product showcase"
                 />
               </div>
-              
+
               {/* Right Column */}
               <div className="relative">
                 <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/bb2db5a75a2cb4959f4d50f995d1d32b228a9852?placeholderIfAbsent=true"
+                  src="./public/images/right.png"
                   className="w-full h-auto object-cover rounded-2xl"
                   alt="Featured product display"
                 />
               </div>
             </div>
-            
+
             {/* Bottom Product Labels */}
             <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
               <div>
-                <h3 className="text-xl md:text-2xl font-semibold text-foreground">MY PRODUCT</h3>
+                <h3 className="text-xl md:text-2xl font-semibold text-foreground">
+                  MY PRODUCT
+                </h3>
                 <div className="w-3 h-3 rounded-full border-2 border-foreground mt-2" />
               </div>
               <img
@@ -74,7 +79,9 @@ const FeaturedProducts = () => {
                 alt="Product rating"
               />
               <div>
-                <h3 className="text-xl md:text-2xl font-semibold text-foreground">3D PRINT + AI</h3>
+                <h3 className="text-xl md:text-2xl font-semibold text-foreground">
+                  3D PRINT + AI
+                </h3>
                 <div className="w-3 h-3 rounded-full border-2 border-foreground mt-2" />
               </div>
               <img

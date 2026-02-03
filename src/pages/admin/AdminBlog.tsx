@@ -1,0 +1,291 @@
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  summary: string;
+  thumbnailUrl?: string;
+  createdAt: string;
+  isPublished: boolean;
+}
+
+interface BlogFormState {
+  id?: number;
+  title: string;
+  slug: string;
+  summary: string;
+  content: string;
+  thumbnailUrl: string;
+  isPublished: boolean;
+}
+
+const emptyBlogForm: BlogFormState = {
+  title: "",
+  slug: "",
+  summary: "",
+  content: "",
+  thumbnailUrl: "",
+  isPublished: true,
+};
+
+const AdminBlog: React.FC = () => {
+  const queryClient = useQueryClient();
+  const { data, isLoading, error } = useQuery<BlogPost[]>({
+    queryKey: ["admin-blog"],
+    queryFn: () => apiClient.request<BlogPost[]>("/admin/blog"),
+  });
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState<BlogFormState>(emptyBlogForm);
+
+  const openCreate = () => {
+    setEditing(false);
+    setForm(emptyBlogForm);
+    setDialogOpen(true);
+  };
+
+  const openEdit = (post: BlogPost) => {
+    setEditing(true);
+    setForm({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      summary: post.summary,
+      content: post.summary, // Placeholder, backend không có content tách biệt trong DTO list
+      thumbnailUrl: post.thumbnailUrl ?? "",
+      isPublished: post.isPublished,
+    });
+    setDialogOpen(true);
+  };
+
+  const createMutation = useMutation({
+    mutationFn: (payload: BlogFormState) =>
+      apiClient.request<BlogPost>("/admin/blog", {
+        method: "POST",
+        body: JSON.stringify({
+          title: payload.title,
+          slug: payload.slug,
+          summary: payload.summary,
+          content: payload.content,
+          thumbnailUrl: payload.thumbnailUrl,
+          isPublished: payload.isPublished,
+        }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-blog"] });
+      setDialogOpen(false);
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (payload: BlogFormState) =>
+      apiClient.request<BlogPost>(`/admin/blog/${payload.id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          title: payload.title,
+          slug: payload.slug,
+          summary: payload.summary,
+          content: payload.content,
+          thumbnailUrl: payload.thumbnailUrl,
+          isPublished: payload.isPublished,
+        }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-blog"] });
+      setDialogOpen(false);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) =>
+      apiClient.request<void>(`/admin/blog/${id}`, {
+        method: "DELETE",
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-blog"] });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editing && form.id) {
+      updateMutation.mutate(form);
+    } else {
+      createMutation.mutate(form);
+    }
+  };
+
+  return (
+    <Card className="bg-[#020617] border-white/10 text-white">
+      <CardHeader className="flex flex-row items-center justify-between gap-4">
+        <div>
+          <CardTitle className="text-lg">Quản lý blog</CardTitle>
+          <p className="text-xs text-white/60 mt-1">
+            Thêm mới, chỉnh sửa và quản lý bài viết blog.
+          </p>
+        </div>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="border-white/40 text-white hover:bg-white/10"
+              onClick={openCreate}
+            >
+              Thêm bài viết
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-[#020617] text-white border-white/10 max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>
+                {editing ? "Chỉnh sửa bài viết" : "Thêm bài viết mới"}
+              </DialogTitle>
+            </DialogHeader>
+            <form className="space-y-4 mt-2" onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-sm mb-1">Tiêu đề</label>
+                <Input
+                  value={form.title}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, title: e.target.value }))
+                  }
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm mb-1">Slug</label>
+                <Input
+                  value={form.slug}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, slug: e.target.value }))
+                  }
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm mb-1">Tóm tắt</label>
+                <Textarea
+                  value={form.summary}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, summary: e.target.value }))
+                  }
+                  rows={3}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm mb-1">Nội dung</label>
+                <Textarea
+                  value={form.content}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, content: e.target.value }))
+                  }
+                  rows={6}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm mb-1">
+                  Ảnh thumbnail (URL)
+                </label>
+                <Input
+                  value={form.thumbnailUrl}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      thumbnailUrl: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <DialogFooter className="mt-4">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="text-white/70"
+                  onClick={() => setDialogOpen(false)}
+                >
+                  Hủy
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                  disabled={
+                    createMutation.isPending || updateMutation.isPending
+                  }
+                >
+                  {editing ? "Lưu thay đổi" : "Tạo bài viết"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </CardHeader>
+      <CardContent>
+        {isLoading && (
+          <p className="text-sm text-white/70">
+            Đang tải danh sách bài viết...
+          </p>
+        )}
+        {error && (
+          <p className="text-sm text-red-400">
+            Không thể tải danh sách bài viết. Vui lòng thử lại sau.
+          </p>
+        )}
+        {data && (
+          <Table className="mt-4">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-white/70">ID</TableHead>
+                <TableHead className="text-white/70">Tiêu đề</TableHead>
+                <TableHead className="text-white/70">Slug</TableHead>
+                <TableHead className="text-white/70">Trạng thái</TableHead>
+                <TableHead className="text-white/70">Ngày tạo</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((post) => (
+                <TableRow key={post.id}>
+                  <TableCell>{post.id}</TableCell>
+                  <TableCell>{post.title}</TableCell>
+                  <TableCell>{post.slug}</TableCell>
+                  <TableCell>
+                    {post.isPublished ? "Đã xuất bản" : "Nháp"}
+                  </TableCell>
+                  <TableCell>
+                    {new Date(post.createdAt).toLocaleString("vi-VN")}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
+export default AdminBlog;

@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "name": "Lunar Glow Necklace",
+    "description": "Vòng cổ in 3D cảm hứng mặt trăng với chất liệu nhựa resin cao cấp.",
+    "price": 490000,
+    "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+    "size": "Free size",
+    "material": "Resin + hợp kim không gỉ",
+    "productPolicy": "Bảo hành 6 tháng, đổi trả trong 7 ngày.",
+    "productPreservation": "Tránh va đập mạnh, hạn chế tiếp xúc hóa chất.",
+    "deliveryTax": "Miễn phí vận chuyển nội thành.",
+    "stock": 25,
+    "averageRating": 4.8,
+    "reviewCount": 124
+  },
+  {
+    "id": 2,
+    "name": "Nebula Ring",
+    "description": "Nhẫn in 3D với hiệu ứng nebula đa sắc, phù hợp phong cách cá tính.",
+    "price": 350000,
+    "imageUrl": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80",
+    "size": "6 / 7 / 8",
+    "material": "PLA + phủ UV",
+    "productPolicy": "Bảo hành màu in trong 12 tháng.",
+    "productPreservation": "Bảo quản nơi khô ráo, tránh nhiệt độ cao.",
+    "deliveryTax": "40.000₫ toàn quốc.",
+    "stock": 40,
+    "averageRating": 4.6,
+    "reviewCount": 89
+  },
+  {
+    "id": 3,
+    "name": "Orbit Bracelet",
+    "description": "Vòng tay quỹ đạo với nhiều module có thể thay đổi linh hoạt.",
+    "price": 590000,
+    "imageUrl": "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=800&q=80",
+    "size": "S / M / L",
+    "material": "PETG + thép không gỉ",
+    "productPolicy": "Đổi size miễn phí trong 14 ngày.",
+    "productPreservation": "Lau nhẹ bằng khăn mềm sau khi sử dụng.",
+    "deliveryTax": "Miễn phí vận chuyển cho đơn trên 500.000₫.",
+    "stock": 12,
+    "averageRating": 4.9,
+    "reviewCount": 56
+  },
+  {
+    "id": 4,
+    "name": "Stellar Earrings",
+    "description": "Hoa tai in 3D cảm hứng chòm sao, phù hợp tiệc tối và sự kiện.",
+    "price": 420000,
+    "imageUrl": "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+    "size": "Free size",
+    "material": "Resin + bạc 925",
+    "productPolicy": "Hỗ trợ đánh bóng miễn phí trọn đời.",
+    "productPreservation": "Cất trong hộp khi không sử dụng.",
+    "deliveryTax": "30.000₫ toàn quốc.",
+    "stock": 32,
+    "averageRating": 4.7,
+    "reviewCount": 101
+  }
+]
+
+

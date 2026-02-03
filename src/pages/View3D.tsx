@@ -7,13 +7,13 @@ import Footer from "@/components/Footer";
 const View3D = () => {
   const navigate = useNavigate();
   const [autoRotate, setAutoRotate] = useState(false);
-  const [modelPath, setModelPath] = useState("");
+  const [modelPath, setModelPath] = useState("/3d/hộp .glb");
 
   // Các model mẫu có sẵn
   const sampleModels = [
     {
-      name: "Astronaut",
-      url: "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
+      name: "Hộp",
+      url: "/3d/hộp .glb",
     },
     {
       name: "Robot Expressive",

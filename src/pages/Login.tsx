@@ -1,45 +1,57 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formData.email || !formData.password) {
-      setError('Vui lòng điền đầy đủ thông tin');
+      setError("Vui lòng điền đầy đủ thông tin");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       await login(formData.email, formData.password);
-      navigate('/');
-    } catch (err: any) {
-      setError(err.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+      const storedUser = localStorage.getItem("authUser");
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser) as { isAdmin?: boolean };
+        if (parsed.isAdmin) {
+          navigate("/admin");
+          return;
+        }
+      }
+      navigate("/");
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Đăng nhập thất bại. Vui lòng thử lại.";
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -52,9 +64,7 @@ const Login: React.FC = () => {
       <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">
         <div className="w-full max-w-[500px]">
           <div className="text-center mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-              Login
-            </h1>
+            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">Login</h1>
             <p className="text-[#F3FAF4]/70 text-base">
               Đăng nhập để tiếp tục mua sắm
             </p>
@@ -81,7 +91,10 @@ const Login: React.FC = () => {
               className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9]"
             />
 
-            <label htmlFor="password" className="text-[#F3FAF4] text-xl mt-6 mb-2">
+            <label
+              htmlFor="password"
+              className="text-[#F3FAF4] text-xl mt-6 mb-2"
+            >
               Password *
             </label>
             <input
@@ -97,10 +110,7 @@ const Login: React.FC = () => {
 
             <div className="flex items-center justify-between mt-4">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 accent-[#D9D9D9]"
-                />
+                <input type="checkbox" className="w-4 h-4 accent-[#D9D9D9]" />
                 <span className="text-[#F3FAF4] text-sm">Remember me</span>
               </label>
               <Link
@@ -121,13 +131,15 @@ const Login: React.FC = () => {
                 className="absolute h-full w-full object-cover inset-0 rounded-md"
                 alt=""
               />
-              <span className="relative">{loading ? 'Đang đăng nhập...' : 'Login'}</span>
+              <span className="relative">
+                {loading ? "Đang đăng nhập..." : "Login"}
+              </span>
             </button>
           </form>
 
           <div className="mt-8 text-center">
             <p className="text-[#F3FAF4]/70 text-sm">
-              Chưa có tài khoản?{' '}
+              Chưa có tài khoản?{" "}
               <Link
                 to="/register"
                 className="text-[#F3FAF4] font-semibold hover:opacity-80 transition-opacity"
@@ -145,4 +157,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
