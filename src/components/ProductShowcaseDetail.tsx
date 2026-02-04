@@ -60,9 +60,11 @@ const ProductShowcaseDetail: React.FC = () => {
               className="aspect-[10] object-contain w-[400px]"
               alt="Product rating stars"
             />
-            <h1 className="text-[32px] font-bold mr-7 mt-1.5 max-md:mr-2.5">
-              Men Armor Black Silver
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-[32px] font-bold mt-1.5 flex gap-2 items-center">
+                Men Armor Black Silver
+              </h1>
+            </div>
             <div className="text-2xl font-normal mt-[27px]">3.850.000 VND</div>
             <div
               className="flex gap-1 text-xs font-normal mt-2.5"

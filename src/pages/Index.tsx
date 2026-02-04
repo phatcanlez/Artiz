@@ -1,52 +1,58 @@
-import React from 'react';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import FeaturedProducts from '@/components/FeaturedProducts';
-import ProductShowcase from '@/components/ProductShowcase';
-import ArmorCase from '@/components/ArmorCase';
-import WhyChooseUs from '@/components/WhyChooseUs';
-import LatestNews from '@/components/LatestNews';
-import Footer from '@/components/Footer';
+import React from "react";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import ProductShowcase from "@/components/ProductShowcase";
+import ArmorCase from "@/components/ArmorCase";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import LatestNews from "@/components/LatestNews";
+import Footer from "@/components/Footer";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
+import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
 
 const Index = () => {
   const productImages1 = [
     "https://api.builder.io/api/v1/image/assets/TEMP/02de465c6f80619f3b40f7852f664ccbdcc42d26?placeholderIfAbsent=true",
     "https://api.builder.io/api/v1/image/assets/TEMP/02de465c6f80619f3b40f7852f664ccbdcc42d26?placeholderIfAbsent=true",
-    "https://api.builder.io/api/v1/image/assets/TEMP/926a8766a9d2ed790b007ff70b05b0ad06a0703a?placeholderIfAbsent=true"
+    "https://api.builder.io/api/v1/image/assets/TEMP/926a8766a9d2ed790b007ff70b05b0ad06a0703a?placeholderIfAbsent=true",
   ];
 
   const productImages2 = [
     "https://api.builder.io/api/v1/image/assets/TEMP/f37030e2aa768fc76f98baeb1fd27e1a39e677f8?placeholderIfAbsent=true",
     "https://api.builder.io/api/v1/image/assets/TEMP/12e420666764b5bead5ccf6db5fbda95585fed80?placeholderIfAbsent=true",
-    "https://api.builder.io/api/v1/image/assets/TEMP/e924b5863dc57cdc18779fa3495688ece884205e?placeholderIfAbsent=true"
+    "https://api.builder.io/api/v1/image/assets/TEMP/e924b5863dc57cdc18779fa3495688ece884205e?placeholderIfAbsent=true",
   ];
 
   const productImages3 = [
     "https://api.builder.io/api/v1/image/assets/TEMP/69fee17ce1ee64da7fa192eba9e7209fb5559641?placeholderIfAbsent=true",
     "https://api.builder.io/api/v1/image/assets/TEMP/325621dafd31fb2e7eaad0cf2b8e1649aa001cfa?placeholderIfAbsent=true",
-    "https://api.builder.io/api/v1/image/assets/TEMP/0aee8d0e256b05e4948d37601b9ad384602b97ce?placeholderIfAbsent=true"
+    "https://api.builder.io/api/v1/image/assets/TEMP/0aee8d0e256b05e4948d37601b9ad384602b97ce?placeholderIfAbsent=true",
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main>
         <Hero />
-        
+
         <FeaturedProducts />
-        
-        <ProductShowcase 
+
+        <ProductShowcase
           images={productImages1}
           className="mt-16 md:mt-20 px-4 md:px-8"
         />
-        
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center mt-12 md:mt-16">
-          Made by Us
-        </h2>
-        
+
+        <div className="flex items-center justify-center gap-4 md:gap-8 mt-12 md:mt-16">
+          <SparkleIcon className="w-10 h-10 md:w-14 md:h-14 shrink-0" />
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center">
+            Made by Us
+          </h2>
+          <RightSparkleIcon className="h-10 md:h-14 w-auto shrink-0" />
+        </div>
+
         <ArmorCase />
-        
+
         {/* Explore More Button */}
         <div className="flex justify-center mt-10">
           <button className="relative px-12 py-5 rounded-lg overflow-hidden group">
@@ -60,14 +66,14 @@ const Index = () => {
             </span>
           </button>
         </div>
-        
-        <ProductShowcase 
+
+        <ProductShowcase
           images={productImages2}
           className="mt-16 md:mt-20 px-4 md:px-8"
         />
-        
+
         <WhyChooseUs />
-        
+
         <div className="w-full px-4 md:px-8 mt-12 md:mt-20">
           <img
             src="https://api.builder.io/api/v1/image/assets/TEMP/18d6c9c73b8a201c748f3a744b7273bfb990b8ab?placeholderIfAbsent=true"
@@ -75,15 +81,15 @@ const Index = () => {
             alt="Company showcase banner"
           />
         </div>
-        
-        <ProductShowcase 
+
+        <ProductShowcase
           images={productImages3}
           className="mt-16 md:mt-24 px-4 md:px-8"
         />
-        
+
         <LatestNews />
       </main>
-      
+
       <Footer />
     </div>
   );

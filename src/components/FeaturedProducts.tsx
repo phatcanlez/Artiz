@@ -39,9 +39,11 @@ const FeaturedProducts = () => {
                   className="w-full max-w-sm h-auto"
                   alt="Featured products banner"
                 />
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-8 md:mt-12">
-                  Featured Products
-                </h1>
+                <div className="flex items-center justify-center gap-2 md:gap-4 mt-8 md:mt-12">
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground">
+                    Featured Products
+                  </h1>
+                </div>
                 <p className="text-sm text-muted-foreground mt-4 max-w-md leading-relaxed">
                   Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả
                   hai nhu cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc

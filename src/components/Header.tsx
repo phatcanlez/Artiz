@@ -39,8 +39,8 @@ const Header: React.FC = () => {
       </nav>
       <Link to="/" className="relative justify-self-center">
         <img
-          src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/257e6b1f1a0724634d46e02ccfafc11633c2ec57?placeholderIfAbsent=true"
-          className="aspect-[1.78] object-contain w-[206px] shrink-0 max-w-full hover:opacity-80 transition-opacity cursor-pointer"
+          src="/public/images/logo.png"
+          className="aspect-[1.78] object-contain w-[180px] shrink-0 max-w-full hover:opacity-80 transition-opacity cursor-pointer"
           alt="Company logo"
         />
       </Link>

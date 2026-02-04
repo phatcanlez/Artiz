@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 interface ReviewProps {
   name: string;
@@ -14,12 +16,8 @@ const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
         <div className="flex gap-[26px]">
           <div className="bg-[rgba(217,217,217,1)] flex w-[88px] shrink-0 h-[88px] rounded-full" />
           <div className="flex flex-col items-stretch mt-[18px]">
-            <h3 className="text-[#F3FAF4] text-[32px] font-semibold">
-              {name}
-            </h3>
-            <time className="text-[#F3FAF4] text-base font-normal">
-              {date}
-            </time>
+            <h3 className="text-[#F3FAF4] text-[32px] font-semibold">{name}</h3>
+            <time className="text-[#F3FAF4] text-base font-normal">{date}</time>
           </div>
         </div>
         <div className="flex items-center gap-2 mt-[43px] max-md:mt-10">
@@ -31,9 +29,7 @@ const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
           <span className="text-[#F3FAF4] text-xs">(120)</span>
         </div>
       </div>
-      <p className="text-[#F3FAF4] text-xl font-normal mt-[25px]">
-        {comment}
-      </p>
+      <p className="text-[#F3FAF4] text-xl font-normal mt-[25px]">{comment}</p>
     </article>
   );
 };
@@ -44,27 +40,32 @@ const ReviewsSection: React.FC = () => {
       name: "Quốc Phong",
       date: "17/03/2025",
       rating: 5,
-      comment: "Mình không nghĩ chiếc nhẫn này lại đẹp đến vậy cho đến khi nhận hàng. Thiết kế đơn giản nhưng tinh tế, đeo lên tay nhìn rất hài hòa và sang. Mình đeo suốt cả tuần, rửa tay hay làm việc cũng không bị trầy hay xỉn màu gì cả. Cảm giác chất liệu chắc, mịn và thoải mái. Nói chung là quá ưng, nhìn ngoài còn đẹp hơn ảnh nhiều luôn."
+      comment:
+        "Mình không nghĩ chiếc nhẫn này lại đẹp đến vậy cho đến khi nhận hàng. Thiết kế đơn giản nhưng tinh tế, đeo lên tay nhìn rất hài hòa và sang. Mình đeo suốt cả tuần, rửa tay hay làm việc cũng không bị trầy hay xỉn màu gì cả. Cảm giác chất liệu chắc, mịn và thoải mái. Nói chung là quá ưng, nhìn ngoài còn đẹp hơn ảnh nhiều luôn.",
     },
     {
       name: "Quốc Phong",
       date: "17/03/2025",
       rating: 5,
-      comment: "Mình mua tặng bạn mà nhìn ngoài còn đẹp hơn trong ảnh. Form chắc tay, sáng nhẹ kiểu tinh tế, bạn mình thích lắm."
+      comment:
+        "Mình mua tặng bạn mà nhìn ngoài còn đẹp hơn trong ảnh. Form chắc tay, sáng nhẹ kiểu tinh tế, bạn mình thích lắm.",
     },
     {
       name: "Quốc Phong",
       date: "17/03/2025",
       rating: 5,
-      comment: "Giao hàng nhanh, hộp đóng gói cẩn thận. Nhẫn đeo vừa tay, kiểu dáng hợp trend. Sẽ ủng hộ thêm mẫu khác."
-    }
+      comment:
+        "Giao hàng nhanh, hộp đóng gói cẩn thận. Nhẫn đeo vừa tay, kiểu dáng hợp trend. Sẽ ủng hộ thêm mẫu khác.",
+    },
   ];
 
   return (
     <section className="flex-1">
-      <h2 className="text-[#F3FAF4] text-[32px] font-bold mb-[30px]">
-        Recent Reviews
-      </h2>
+      <div className="flex items-center gap-4 mb-[30px]">
+        <SparkleIcon className="w-8 h-8 shrink-0" />
+        <h2 className="text-[#F3FAF4] text-[32px] font-bold">Recent Reviews</h2>
+        <RightSparkleIcon className="h-8 w-auto shrink-0" />
+      </div>
       {reviews.map((review, index) => (
         <Review
           key={index}
@@ -79,4 +80,3 @@ const ReviewsSection: React.FC = () => {
 };
 
 export default ReviewsSection;
-

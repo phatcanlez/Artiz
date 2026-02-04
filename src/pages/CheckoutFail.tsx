@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const CheckoutFail: React.FC = () => {
   const location = useLocation();
@@ -10,7 +10,7 @@ const CheckoutFail: React.FC = () => {
 
   const handleRetry = () => {
     // Navigate back to checkout with the same data
-    navigate('/checkout', { state: { orderData } });
+    navigate("/checkout", { state: { orderData } });
   };
 
   return (
@@ -39,9 +39,11 @@ const CheckoutFail: React.FC = () => {
           </div>
 
           {/* Error Message */}
-          <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-            Payment Failed
-          </h1>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+              Payment Failed
+            </h1>
+          </div>
           <p className="text-[#F3FAF4]/70 text-lg mb-4">
             Rất tiếc, thanh toán của bạn không thành công.
           </p>
@@ -87,11 +89,14 @@ const CheckoutFail: React.FC = () => {
 
           {/* Support Info */}
           <p className="text-[#F3FAF4]/50 text-sm mt-8">
-            Nếu vấn đề vẫn tiếp tục, vui lòng{' '}
-            <Link to="#contact" className="text-[#F3FAF4] underline hover:opacity-80">
+            Nếu vấn đề vẫn tiếp tục, vui lòng{" "}
+            <Link
+              to="#contact"
+              className="text-[#F3FAF4] underline hover:opacity-80"
+            >
               liên hệ hỗ trợ
-            </Link>
-            {' '}của chúng tôi.
+            </Link>{" "}
+            của chúng tôi.
           </p>
         </div>
       </main>
@@ -102,4 +107,3 @@ const CheckoutFail: React.FC = () => {
 };
 
 export default CheckoutFail;
-

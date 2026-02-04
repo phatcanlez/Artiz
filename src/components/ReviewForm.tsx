@@ -1,34 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const ReviewForm: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: 'Quốc Phong',
-    email: 'quocphong12@gmail.com',
+    name: "Quốc Phong",
+    email: "quocphong12@gmail.com",
     rating: 5,
-    review: ''
+    review: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Review submitted:', formData);
+    console.log("Review submitted:", formData);
   };
 
   return (
     <aside className="flex flex-col text-xl text-[#F3FAF4] font-normal w-[401px] max-w-full">
-      <h2 className="text-[#F3FAF4] text-[32px] font-bold">
-        Your review
-      </h2>
-      
+      <div className="flex items-center gap-4 mb-4">
+        <SparkleIcon className="w-8 h-8 shrink-0" />
+        <h2 className="text-[#F3FAF4] text-[32px] font-bold">Your review</h2>
+        <RightSparkleIcon className="h-8 w-auto shrink-0" />
+      </div>
+
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <label htmlFor="review-rating" className="text-[#F3FAF4] text-2xl mt-[33px]">
+        <label
+          htmlFor="review-rating"
+          className="text-[#F3FAF4] text-2xl mt-[33px]"
+        >
           Add your review *
         </label>
         <img
@@ -38,7 +47,7 @@ const ReviewForm: React.FC = () => {
           role="button"
           tabIndex={0}
         />
-        
+
         <label htmlFor="reviewer-name" className="text-[#F3FAF4] mt-[23px]">
           Name*
         </label>
@@ -51,7 +60,7 @@ const ReviewForm: React.FC = () => {
           required
           className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] p-[11px] rounded-md border-solid"
         />
-        
+
         <label htmlFor="reviewer-email" className="text-[#F3FAF4] mt-[27px]">
           Email *
         </label>
@@ -64,7 +73,7 @@ const ReviewForm: React.FC = () => {
           required
           className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] whitespace-nowrap mt-[11px] px-3 py-[11px] rounded-md border-solid"
         />
-        
+
         <label htmlFor="review-text" className="text-[#F3FAF4] mt-[34px]">
           Rate us *
         </label>
@@ -78,7 +87,7 @@ const ReviewForm: React.FC = () => {
           rows={8}
           className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] pt-[13px] pb-[100px] px-3 rounded-md border-solid resize-none"
         />
-        
+
         <button
           type="submit"
           className="flex flex-col relative aspect-[6.746] w-full items-center text-2xl text-[#102314] font-bold justify-center mt-[21px] px-10 py-4 rounded-md hover:opacity-90 transition-opacity"
@@ -96,4 +105,3 @@ const ReviewForm: React.FC = () => {
 };
 
 export default ReviewForm;
-

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface CartItem {
   id: number;
@@ -21,39 +21,44 @@ const Cart: React.FC = () => {
       name: "Men Armor Black Silver",
       price: 3850000,
       quantity: 1,
-      image: "https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400&q=80",
       color: "Black",
-      size: "M"
+      size: "M",
     },
     {
       id: 2,
       name: "Men Armor Black Silver",
       price: 3850000,
       quantity: 2,
-      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80",
       color: "Silver",
-      size: "L"
-    }
+      size: "L",
+    },
   ]);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+    setCartItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item,
+      ),
     );
   };
 
   const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+    setCartItems((items) => items.filter((item) => item.id !== id));
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN').format(price);
+    return new Intl.NumberFormat("vi-VN").format(price);
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
   const shipping = 50000; // Fixed shipping cost
   const total = subtotal + shipping;
 
@@ -63,12 +68,15 @@ const Cart: React.FC = () => {
 
       <main className="flex flex-col items-center flex-1 py-16 px-5">
         <div className="w-full max-w-[1240px]">
-          <div className="mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-2">
-              Shopping Cart
-            </h1>
+          <div className="mb-10 text-center">
+            <div className="flex items-center justify-center gap-4 mb-2">
+              <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+                Shopping Cart
+              </h1>
+            </div>
             <p className="text-[#F3FAF4]/70 text-base">
-              {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart
+              {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in
+              your cart
             </p>
           </div>
 
@@ -134,12 +142,18 @@ const Cart: React.FC = () => {
                           </h3>
                           {item.color && (
                             <p className="text-[#F3FAF4]/70 text-sm mb-1">
-                              Color: <span className="text-[#F3FAF4]">{item.color}</span>
+                              Color:{" "}
+                              <span className="text-[#F3FAF4]">
+                                {item.color}
+                              </span>
                             </p>
                           )}
                           {item.size && (
                             <p className="text-[#F3FAF4]/70 text-sm">
-                              Size: <span className="text-[#F3FAF4]">{item.size}</span>
+                              Size:{" "}
+                              <span className="text-[#F3FAF4]">
+                                {item.size}
+                              </span>
                             </p>
                           )}
                         </div>
@@ -168,7 +182,9 @@ const Cart: React.FC = () => {
                         {/* Quantity Controls */}
                         <div className="flex items-center gap-3">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
                             className="w-8 h-8 rounded border border-white/30 text-[#F3FAF4] hover:bg-white/10 transition-colors flex items-center justify-center"
                             aria-label="Decrease quantity"
                           >
@@ -189,7 +205,9 @@ const Cart: React.FC = () => {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
                             className="w-8 h-8 rounded border border-white/30 text-[#F3FAF4] hover:bg-white/10 transition-colors flex items-center justify-center"
                             aria-label="Increase quantity"
                           >
@@ -236,14 +254,20 @@ const Cart: React.FC = () => {
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-[#F3FAF4]/70">
                       <span>Subtotal</span>
-                      <span className="text-[#F3FAF4]">{formatPrice(subtotal)} VND</span>
+                      <span className="text-[#F3FAF4]">
+                        {formatPrice(subtotal)} VND
+                      </span>
                     </div>
                     <div className="flex justify-between text-[#F3FAF4]/70">
                       <span>Shipping</span>
-                      <span className="text-[#F3FAF4]">{formatPrice(shipping)} VND</span>
+                      <span className="text-[#F3FAF4]">
+                        {formatPrice(shipping)} VND
+                      </span>
                     </div>
                     <div className="border-t border-white/10 pt-4 flex justify-between">
-                      <span className="text-[#F3FAF4] text-xl font-bold">Total</span>
+                      <span className="text-[#F3FAF4] text-xl font-bold">
+                        Total
+                      </span>
                       <span className="text-[#F3FAF4] text-xl font-bold">
                         {formatPrice(total)} VND
                       </span>
@@ -252,7 +276,7 @@ const Cart: React.FC = () => {
 
                   <Link
                     to="/checkout"
-                    className="block w-full relative aspect-[6.746] flex items-center justify-center text-2xl text-[#102314] font-bold py-4 rounded-md hover:opacity-90 transition-opacity mb-4"
+                    className="relative w-full aspect-[6.746] flex items-center justify-center text-2xl text-[#102314] font-bold py-4 rounded-md hover:opacity-90 transition-opacity mb-4"
                   >
                     <img
                       src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
@@ -281,4 +305,3 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
-

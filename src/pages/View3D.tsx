@@ -63,9 +63,11 @@ const View3D = () => {
               </svg>
               Quay lại
             </button>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              3D Model Viewer
-            </h1>
+            <div className="flex items-center gap-4 mb-4">
+              <h1 className="text-4xl md:text-5xl font-bold text-white">
+                3D Model Viewer
+              </h1>
+            </div>
             <p className="text-gray-400 text-lg">
               Xem và tương tác với mô hình 3D. Sử dụng chuột để xoay, scroll để
               zoom, và kéo để di chuyển.

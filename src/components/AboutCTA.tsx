@@ -1,16 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const AboutCTA: React.FC = () => {
   return (
     <section className="w-full py-16 px-6 lg:px-24">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-white text-4xl md:text-5xl font-bold mb-6">
-          Ready to Start Your Project?
-        </h2>
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <SparkleIcon className="w-8 h-8 md:w-10 md:h-10 shrink-0" />
+          <h2 className="text-white text-4xl md:text-5xl font-bold">
+            Ready to Start Your Project?
+          </h2>
+          <RightSparkleIcon className="h-8 md:h-10 w-auto shrink-0" />
+        </div>
         <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-          Hãy liên hệ với chúng tôi ngay hôm nay để biến ý tưởng của bạn thành hiện thực. 
-          Chúng tôi luôn sẵn sàng hỗ trợ và tư vấn cho bạn.
+          Hãy liên hệ với chúng tôi ngay hôm nay để biến ý tưởng của bạn thành
+          hiện thực. Chúng tôi luôn sẵn sàng hỗ trợ và tư vấn cho bạn.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -39,4 +45,3 @@ const AboutCTA: React.FC = () => {
 };
 
 export default AboutCTA;
-

@@ -64,7 +64,9 @@ const Login: React.FC = () => {
       <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">
         <div className="w-full max-w-[500px]">
           <div className="text-center mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">Login</h1>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <h1 className="text-[#F3FAF4] text-[48px] font-bold">Login</h1>
+            </div>
             <p className="text-[#F3FAF4]/70 text-base">
               Đăng nhập để tiếp tục mua sắm
             </p>

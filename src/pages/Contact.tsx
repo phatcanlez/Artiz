@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-    type: 'feedback' // feedback or contact
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    type: "feedback", // feedback or contact
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -34,21 +38,21 @@ const Contact: React.FC = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Vui lòng nhập họ và tên';
+      newErrors.name = "Vui lòng nhập họ và tên";
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'Vui lòng nhập email';
+      newErrors.email = "Vui lòng nhập email";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ';
+      newErrors.email = "Email không hợp lệ";
     }
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Vui lòng nhập số điện thoại';
+      newErrors.phone = "Vui lòng nhập số điện thoại";
     }
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Vui lòng nhập chủ đề';
+      newErrors.subject = "Vui lòng nhập chủ đề";
     }
     if (!formData.message.trim()) {
-      newErrors.message = 'Vui lòng nhập nội dung';
+      newErrors.message = "Vui lòng nhập nội dung";
     }
 
     setErrors(newErrors);
@@ -57,25 +61,25 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     // Simulate form submission
-    console.log('Contact form submitted:', formData);
+    console.log("Contact form submitted:", formData);
     setIsSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-        type: 'feedback'
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+        type: "feedback",
       });
     }, 3000);
   };
@@ -87,11 +91,13 @@ const Contact: React.FC = () => {
       <main className="flex flex-col items-center flex-1 py-16 px-5">
         <div className="w-full max-w-[1240px]">
           {/* Header Section */}
-          <div className="text-center mb-12">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-              Contact Us
-            </h1>
-            <p className="text-[#F3FAF4]/70 text-lg">
+          <div className="text-center mb-12 flex flex-col items-center">
+            <div className="flex items-center gap-4">
+              <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+                Contact Us
+              </h1>
+            </div>
+            <p className="text-[#F3FAF4]/70 text-lg mt-4">
               Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn
             </p>
           </div>
@@ -120,7 +126,8 @@ const Contact: React.FC = () => {
                   </svg>
                   <p className="text-lg font-semibold mb-2">Cảm ơn bạn!</p>
                   <p className="text-sm">
-                    Chúng tôi đã nhận được tin nhắn của bạn và sẽ phản hồi sớm nhất có thể.
+                    Chúng tôi đã nhận được tin nhắn của bạn và sẽ phản hồi sớm
+                    nhất có thể.
                   </p>
                 </div>
               ) : (
@@ -145,7 +152,10 @@ const Contact: React.FC = () => {
 
                   {/* Name */}
                   <div>
-                    <label htmlFor="name" className="text-[#F3FAF4] text-lg mb-2 block">
+                    <label
+                      htmlFor="name"
+                      className="text-[#F3FAF4] text-lg mb-2 block"
+                    >
                       Họ và tên *
                     </label>
                     <input
@@ -155,7 +165,7 @@ const Contact: React.FC = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                        errors.name ? 'border-red-500' : 'border-neutral-400'
+                        errors.name ? "border-red-500" : "border-neutral-400"
                       }`}
                       placeholder="Nhập họ và tên"
                     />
@@ -167,7 +177,10 @@ const Contact: React.FC = () => {
                   {/* Email & Phone */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="email" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="email"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Email *
                       </label>
                       <input
@@ -177,17 +190,22 @@ const Contact: React.FC = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                          errors.email ? 'border-red-500' : 'border-neutral-400'
+                          errors.email ? "border-red-500" : "border-neutral-400"
                         }`}
                         placeholder="Nhập email"
                       />
                       {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="phone"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Số điện thoại *
                       </label>
                       <input
@@ -197,19 +215,24 @@ const Contact: React.FC = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                          errors.phone ? 'border-red-500' : 'border-neutral-400'
+                          errors.phone ? "border-red-500" : "border-neutral-400"
                         }`}
                         placeholder="Nhập số điện thoại"
                       />
                       {errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.phone}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   {/* Subject */}
                   <div>
-                    <label htmlFor="subject" className="text-[#F3FAF4] text-lg mb-2 block">
+                    <label
+                      htmlFor="subject"
+                      className="text-[#F3FAF4] text-lg mb-2 block"
+                    >
                       Chủ đề *
                     </label>
                     <input
@@ -219,18 +242,23 @@ const Contact: React.FC = () => {
                       value={formData.subject}
                       onChange={handleInputChange}
                       className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                        errors.subject ? 'border-red-500' : 'border-neutral-400'
+                        errors.subject ? "border-red-500" : "border-neutral-400"
                       }`}
                       placeholder="Nhập chủ đề"
                     />
                     {errors.subject && (
-                      <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.subject}
+                      </p>
                     )}
                   </div>
 
                   {/* Message */}
                   <div>
-                    <label htmlFor="message" className="text-[#F3FAF4] text-lg mb-2 block">
+                    <label
+                      htmlFor="message"
+                      className="text-[#F3FAF4] text-lg mb-2 block"
+                    >
                       Nội dung *
                     </label>
                     <textarea
@@ -240,12 +268,14 @@ const Contact: React.FC = () => {
                       onChange={handleInputChange}
                       rows={6}
                       className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] resize-none ${
-                        errors.message ? 'border-red-500' : 'border-neutral-400'
+                        errors.message ? "border-red-500" : "border-neutral-400"
                       }`}
                       placeholder="Nhập nội dung tin nhắn của bạn"
                     />
                     {errors.message && (
-                      <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.message}
+                      </p>
                     )}
                   </div>
 
@@ -291,7 +321,9 @@ const Contact: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-[#F3FAF4] font-bold mb-1">Email</h3>
-                      <p className="text-[#F3FAF4]/70">support@artizstudio.com</p>
+                      <p className="text-[#F3FAF4]/70">
+                        support@artizstudio.com
+                      </p>
                       <p className="text-[#F3FAF4]/70">info@artizstudio.com</p>
                     </div>
                   </div>
@@ -344,7 +376,8 @@ const Contact: React.FC = () => {
                     <div>
                       <h3 className="text-[#F3FAF4] font-bold mb-1">Address</h3>
                       <p className="text-[#F3FAF4]/70">
-                        123 Đường ABC, Quận XYZ<br />
+                        123 Đường ABC, Quận XYZ
+                        <br />
                         Thành phố Hồ Chí Minh, Việt Nam
                       </p>
                     </div>
@@ -367,9 +400,15 @@ const Contact: React.FC = () => {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-[#F3FAF4] font-bold mb-1">Business Hours</h3>
-                      <p className="text-[#F3FAF4]/70">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                      <p className="text-[#F3FAF4]/70">Saturday: 9:00 AM - 4:00 PM</p>
+                      <h3 className="text-[#F3FAF4] font-bold mb-1">
+                        Business Hours
+                      </h3>
+                      <p className="text-[#F3FAF4]/70">
+                        Monday - Friday: 9:00 AM - 6:00 PM
+                      </p>
+                      <p className="text-[#F3FAF4]/70">
+                        Saturday: 9:00 AM - 4:00 PM
+                      </p>
                       <p className="text-[#F3FAF4]/70">Sunday: Closed</p>
                     </div>
                   </div>
@@ -386,4 +425,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-

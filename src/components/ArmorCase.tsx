@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const ArmorCase = () => {
   const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0 });
@@ -30,9 +32,11 @@ const ArmorCase = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="flex flex-col justify-center">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-              Armor Case
-            </h2>
+            <div className="flex items-center gap-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+                Armor Case
+              </h2>
+            </div>
             <img
               src="https://api.builder.io/api/v1/image/assets/TEMP/6c29d9b0b6f725075dd14c455c008cf4661ea7e8?placeholderIfAbsent=true"
               className="w-full max-w-sm h-auto mt-8 md:mt-12"

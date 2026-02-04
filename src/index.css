@@ -97,6 +97,24 @@
   }
 }
 
+/* Global hover effect for links and buttons to use the green color */
+@layer components {
+  .hover-effect {
+    @apply transition-colors duration-200;
+  }
+
+  .hover-effect:hover {
+    color: rgb(68 255 0 / var(--tw-bg-opacity, 1));
+  }
+}
+
+/* Override default anchor hover globally if desired, or apply specific class */
+a:hover,
+button:hover {
+  color: rgb(68 255 0 / 1);
+  transition: color 0.2s ease-in-out;
+}
+
 body {
   font-family: "Poppins", sans-serif;
 }

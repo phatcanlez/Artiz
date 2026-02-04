@@ -1,4 +1,6 @@
 import React from "react";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const SocialProof: React.FC = () => {
   return (
@@ -18,9 +20,13 @@ const SocialProof: React.FC = () => {
               className="aspect-[8.93] object-contain w-[401px] max-w-full"
               alt="Company logo"
             />
-            <h2 className="text-white text-[64px] font-normal mt-[59px] max-md:text-[40px] max-md:mt-10">
-              SOCIAL PROOF
-            </h2>
+            <div className="flex items-center gap-4 mt-[59px] max-md:mt-10">
+              <SparkleIcon className="w-12 h-12 shrink-0 md:w-16 md:h-16" />
+              <h2 className="text-white text-[64px] font-normal max-md:text-[40px]">
+                SOCIAL PROOF
+              </h2>
+              <RightSparkleIcon className="h-12 md:h-16 w-auto shrink-0" />
+            </div>
             <p className="text-white text-sm font-normal text-center self-stretch mt-[9px]">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
               nhu cầu:

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const CheckoutSuccess: React.FC = () => {
   const location = useLocation();
@@ -33,11 +33,14 @@ const CheckoutSuccess: React.FC = () => {
           </div>
 
           {/* Success Message */}
-          <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-            Order Successful!
-          </h1>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+              Order Successful!
+            </h1>
+          </div>
           <p className="text-[#F3FAF4]/70 text-lg mb-8">
-            Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xác nhận và sẽ được xử lý sớm nhất.
+            Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xác nhận và sẽ được
+            xử lý sớm nhất.
           </p>
 
           {/* Order Details */}
@@ -47,14 +50,31 @@ const CheckoutSuccess: React.FC = () => {
                 Order Details
               </h2>
               <div className="space-y-2 text-[#F3FAF4]/70">
-                <p><span className="text-[#F3FAF4]">Name:</span> {orderData.fullName}</p>
-                <p><span className="text-[#F3FAF4]">Email:</span> {orderData.email}</p>
-                <p><span className="text-[#F3FAF4]">Phone:</span> {orderData.phone}</p>
-                <p><span className="text-[#F3FAF4]">Address:</span> {orderData.address}</p>
-                <p><span className="text-[#F3FAF4]">City:</span> {orderData.city}</p>
-                <p><span className="text-[#F3FAF4]">Payment:</span> {
-                  orderData.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'
-                }</p>
+                <p>
+                  <span className="text-[#F3FAF4]">Name:</span>{" "}
+                  {orderData.fullName}
+                </p>
+                <p>
+                  <span className="text-[#F3FAF4]">Email:</span>{" "}
+                  {orderData.email}
+                </p>
+                <p>
+                  <span className="text-[#F3FAF4]">Phone:</span>{" "}
+                  {orderData.phone}
+                </p>
+                <p>
+                  <span className="text-[#F3FAF4]">Address:</span>{" "}
+                  {orderData.address}
+                </p>
+                <p>
+                  <span className="text-[#F3FAF4]">City:</span> {orderData.city}
+                </p>
+                <p>
+                  <span className="text-[#F3FAF4]">Payment:</span>{" "}
+                  {orderData.paymentMethod === "cod"
+                    ? "Cash on Delivery"
+                    : "Bank Transfer"}
+                </p>
               </div>
             </div>
           )}
@@ -95,4 +115,3 @@ const CheckoutSuccess: React.FC = () => {
 };
 
 export default CheckoutSuccess;
-

@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: ''
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const navigate = useNavigate();
@@ -20,60 +20,69 @@ const Register: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError('Vui lòng điền đầy đủ thông tin');
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("Vui lòng điền đầy đủ thông tin");
       return;
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setError('Email không hợp lệ');
+      setError("Email không hợp lệ");
       return;
     }
 
     // Password validation
     if (formData.password.length < 6) {
-      setError('Mật khẩu phải có ít nhất 6 ký tự');
+      setError("Mật khẩu phải có ít nhất 6 ký tự");
       return;
     }
 
     // Confirm password
     if (formData.password !== formData.confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp');
+      setError("Mật khẩu xác nhận không khớp");
       return;
     }
 
     // Terms acceptance
     if (!acceptTerms) {
-      setError('Vui lòng đồng ý với điều khoản sử dụng');
+      setError("Vui lòng đồng ý với điều khoản sử dụng");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       await register(
         formData.name,
         formData.email,
         formData.password,
-        formData.phone || undefined
+        formData.phone || undefined,
       );
-      navigate('/');
-    } catch (err: any) {
-      setError(err.message || 'Đăng ký thất bại. Vui lòng thử lại.');
+      navigate("/");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Đăng ký thất bại. Vui lòng thử lại.");
+      }
     } finally {
       setLoading(false);
     }
@@ -86,9 +95,9 @@ const Register: React.FC = () => {
       <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">
         <div className="w-full max-w-[500px]">
           <div className="text-center mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-              Register
-            </h1>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <h1 className="text-[#F3FAF4] text-[48px] font-bold">Register</h1>
+            </div>
             <p className="text-[#F3FAF4]/70 text-base">
               Tạo tài khoản mới để bắt đầu mua sắm
             </p>
@@ -142,7 +151,10 @@ const Register: React.FC = () => {
               className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9]"
             />
 
-            <label htmlFor="password" className="text-[#F3FAF4] text-xl mt-6 mb-2">
+            <label
+              htmlFor="password"
+              className="text-[#F3FAF4] text-xl mt-6 mb-2"
+            >
               Mật khẩu *
             </label>
             <input
@@ -156,7 +168,10 @@ const Register: React.FC = () => {
               className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9]"
             />
 
-            <label htmlFor="confirmPassword" className="text-[#F3FAF4] text-xl mt-6 mb-2">
+            <label
+              htmlFor="confirmPassword"
+              className="text-[#F3FAF4] text-xl mt-6 mb-2"
+            >
               Xác nhận mật khẩu *
             </label>
             <input
@@ -178,14 +193,14 @@ const Register: React.FC = () => {
                 className="w-4 h-4 mt-1 accent-[#D9D9D9]"
               />
               <span className="text-[#F3FAF4] text-sm">
-                Tôi đồng ý với{' '}
+                Tôi đồng ý với{" "}
                 <Link
                   to="#terms"
                   className="text-[#F3FAF4] underline hover:opacity-80"
                 >
                   Điều khoản sử dụng
-                </Link>
-                {' '}và{' '}
+                </Link>{" "}
+                và{" "}
                 <Link
                   to="#privacy"
                   className="text-[#F3FAF4] underline hover:opacity-80"
@@ -205,13 +220,15 @@ const Register: React.FC = () => {
                 className="absolute h-full w-full object-cover inset-0 rounded-md"
                 alt=""
               />
-              <span className="relative">{loading ? 'Đang đăng ký...' : 'Đăng ký'}</span>
+              <span className="relative">
+                {loading ? "Đang đăng ký..." : "Đăng ký"}
+              </span>
             </button>
           </form>
 
           <div className="mt-8 text-center">
             <p className="text-[#F3FAF4]/70 text-sm">
-              Đã có tài khoản?{' '}
+              Đã có tài khoản?{" "}
               <Link
                 to="/login"
                 className="text-[#F3FAF4] font-semibold hover:opacity-80 transition-opacity"
@@ -229,4 +246,3 @@ const Register: React.FC = () => {
 };
 
 export default Register;
-

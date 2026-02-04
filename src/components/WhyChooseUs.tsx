@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const WhyChooseUs = () => {
   return (
@@ -13,15 +15,20 @@ const WhyChooseUs = () => {
               alt="Why choose us illustration left"
             />
           </div>
-          
+
           {/* Center Content */}
           <div className="lg:col-span-2 text-center">
-            <h2 className="text-5xl md:text-6xl lg:text-8xl font-bold text-foreground">
-              Why Choose Us
-            </h2>
+            <div className="flex items-center justify-center gap-4 md:gap-8">
+              <SparkleIcon className="w-12 h-12 md:w-16 md:h-16 shrink-0" />
+              <h2 className="text-5xl md:text-6xl lg:text-8xl font-bold text-foreground uppercase">
+                Why Choose Us
+              </h2>
+              <RightSparkleIcon className="h-12 md:h-16 w-auto shrink-0" />
+            </div>
             <p className="text-sm text-muted-foreground mt-4 max-w-lg mx-auto leading-relaxed">
-              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
-              Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.
+              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
+              nhu cầu: Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng –
+              từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.
             </p>
             <img
               src="https://api.builder.io/api/v1/image/assets/TEMP/07cd44eea2fc282efe1888d012fd8ae29308783b?placeholderIfAbsent=true"
@@ -29,7 +36,7 @@ const WhyChooseUs = () => {
               alt="Why choose us features showcase"
             />
           </div>
-          
+
           {/* Right Image */}
           <div className="hidden lg:block">
             <img

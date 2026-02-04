@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!email) {
-      setError('Vui lòng nhập email của bạn');
+      setError("Vui lòng nhập email của bạn");
       return;
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError('Email không hợp lệ');
+      setError("Email không hợp lệ");
       return;
     }
 
     // Simulate password reset (replace with actual API call)
-    console.log('Password reset request for:', email);
+    console.log("Password reset request for:", email);
     setSuccess(true);
-    setError('');
-    
+    setError("");
+
     // Optionally navigate after a delay
     // setTimeout(() => navigate('/login'), 3000);
   };
@@ -41,9 +41,11 @@ const ForgotPassword: React.FC = () => {
       <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">
         <div className="w-full max-w-[500px]">
           <div className="text-center mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-4">
-              Forgot Password
-            </h1>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+                Forgot Password
+              </h1>
+            </div>
             <p className="text-[#F3FAF4]/70 text-base">
               Nhập email của bạn để nhận link đặt lại mật khẩu
             </p>
@@ -66,8 +68,8 @@ const ForgotPassword: React.FC = () => {
               </svg>
               <p className="text-lg font-semibold mb-2">Email đã được gửi!</p>
               <p className="text-sm">
-                Chúng tôi đã gửi link đặt lại mật khẩu đến email của bạn.
-                Vui lòng kiểm tra hộp thư và làm theo hướng dẫn.
+                Chúng tôi đã gửi link đặt lại mật khẩu đến email của bạn. Vui
+                lòng kiểm tra hộp thư và làm theo hướng dẫn.
               </p>
               <Link
                 to="/login"
@@ -94,7 +96,7 @@ const ForgotPassword: React.FC = () => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  setError('');
+                  setError("");
                 }}
                 required
                 placeholder="Nhập email của bạn"
@@ -132,4 +134,3 @@ const ForgotPassword: React.FC = () => {
 };
 
 export default ForgotPassword;
-

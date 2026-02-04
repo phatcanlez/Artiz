@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    paymentMethod: 'cod' // cod = cash on delivery
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    paymentMethod: "cod", // cod = cash on delivery
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -37,24 +41,24 @@ const Checkout: React.FC = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Vui lòng nhập họ và tên';
+      newErrors.fullName = "Vui lòng nhập họ và tên";
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'Vui lòng nhập email';
+      newErrors.email = "Vui lòng nhập email";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ';
+      newErrors.email = "Email không hợp lệ";
     }
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Vui lòng nhập số điện thoại';
+      newErrors.phone = "Vui lòng nhập số điện thoại";
     }
     if (!formData.address.trim()) {
-      newErrors.address = 'Vui lòng nhập địa chỉ';
+      newErrors.address = "Vui lòng nhập địa chỉ";
     }
     if (!formData.city.trim()) {
-      newErrors.city = 'Vui lòng nhập thành phố';
+      newErrors.city = "Vui lòng nhập thành phố";
     }
     if (!formData.postalCode.trim()) {
-      newErrors.postalCode = 'Vui lòng nhập mã bưu điện';
+      newErrors.postalCode = "Vui lòng nhập mã bưu điện";
     }
 
     setErrors(newErrors);
@@ -63,27 +67,27 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     // Simulate payment processing
     // In real app, this would call payment API
-    console.log('Checkout data:', formData);
-    
+    console.log("Checkout data:", formData);
+
     // Simulate random success/failure (90% success rate for demo)
     const isSuccess = Math.random() > 0.1;
-    
+
     if (isSuccess) {
-      navigate('/checkout/success', { state: { orderData: formData } });
+      navigate("/checkout/success", { state: { orderData: formData } });
     } else {
-      navigate('/checkout/fail', { state: { orderData: formData } });
+      navigate("/checkout/fail", { state: { orderData: formData } });
     }
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN').format(price);
+    return new Intl.NumberFormat("vi-VN").format(price);
   };
 
   const subtotal = 7700000; // Sample data
@@ -96,11 +100,14 @@ const Checkout: React.FC = () => {
 
       <main className="flex flex-col items-center flex-1 py-16 px-5">
         <div className="w-full max-w-[1240px]">
-          <h1 className="text-[#F3FAF4] text-[48px] font-bold mb-10">
-            Checkout
-          </h1>
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <h1 className="text-[#F3FAF4] text-[48px] font-bold">Checkout</h1>
+          </div>
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          >
             {/* Checkout Form */}
             <div className="lg:col-span-2 space-y-6">
               {/* Shipping Information */}
@@ -111,7 +118,10 @@ const Checkout: React.FC = () => {
 
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="fullName" className="text-[#F3FAF4] text-lg mb-2 block">
+                    <label
+                      htmlFor="fullName"
+                      className="text-[#F3FAF4] text-lg mb-2 block"
+                    >
                       Họ và tên *
                     </label>
                     <input
@@ -121,18 +131,25 @@ const Checkout: React.FC = () => {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                        errors.fullName ? 'border-red-500' : 'border-neutral-400'
+                        errors.fullName
+                          ? "border-red-500"
+                          : "border-neutral-400"
                       }`}
                       placeholder="Nhập họ và tên"
                     />
                     {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.fullName}
+                      </p>
                     )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="email" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="email"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Email *
                       </label>
                       <input
@@ -142,17 +159,22 @@ const Checkout: React.FC = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.email ? 'border-red-500' : 'border-neutral-400'
+                          errors.email ? "border-red-500" : "border-neutral-400"
                         }`}
                         placeholder="Nhập email"
                       />
                       {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="phone"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Số điện thoại *
                       </label>
                       <input
@@ -162,18 +184,23 @@ const Checkout: React.FC = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.phone ? 'border-red-500' : 'border-neutral-400'
+                          errors.phone ? "border-red-500" : "border-neutral-400"
                         }`}
                         placeholder="Nhập số điện thoại"
                       />
                       {errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.phone}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="address" className="text-[#F3FAF4] text-lg mb-2 block">
+                    <label
+                      htmlFor="address"
+                      className="text-[#F3FAF4] text-lg mb-2 block"
+                    >
                       Địa chỉ *
                     </label>
                     <textarea
@@ -183,18 +210,23 @@ const Checkout: React.FC = () => {
                       onChange={handleInputChange}
                       rows={3}
                       className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] resize-none ${
-                        errors.address ? 'border-red-500' : 'border-neutral-400'
+                        errors.address ? "border-red-500" : "border-neutral-400"
                       }`}
                       placeholder="Nhập địa chỉ giao hàng"
                     />
                     {errors.address && (
-                      <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.address}
+                      </p>
                     )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="city" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="city"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Thành phố *
                       </label>
                       <input
@@ -204,17 +236,22 @@ const Checkout: React.FC = () => {
                         value={formData.city}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.city ? 'border-red-500' : 'border-neutral-400'
+                          errors.city ? "border-red-500" : "border-neutral-400"
                         }`}
                         placeholder="Nhập thành phố"
                       />
                       {errors.city && (
-                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.city}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="postalCode" className="text-[#F3FAF4] text-lg mb-2 block">
+                      <label
+                        htmlFor="postalCode"
+                        className="text-[#F3FAF4] text-lg mb-2 block"
+                      >
                         Mã bưu điện *
                       </label>
                       <input
@@ -224,12 +261,16 @@ const Checkout: React.FC = () => {
                         value={formData.postalCode}
                         onChange={handleInputChange}
                         className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.postalCode ? 'border-red-500' : 'border-neutral-400'
+                          errors.postalCode
+                            ? "border-red-500"
+                            : "border-neutral-400"
                         }`}
                         placeholder="Nhập mã bưu điện"
                       />
                       {errors.postalCode && (
-                        <p className="text-red-500 text-sm mt-1">{errors.postalCode}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.postalCode}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -248,13 +289,17 @@ const Checkout: React.FC = () => {
                       type="radio"
                       name="paymentMethod"
                       value="cod"
-                      checked={formData.paymentMethod === 'cod'}
+                      checked={formData.paymentMethod === "cod"}
                       onChange={handleInputChange}
                       className="w-5 h-5 accent-[#D9D9D9]"
                     />
                     <div className="flex-1">
-                      <span className="text-[#F3FAF4] text-lg font-medium">Cash on Delivery</span>
-                      <p className="text-[#F3FAF4]/70 text-sm">Thanh toán khi nhận hàng</p>
+                      <span className="text-[#F3FAF4] text-lg font-medium">
+                        Cash on Delivery
+                      </span>
+                      <p className="text-[#F3FAF4]/70 text-sm">
+                        Thanh toán khi nhận hàng
+                      </p>
                     </div>
                   </label>
 
@@ -263,13 +308,17 @@ const Checkout: React.FC = () => {
                       type="radio"
                       name="paymentMethod"
                       value="bank"
-                      checked={formData.paymentMethod === 'bank'}
+                      checked={formData.paymentMethod === "bank"}
                       onChange={handleInputChange}
                       className="w-5 h-5 accent-[#D9D9D9]"
                     />
                     <div className="flex-1">
-                      <span className="text-[#F3FAF4] text-lg font-medium">Bank Transfer</span>
-                      <p className="text-[#F3FAF4]/70 text-sm">Chuyển khoản ngân hàng</p>
+                      <span className="text-[#F3FAF4] text-lg font-medium">
+                        Bank Transfer
+                      </span>
+                      <p className="text-[#F3FAF4]/70 text-sm">
+                        Chuyển khoản ngân hàng
+                      </p>
                     </div>
                   </label>
                 </div>
@@ -286,14 +335,20 @@ const Checkout: React.FC = () => {
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-[#F3FAF4]/70">
                     <span>Subtotal</span>
-                    <span className="text-[#F3FAF4]">{formatPrice(subtotal)} VND</span>
+                    <span className="text-[#F3FAF4]">
+                      {formatPrice(subtotal)} VND
+                    </span>
                   </div>
                   <div className="flex justify-between text-[#F3FAF4]/70">
                     <span>Shipping</span>
-                    <span className="text-[#F3FAF4]">{formatPrice(shipping)} VND</span>
+                    <span className="text-[#F3FAF4]">
+                      {formatPrice(shipping)} VND
+                    </span>
                   </div>
                   <div className="border-t border-white/10 pt-4 flex justify-between">
-                    <span className="text-[#F3FAF4] text-xl font-bold">Total</span>
+                    <span className="text-[#F3FAF4] text-xl font-bold">
+                      Total
+                    </span>
                     <span className="text-[#F3FAF4] text-xl font-bold">
                       {formatPrice(total)} VND
                     </span>
@@ -323,4 +378,3 @@ const Checkout: React.FC = () => {
 };
 
 export default Checkout;
-
