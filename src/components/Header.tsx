@@ -39,7 +39,7 @@ const Header: React.FC = () => {
       </nav>
       <Link to="/" className="relative justify-self-center">
         <img
-          src="/public/images/logo.png"
+          src="/images/logo.png"
           className="aspect-[1.78] object-contain w-[180px] shrink-0 max-w-full hover:opacity-80 transition-opacity cursor-pointer"
           alt="Company logo"
         />

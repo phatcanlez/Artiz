@@ -1,6 +1,4 @@
 import React from "react";
-import { SparkleIcon } from "./ui/SparkleIcon";
-import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 interface ReviewProps {
   name: string;
@@ -61,11 +59,9 @@ const ReviewsSection: React.FC = () => {
 
   return (
     <section className="flex-1">
-      <div className="flex items-center gap-4 mb-[30px]">
-        <SparkleIcon className="w-8 h-8 shrink-0" />
-        <h2 className="text-[#F3FAF4] text-[32px] font-bold">Recent Reviews</h2>
-        <RightSparkleIcon className="h-8 w-auto shrink-0" />
-      </div>
+      <h2 className="text-[#F3FAF4] text-[32px] font-bold mb-[30px]">
+        Recent Reviews
+      </h2>
       {reviews.map((review, index) => (
         <Review
           key={index}

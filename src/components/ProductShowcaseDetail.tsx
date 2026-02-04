@@ -1,120 +1,81 @@
 import React, { useState } from "react";
 import Product3DViewer from "./Product3DViewer";
+import { SparkleIcon } from "./ui/SparkleIcon";
+import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const ProductShowcaseDetail: React.FC = () => {
   const [viewMode, setViewMode] = useState<"3d" | "image">("3d");
 
   return (
-    <section className="self-center w-full max-w-[1240px] mt-20 px-5 max-md:mt-10">
-      <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
-        <div className="w-[68%] max-md:w-full max-md:ml-0">
-          <div className="flex grow flex-col items-stretch mt-5 max-md:max-w-full">
-            {/* Toggle buttons để chuyển giữa 3D và hình ảnh */}
-            <div className="flex gap-2 mb-4">
-              <button
-                onClick={() => setViewMode("3d")}
-                className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                  viewMode === "3d"
-                    ? "bg-white text-black"
-                    : "bg-gray-700 text-white hover:bg-gray-600"
-                }`}
-              >
-                3D View
-              </button>
-              <button
-                onClick={() => setViewMode("image")}
-                className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                  viewMode === "image"
-                    ? "bg-white text-black"
-                    : "bg-gray-700 text-white hover:bg-gray-600"
-                }`}
-              >
-                Image View
-              </button>
-            </div>
-
-            {/* Hiển thị 3D hoặc hình ảnh */}
-            {viewMode === "3d" ? (
-              <div className="w-full aspect-[1.13]">
-                <Product3DViewer className="w-full h-full" />
-              </div>
-            ) : (
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a62acc892543afbb94e7244883611999c1b7a935?placeholderIfAbsent=true"
-                className="aspect-[1.13] object-contain w-full max-md:max-w-full"
-                alt="Men Armor Black Silver main product image"
-              />
-            )}
-
-            <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/487fb0253b5c84d089312a83352ccc4c19ef3dfd?placeholderIfAbsent=true"
-              className="aspect-[9.9] object-contain w-[716px] max-w-full mt-[13px]"
-              alt="Product gallery thumbnails"
+    <div className="flex gap-6 w-full lg:w-[60%] lg:h-[600px]">
+      {/* Thumbnails */}
+      <div className="flex flex-col gap-4 shrink-0 overflow-y-auto max-h-full scrollbar-none py-1">
+        {[1, 2, 3, 4, 5].map((item) => (
+          <div
+            key={item}
+            className="w-16 h-16 bg-white/5 rounded-sm cursor-pointer hover:border border-white/50 transition-colors shrink-0"
+          />
+        ))}
+        <div className="text-white flex justify-center cursor-pointer mt-2">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
             />
-          </div>
-        </div>
-        <div className="w-[32%] ml-5 max-md:w-full max-md:ml-0">
-          <div className="flex w-full flex-col items-stretch text-xl text-white font-medium">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/983ff0dbdc6e666ed16921a7c321f02489227a0e?placeholderIfAbsent=true"
-              className="aspect-[10] object-contain w-[400px]"
-              alt="Product rating stars"
-            />
-            <div className="flex items-center gap-2">
-              <h1 className="text-[32px] font-bold mt-1.5 flex gap-2 items-center">
-                Men Armor Black Silver
-              </h1>
-            </div>
-            <div className="text-2xl font-normal mt-[27px]">3.850.000 VND</div>
-            <div
-              className="flex gap-1 text-xs font-normal mt-2.5"
-              role="img"
-              aria-label="5 star rating"
-            >
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a42b9512f67cabe27e9f58d7dec0fb65a8cc2445?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-[13px] shrink-0"
-                alt=""
-              />
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a42b9512f67cabe27e9f58d7dec0fb65a8cc2445?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-[13px] shrink-0"
-                alt=""
-              />
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a42b9512f67cabe27e9f58d7dec0fb65a8cc2445?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-[13px] shrink-0"
-                alt=""
-              />
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a42b9512f67cabe27e9f58d7dec0fb65a8cc2445?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-[13px] shrink-0"
-                alt=""
-              />
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a42b9512f67cabe27e9f58d7dec0fb65a8cc2445?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-[13px] shrink-0"
-                alt=""
-              />
-              <span className="self-stretch">( 2 reviews )</span>
-            </div>
-            <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/0fc26a5190ff5d6a485dd7da3c91be04549aa42f?placeholderIfAbsent=true"
-              className="aspect-[7.75] object-contain w-[395px] mt-[27px] rounded-[3px]"
-              alt="Product color options"
-            />
-            <button className="flex flex-col relative aspect-[6.746] w-[398px] items-center text-black font-bold justify-center mt-[25px] px-[70px] py-4 rounded-md max-md:px-5 hover:opacity-90 transition-opacity">
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-                className="absolute h-full w-full object-cover inset-0 rounded-md"
-                alt=""
-              />
-              <span className="relative">Buy it now</span>
-            </button>
-          </div>
+          </svg>
         </div>
       </div>
-    </section>
+
+      {/* Main Display */}
+      <div className="flex-1 relative border border-white/20 p-1 group h-full">
+        <SparkleIcon className="absolute -bottom-3 -left-3 w-8 h-8 z-10 text-white" />
+        <SparkleIcon className="absolute -bottom-3 -right-3 w-8 h-8 z-10 text-white" />
+
+        {/* Toggle buttons */}
+        <div className="absolute top-4 right-4 z-20 flex gap-2">
+          <button
+            onClick={() => setViewMode("3d")}
+            className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
+              viewMode === "3d"
+                ? "bg-white text-black"
+                : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
+            }`}
+          >
+            3D
+          </button>
+          <button
+            onClick={() => setViewMode("image")}
+            className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
+              viewMode === "image"
+                ? "bg-white text-black"
+                : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
+            }`}
+          >
+            IMG
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
+          {viewMode === "3d" ? (
+            <Product3DViewer className="w-full h-full" />
+          ) : (
+            <img
+              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a62acc892543afbb94e7244883611999c1b7a935?placeholderIfAbsent=true"
+              className="w-full h-full object-contain"
+              alt="Men Armor Black Silver"
+            />
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { SparkleIcon } from "./ui/SparkleIcon";
-import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const ReviewForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -26,78 +24,103 @@ const ReviewForm: React.FC = () => {
   };
 
   return (
-    <aside className="flex flex-col text-xl text-[#F3FAF4] font-normal w-[401px] max-w-full">
-      <div className="flex items-center gap-4 mb-4">
-        <SparkleIcon className="w-8 h-8 shrink-0" />
-        <h2 className="text-[#F3FAF4] text-[32px] font-bold">Your review</h2>
-        <RightSparkleIcon className="h-8 w-auto shrink-0" />
-      </div>
+    <aside className="flex flex-col text-[#F3FAF4] w-full max-w-full">
+      <h2 className="text-[32px] font-bold mb-4">Your review</h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <label
-          htmlFor="review-rating"
-          className="text-[#F3FAF4] text-2xl mt-[33px]"
-        >
-          Add your review *
-        </label>
-        <img
-          src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/33fd9c9f0dfbbd1325c6070975bb38d5830c2d5a?placeholderIfAbsent=true"
-          className="aspect-[6.25] object-contain w-[206px] max-w-full mt-[19px]"
-          alt="Rating stars selector"
-          role="button"
-          tabIndex={0}
-        />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div>
+          <label className="block text-xl mb-2">Add your review *</label>
+          <div className="flex gap-1 text-3xl">
+            <span
+              className="text-transparent stroke-white stroke-1 hover:text-yellow-500 cursor-pointer"
+              style={{ WebkitTextStroke: "1px white" }}
+            >
+              ☆
+            </span>
+            <span
+              className="text-transparent stroke-white stroke-1 hover:text-yellow-500 cursor-pointer"
+              style={{ WebkitTextStroke: "1px white" }}
+            >
+              ☆
+            </span>
+            <span
+              className="text-transparent stroke-white stroke-1 hover:text-yellow-500 cursor-pointer"
+              style={{ WebkitTextStroke: "1px white" }}
+            >
+              ☆
+            </span>
+            <span
+              className="text-transparent stroke-white stroke-1 hover:text-yellow-500 cursor-pointer"
+              style={{ WebkitTextStroke: "1px white" }}
+            >
+              ☆
+            </span>
+            <span
+              className="text-transparent stroke-white stroke-1 hover:text-yellow-500 cursor-pointer"
+              style={{ WebkitTextStroke: "1px white" }}
+            >
+              ☆
+            </span>
+          </div>
+        </div>
 
-        <label htmlFor="reviewer-name" className="text-[#F3FAF4] mt-[23px]">
-          Name*
-        </label>
-        <input
-          type="text"
-          id="reviewer-name"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-          className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] p-[11px] rounded-md border-solid"
-        />
+        <div>
+          <label
+            htmlFor="reviewer-name"
+            className="block mb-2 text-sm font-bold"
+          >
+            Name*
+          </label>
+          <input
+            type="text"
+            id="reviewer-name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            className="w-full bg-white text-black px-4 py-3 rounded-md outline-none focus:ring-2 focus:ring-gray-400"
+          />
+        </div>
 
-        <label htmlFor="reviewer-email" className="text-[#F3FAF4] mt-[27px]">
-          Email *
-        </label>
-        <input
-          type="email"
-          id="reviewer-email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-          className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] whitespace-nowrap mt-[11px] px-3 py-[11px] rounded-md border-solid"
-        />
+        <div>
+          <label
+            htmlFor="reviewer-email"
+            className="block mb-2 text-sm font-bold"
+          >
+            Email *
+          </label>
+          <input
+            type="email"
+            id="reviewer-email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            className="w-full bg-white text-black px-4 py-3 rounded-md outline-none focus:ring-2 focus:ring-gray-400"
+          />
+        </div>
 
-        <label htmlFor="review-text" className="text-[#F3FAF4] mt-[34px]">
-          Rate us *
-        </label>
-        <textarea
-          id="review-text"
-          name="review"
-          value={formData.review}
-          onChange={handleInputChange}
-          placeholder="Write here"
-          required
-          rows={8}
-          className="bg-white border-neutral-400 border text-base text-[rgba(152,152,152,1)] mt-[11px] pt-[13px] pb-[100px] px-3 rounded-md border-solid resize-none"
-        />
+        <div>
+          <label htmlFor="review-text" className="block mb-2 text-sm font-bold">
+            Rate us *
+          </label>
+          <textarea
+            id="review-text"
+            name="review"
+            value={formData.review}
+            onChange={handleInputChange}
+            placeholder="Write here"
+            required
+            rows={5}
+            className="w-full bg-white text-black px-4 py-3 rounded-md outline-none resize-none focus:ring-2 focus:ring-gray-400 placeholder:text-gray-400"
+          />
+        </div>
 
         <button
           type="submit"
-          className="flex flex-col relative aspect-[6.746] w-full items-center text-2xl text-[#102314] font-bold justify-center mt-[21px] px-10 py-4 rounded-md hover:opacity-90 transition-opacity"
+          className="w-full bg-[#D9D9D9] text-black font-bold text-center mt-2 px-10 py-4 rounded-md hover:bg-white transition-colors text-xl"
         >
-          <img
-            src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-            className="absolute h-full w-full object-cover inset-0 rounded-md"
-            alt=""
-          />
-          <span className="relative">Submit a review</span>
+          Submit a review
         </button>
       </form>
     </aside>

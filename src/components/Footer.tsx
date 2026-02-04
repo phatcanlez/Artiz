@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           {/* Column 1: Logo & Social Media */}
           <div className="flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-white">
             <img
-              src="/public/images/logo.png"
+              src="/images/logo.png"
               className="w-24 md:w-32 object-contain mb-6 brightness-0 invert"
               alt="Artiz Logo"
             />
