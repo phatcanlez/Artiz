@@ -28,7 +28,7 @@ const ArmorCase = () => {
   };
 
   return (
-    <section className="w-full px-4 md:px-8 mt-12 md:mt-20">
+    <section className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Content */}
@@ -55,8 +55,13 @@ const ArmorCase = () => {
           </div>
 
           {/* Center: Khung vòng tròn cũ (trắng) bên ngoài, 3D ở giữa */}
-          <div className="flex items-center justify-center">
-            <SegmentedRing size={380} strokeWidth={10} segments={6}>
+          <div className="flex items-center justify-center mt-10 lg:mt-0">
+            <SegmentedRing
+              size={380}
+              strokeWidth={10}
+              segments={6}
+              className="scale-75 sm:scale-90 md:scale-100"
+            >
               <model-viewer
                 src="/3d/hộp .glb"
                 alt="Armor Case 3D"

@@ -40,7 +40,7 @@ const CheckoutFail: React.FC = () => {
 
           {/* Error Message */}
           <div className="flex items-center justify-center gap-4 mb-4">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+            <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
               Payment Failed
             </h1>
           </div>

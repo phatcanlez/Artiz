@@ -85,15 +85,15 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-x-hidden items-stretch bg-[#000311] min-h-screen">
       <Header />
 
-      <main className="flex flex-col items-center flex-1 py-16 px-5">
-        <div className="w-full max-w-[1240px]">
+      <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
+        <div className="w-full max-w-[1240px] min-w-0">
           {/* Header Section */}
-          <div className="text-center mb-12 flex flex-col items-center">
-            <div className="flex items-center gap-4">
-              <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+          <div className="text-center mb-8 sm:mb-12 flex flex-col items-center">
+            <div className="flex items-center justify-center gap-4">
+              <h1 className="text-[#F3FAF4] text-3xl sm:text-4xl md:text-[48px] font-bold">
                 Contact Us
               </h1>
             </div>
@@ -102,10 +102,10 @@ const Contact: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Form */}
-            <div className="bg-white/5 border border-white/10 rounded-lg p-8">
-              <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
+            <div className="bg-white/5 border border-white/10 rounded-lg p-5 sm:p-6 md:p-8">
+              <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                 Send us a Message
               </h2>
 
@@ -296,9 +296,9 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-8">
-              <div className="bg-white/5 border border-white/10 rounded-lg p-8">
-                <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-5 sm:p-6 md:p-8">
+                <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                   Contact Information
                 </h2>
 

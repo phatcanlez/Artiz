@@ -63,14 +63,14 @@ const Cart: React.FC = () => {
   const total = subtotal + shipping;
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-x-hidden items-stretch bg-[#000311] min-h-screen">
       <Header />
 
-      <main className="flex flex-col items-center flex-1 py-16 px-5">
-        <div className="w-full max-w-[1240px]">
-          <div className="mb-10 text-center">
-            <div className="flex items-center justify-center gap-4 mb-2">
-              <h1 className="text-[#F3FAF4] text-[48px] font-bold">
+      <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
+        <div className="w-full max-w-[1240px] min-w-0">
+          <div className="mb-6 sm:mb-10 text-center">
+            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 px-2">
+              <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
                 Shopping Cart
               </h1>
             </div>
@@ -122,22 +122,22 @@ const Cart: React.FC = () => {
                 {cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white/5 border border-white/10 rounded-lg p-6 flex flex-col sm:flex-row gap-6"
+                    className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6"
                   >
                     {/* Product Image */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 flex justify-center sm:justify-start">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-32 h-32 object-cover rounded-lg"
+                        className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg"
                       />
                     </div>
 
                     {/* Product Info */}
                     <div className="flex-1 flex flex-col">
                       <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="text-[#F3FAF4] text-xl font-bold mb-2">
+                        <div className="min-w-0">
+                          <h3 className="text-[#F3FAF4] text-base sm:text-xl font-bold mb-2 line-clamp-2">
                             {item.name}
                           </h3>
                           {item.color && (

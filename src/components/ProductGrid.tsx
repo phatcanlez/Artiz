@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 import ProductCard from "./ProductCard";
-import { apiClient, Product } from "@/lib/api";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const ProductGrid: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("new");
 
-  const {
-    data: products = [],
-    isLoading,
-    error,
-  } = useQuery<Product[]>({
-    queryKey: ["products"],
-    queryFn: () => apiClient.getProducts(),
-  });
+  // Single static product as requested
+  const product = {
+    id: 1,
+    image: "/images/airpod.jpg",
+    title: "Men Armor Black Silver",
+    price: "3.850.000 VND",
+    rating: 5,
+    reviews: 2,
+  };
 
   const filterButtons = [
     { id: "new", label: "NEW COLLECTION" },
@@ -24,21 +23,21 @@ const ProductGrid: React.FC = () => {
   ];
 
   return (
-    <section className="w-full py-16 px-6 lg:px-24">
+    <section className="w-full py-10 sm:py-16 px-4 sm:px-6 lg:px-24 overflow-hidden">
       {/* Section Header */}
       <div
-        className="relative rounded-xl overflow-hidden mb-12 py-16 px-8"
+        className="relative rounded-xl overflow-hidden mb-8 sm:mb-12 py-10 sm:py-16 px-4 sm:px-6 md:px-8"
         style={{
           background:
             "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
         }}
       >
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <SparkleIcon className="w-10 h-10 md:w-14 md:h-14 shrink-0" />
-          <h2 className="text-white text-center text-4xl md:text-5xl lg:text-6xl font-bold">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
+          <h2 className="text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             Suggestions For You
           </h2>
-          <RightSparkleIcon className="h-10 md:h-14 w-auto shrink-0" />
+          <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" />
         </div>
         <p className="text-white/80 text-center text-sm max-w-xl mx-auto">
           We have a lot of options for you here. If you are having trouble, we
@@ -47,12 +46,12 @@ const ProductGrid: React.FC = () => {
       </div>
 
       {/* Filter Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
         {filterButtons.map((btn) => (
           <button
             key={btn.id}
             onClick={() => setActiveFilter(btn.id)}
-            className={`px-8 py-4 font-bold text-sm transition-all rounded-lg ${
+            className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 font-bold text-xs sm:text-sm transition-all rounded-lg touch-manipulation ${
               activeFilter === btn.id
                 ? "bg-[#D9D7D7] text-black"
                 : "bg-[#D9D7D7]/70 text-black/70 hover:bg-[#D9D7D7]"
@@ -82,37 +81,18 @@ const ProductGrid: React.FC = () => {
         </button>
       </div>
 
-      {/* Product Grid */}
-      {isLoading && (
-        <div className="text-center text-white py-12">
-          <p>Đang tải sản phẩm...</p>
-        </div>
-      )}
-      {error && (
-        <div className="text-center text-red-500 py-12">
-          <p>Không thể tải sản phẩm. Vui lòng thử lại sau.</p>
-        </div>
-      )}
-      {!isLoading && !error && products.length === 0 && (
-        <div className="text-center text-white py-12">
-          <p>Không có sản phẩm nào.</p>
-        </div>
-      )}
-      {!isLoading && !error && products.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.imageUrl}
-              title={product.name}
-              price={`${product.price.toLocaleString("vi-VN")} VND`}
-              rating={Math.round(product.averageRating)}
-              reviews={product.reviewCount}
-            />
-          ))}
-        </div>
-      )}
+      {/* Product Grid - single static product */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          image={product.image}
+          title={product.title}
+          price={product.price}
+          rating={product.rating}
+          reviews={product.reviews}
+        />
+      </div>
     </section>
   );
 };

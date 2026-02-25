@@ -58,14 +58,14 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-x-hidden items-stretch bg-[#000311] min-h-screen">
       <Header />
 
-      <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">
-        <div className="w-full max-w-[500px]">
-          <div className="text-center mb-10">
+      <main className="flex flex-col items-center justify-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
+        <div className="w-full max-w-[500px] min-w-0">
+          <div className="text-center mb-6 sm:mb-10">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <h1 className="text-[#F3FAF4] text-[48px] font-bold">Login</h1>
+              <h1 className="text-[#F3FAF4] text-3xl sm:text-4xl md:text-[48px] font-bold">Login</h1>
             </div>
             <p className="text-[#F3FAF4]/70 text-base">
               Đăng nhập để tiếp tục mua sắm

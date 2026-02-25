@@ -14,7 +14,7 @@ const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
         <div className="flex gap-[26px]">
           <div className="bg-[rgba(217,217,217,1)] flex w-[88px] shrink-0 h-[88px] rounded-full" />
           <div className="flex flex-col items-stretch mt-[18px]">
-            <h3 className="text-[#F3FAF4] text-[32px] font-semibold">{name}</h3>
+            <h3 className="text-[#F3FAF4] text-xl sm:text-2xl md:text-[32px] font-semibold">{name}</h3>
             <time className="text-[#F3FAF4] text-base font-normal">{date}</time>
           </div>
         </div>
@@ -59,7 +59,7 @@ const ReviewsSection: React.FC = () => {
 
   return (
     <section className="flex-1">
-      <h2 className="text-[#F3FAF4] text-[32px] font-bold mb-[30px]">
+      <h2 className="text-[#F3FAF4] text-xl sm:text-2xl md:text-[32px] font-bold mb-4 sm:mb-[30px]">
         Recent Reviews
       </h2>
       {reviews.map((review, index) => (

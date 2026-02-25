@@ -4,8 +4,8 @@ import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
 const WhyChooseUs = () => {
   return (
-    <section className="w-full px-4 md:px-8 mt-12 md:mt-20">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto min-w-0">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
           {/* Left Image */}
           <div className="hidden lg:block">
@@ -18,12 +18,12 @@ const WhyChooseUs = () => {
 
           {/* Center Content */}
           <div className="lg:col-span-2 text-center">
-            <div className="flex items-center justify-center gap-4 md:gap-8">
-              <SparkleIcon className="w-12 h-12 md:w-16 md:h-16 shrink-0" />
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-8">
+              <SparkleIcon className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 shrink-0" />
               <h2 className="text-5xl md:text-6xl lg:text-8xl font-bold text-foreground uppercase">
                 Why Choose Us
               </h2>
-              <RightSparkleIcon className="h-12 md:h-16 w-auto shrink-0" />
+              <RightSparkleIcon className="h-8 w-auto sm:h-12 md:h-16 shrink-0" />
             </div>
             <p className="text-sm text-muted-foreground mt-4 max-w-lg mx-auto leading-relaxed">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai

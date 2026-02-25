@@ -6,9 +6,9 @@ import Footer from '@/components/Footer';
 
 const ProductList = () => {
   return (
-    <div className="w-full min-h-screen bg-[#000311]">
+    <div className="w-full min-h-screen bg-[#000311] overflow-x-hidden">
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <HeroProductList />
         <ProductGrid />
       </main>

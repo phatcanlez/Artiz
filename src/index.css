@@ -92,9 +92,14 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
-  }
+html {
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-background text-foreground;
+  overflow-x: hidden;
+}
 }
 
 /* Global hover effect for links and buttons to use the green color */

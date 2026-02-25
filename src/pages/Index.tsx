@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -30,54 +31,52 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
 
-      <main>
+      <main className="overflow-x-hidden">
         <Hero />
 
         <FeaturedProducts />
 
-        <ProductShowcase
-          images={productImages1}
-          className="mt-16 md:mt-20 px-4 md:px-8"
-        />
-
-        <div className="flex items-center justify-center gap-4 md:gap-8 mt-12 md:mt-16">
-          <SparkleIcon className="w-10 h-10 md:w-14 md:h-14 shrink-0" />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 mt-10 sm:mt-12 md:mt-16 px-4">
+          <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center">
             Made by Us
           </h2>
-          <RightSparkleIcon className="h-10 md:h-14 w-auto shrink-0" />
+          <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" />
         </div>
 
         <ArmorCase />
 
         {/* Explore More Button */}
-        <div className="flex justify-center mt-10">
-          <button className="relative px-12 py-5 rounded-lg overflow-hidden group">
+        <div className="flex justify-center mt-8 sm:mt-10 px-4">
+          <Link
+            to="/products"
+            className="relative inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 rounded-lg overflow-hidden group w-full max-w-sm touch-manipulation"
+          >
             <img
               src="https://api.builder.io/api/v1/image/assets/TEMP/95f13e3fb8dd90e6c9e795cc6c566748e9655416?placeholderIfAbsent=true"
               className="absolute inset-0 w-full h-full object-cover"
-              alt="Button background"
+              alt="Explore more products background"
             />
-            <span className="relative z-10 text-xl md:text-2xl font-bold text-background group-hover:opacity-80 transition-opacity">
+            <span className="relative z-10 text-base sm:text-xl font-bold text-background group-hover:opacity-80 transition-opacity tracking-wide">
               EXPLORE MORE
             </span>
-          </button>
+          </Link>
         </div>
 
         <ProductShowcase
-          images={productImages2}
-          className="mt-16 md:mt-20 px-4 md:px-8"
+          images={productImages3}
+          className="mt-16 md:mt-24 px-4 md:px-8"
         />
 
         <WhyChooseUs />
 
-        <div className="w-full px-4 md:px-8 mt-12 md:mt-20">
+        <div className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20">
           <img
             src="https://api.builder.io/api/v1/image/assets/TEMP/18d6c9c73b8a201c748f3a744b7273bfb990b8ab?placeholderIfAbsent=true"
-            className="w-full max-w-6xl mx-auto h-auto rounded-2xl"
+            className="w-full max-w-6xl mx-auto h-auto rounded-xl sm:rounded-2xl min-w-0"
             alt="Company showcase banner"
           />
         </div>

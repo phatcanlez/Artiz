@@ -95,24 +95,24 @@ const Checkout: React.FC = () => {
   const total = subtotal + shipping;
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-x-hidden items-stretch bg-[#000311] min-h-screen">
       <Header />
 
-      <main className="flex flex-col items-center flex-1 py-16 px-5">
-        <div className="w-full max-w-[1240px]">
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <h1 className="text-[#F3FAF4] text-[48px] font-bold">Checkout</h1>
+      <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
+        <div className="w-full max-w-[1240px] min-w-0">
+          <div className="flex items-center justify-center gap-4 mb-6 sm:mb-10">
+            <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">Checkout</h1>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8"
           >
             {/* Checkout Form */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               {/* Shipping Information */}
-              <div className="bg-white/5 border border-white/10 rounded-lg p-6">
-                <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
+                <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                   Shipping Information
                 </h2>
 

@@ -1,40 +1,40 @@
 import React, { useState } from "react";
 import Product3DViewer from "./Product3DViewer";
 import { SparkleIcon } from "./ui/SparkleIcon";
-import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+
+const imageList = [
+  "/images/airmax.jpg",
+  "/images/airpod.jpg",
+  "/images/lipstick.jpg",
+  "/images/iphone.jpg",
+];
 
 const ProductShowcaseDetail: React.FC = () => {
   const [viewMode, setViewMode] = useState<"3d" | "image">("3d");
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeImage = imageList[activeIndex] ?? imageList[0];
 
   return (
-    <div className="flex gap-6 w-full lg:w-[60%] lg:h-[600px]">
-      {/* Thumbnails */}
-      <div className="flex flex-col gap-4 shrink-0 overflow-y-auto max-h-full scrollbar-none py-1">
-        {[1, 2, 3, 4, 5].map((item) => (
-          <div
-            key={item}
-            className="w-16 h-16 bg-white/5 rounded-sm cursor-pointer hover:border border-white/50 transition-colors shrink-0"
-          />
-        ))}
-        <div className="text-white flex justify-center cursor-pointer mt-2">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 w-full min-w-0 lg:w-[60%] lg:h-[600px]">
+      {/* Thumbnails - vertical slide */}
+      <div className="flex flex-row lg:flex-col gap-2 sm:gap-3 shrink-0 overflow-x-auto lg:overflow-y-auto max-h-full scrollbar-none py-1 pr-1 lg:pr-0">
+        {imageList.map((src, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-sm overflow-hidden border transition-colors flex-shrink-0 ${
+              index === activeIndex ? "border-[#44FF00]" : "border-white/20 hover:border-white/60"
+            }`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
+            <img src={src} className="w-full h-full object-cover" alt={`Thumbnail ${index + 1}`} />
+          </button>
+        ))}
       </div>
 
       {/* Main Display */}
-      <div className="flex-1 relative border border-white/20 p-1 group h-full">
+      <div className="flex-1 relative border border-white/20 p-1 group h-[420px] sm:h-[520px] lg:h-[600px]">
         <SparkleIcon className="absolute -bottom-3 -left-3 w-8 h-8 z-10 text-white" />
         <SparkleIcon className="absolute -bottom-3 -right-3 w-8 h-8 z-10 text-white" />
 
@@ -68,9 +68,9 @@ const ProductShowcaseDetail: React.FC = () => {
             <Product3DViewer className="w-full h-full" />
           ) : (
             <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/a62acc892543afbb94e7244883611999c1b7a935?placeholderIfAbsent=true"
+              src={activeImage}
               className="w-full h-full object-contain"
-              alt="Men Armor Black Silver"
+              alt="Product detail"
             />
           )}
         </div>

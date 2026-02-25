@@ -139,13 +139,10 @@ const View3D = () => {
           </div>
 
           {/* 3D Viewer */}
-          <div
-            className="bg-gray-900 rounded-lg p-4"
-            style={{ minHeight: "600px" }}
-          >
+          <div className="bg-gray-900 rounded-lg p-4 h-[600px]">
             <Product3DViewer
               modelPath={modelPath || undefined}
-              className="w-full"
+              className="w-full h-full"
               autoRotate={autoRotate}
               cameraControls={true}
             />

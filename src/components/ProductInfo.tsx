@@ -60,8 +60,8 @@ const ProductInfo: React.FC = () => {
   return (
     <div className="w-full text-white font-medium">
       {/* Product Header */}
-      <div className="flex justify-between items-start mb-2">
-        <h1 className="text-[32px] font-bold leading-tight">
+      <div className="flex justify-between items-start gap-2 mb-2">
+        <h1 className="text-lg sm:text-2xl md:text-[32px] font-bold leading-tight min-w-0">
           Men Armor Black Silver
         </h1>
         <div className="pt-2">
