@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Header: React.FC = () => {
@@ -22,7 +23,28 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full min-h-[145px] grid grid-cols-[1fr_auto_1fr] items-center gap-5 pt-2 pb-[21px] px-20 max-md:flex max-md:flex-col max-md:px-5 bg-white">
+    <>
+      {/* Green announcement bar */}
+      <div className="w-full bg-[#44FF00] py-3 flex items-center justify-center gap-4 text-white">
+        <button
+          type="button"
+          className="p-1 hover:opacity-80 transition-opacity"
+          aria-label="Previous message"
+        >
+          <ChevronLeft size={24} strokeWidth={2.5} />
+        </button>
+        <span className="text-sm md:text-base font-medium tracking-wide uppercase">
+          FREE SHIP NATIONWIDE
+        </span>
+        <button
+          type="button"
+          className="p-1 hover:opacity-80 transition-opacity"
+          aria-label="Next message"
+        >
+          <ChevronRight size={24} strokeWidth={2.5} />
+        </button>
+      </div>
+      <header className="relative w-full min-h-[145px] grid grid-cols-[1fr_auto_1fr] items-center gap-5 pt-2 pb-[21px] px-20 max-md:flex max-md:flex-col max-md:px-5 bg-white">
       <nav className="relative flex items-center gap-[33px] text-xl text-black font-medium justify-self-start max-md:w-full max-md:justify-center max-md:flex-wrap">
         <Link to="/about" className="hover:opacity-80 transition-opacity">
           About Us
@@ -98,6 +120,7 @@ const Header: React.FC = () => {
         </button>
       </div>
     </header>
+    </>
   );
 };
 
