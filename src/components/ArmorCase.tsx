@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import { SegmentedRing } from "./ui/SegmentedRing";
 
 const ArmorCase = () => {
   const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0 });
@@ -53,26 +54,33 @@ const ArmorCase = () => {
             />
           </div>
 
-          {/* Center Image */}
-          <div
-            className="flex items-center justify-center perspective-1000"
-            ref={imageRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div
-              className="w-full max-w-lg h-auto object-contain transition-transform duration-300 ease-out"
-              style={{
-                transform: `perspective(1000px) rotateX(${transform.rotateX}deg) rotateY(${transform.rotateY}deg) scale3d(1.05, 1.05, 1.05)`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/41ae12015e67a124b568235324467030515a8463?placeholderIfAbsent=true"
-                className="w-full h-auto object-contain"
-                alt="Armor case main product image"
-              />
-            </div>
+          {/* Center: Khung vòng tròn cũ (trắng) bên ngoài, 3D ở giữa */}
+          <div className="flex items-center justify-center">
+            <SegmentedRing size={380} strokeWidth={10} segments={6}>
+              <model-viewer
+                src="/3d/hộp .glb"
+                alt="Armor Case 3D"
+                auto-rotate
+                camera-controls
+                interaction-prompt="auto"
+                shadow-intensity="1"
+                environment-image="neutral"
+                loading="eager"
+                reveal="auto"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                }}
+              >
+                <div
+                  slot="poster"
+                  className="flex items-center justify-center h-full text-white/70 text-sm"
+                >
+                  Đang tải 3D...
+                </div>
+              </model-viewer>
+            </SegmentedRing>
           </div>
 
           {/* Right Content */}
