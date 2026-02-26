@@ -47,7 +47,10 @@ const Header: React.FC = () => {
       <header className="w-full bg-white">
         <div className="max-w-[1240px] mx-auto px-3 sm:px-6 md:px-14 lg:px-20 pt-2 pb-3 sm:pb-[21px] flex flex-col gap-2 md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
           {/* Logo center on mobile, middle on desktop */}
-          <Link to="/" className="flex justify-center md:justify-center order-1 md:order-2">
+          <Link
+            to="/"
+            className="flex justify-center md:justify-center order-1 md:order-2"
+          >
             <img
               src="/images/logo.png"
               className="aspect-[1.78] object-contain w-[120px] sm:w-[150px] md:w-[180px] shrink-0 max-w-full hover:opacity-80 transition-opacity cursor-pointer"
@@ -57,16 +60,28 @@ const Header: React.FC = () => {
 
           {/* Nav */}
           <nav className="relative flex items-center justify-center md:justify-start gap-3 sm:gap-4 md:gap-[33px] text-sm sm:text-base md:text-xl text-black font-medium order-2 md:order-1 flex-wrap">
-            <Link to="/about" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            <Link
+              to="/about"
+              className="hover:opacity-80 transition-opacity whitespace-nowrap"
+            >
               About Us
             </Link>
-            <a href="/products" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            <a
+              href="/products"
+              className="hover:opacity-80 transition-opacity whitespace-nowrap"
+            >
               Shop
             </a>
-            <Link to="/news" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            <Link
+              to="/news"
+              className="hover:opacity-80 transition-opacity whitespace-nowrap"
+            >
               News
             </Link>
-            <Link to="/contact" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            <Link
+              to="/contact"
+              className="hover:opacity-80 transition-opacity whitespace-nowrap"
+            >
               Contact
             </Link>
           </nav>

@@ -6,7 +6,7 @@ const HeroProductList: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=1200&q=80"
+          src="/images/airmax.jpg"
           alt="Artiz Background"
           className="w-full max-w-[1000px] h-auto object-contain opacity-80 min-w-0"
         />

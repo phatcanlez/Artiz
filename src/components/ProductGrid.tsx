@@ -6,15 +6,41 @@ import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 const ProductGrid: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("new");
 
-  // Single static product as requested
-  const product = {
-    id: 1,
-    image: "/images/airpod.jpg",
-    title: "Men Armor Black Silver",
-    price: "3.850.000 VND",
-    rating: 5,
-    reviews: 2,
-  };
+  // Products using local images: airmax, airpod, iphone, lipstick
+  const products = [
+    {
+      id: 1,
+      image: "/images/airmax.jpg",
+      title: "Men Armor Black Silver",
+      price: "3.850.000 VND",
+      rating: 5,
+      reviews: 2,
+    },
+    {
+      id: 2,
+      image: "/images/airpod.jpg",
+      title: "AirPods Pro",
+      price: "5.990.000 VND",
+      rating: 5,
+      reviews: 12,
+    },
+    {
+      id: 3,
+      image: "/images/iphone.jpg",
+      title: "iPhone Case Spider",
+      price: "450.000 VND",
+      rating: 4,
+      reviews: 8,
+    },
+    {
+      id: 4,
+      image: "/images/lipstick.jpg",
+      title: "3D Printed Lipstick",
+      price: "280.000 VND",
+      rating: 5,
+      reviews: 5,
+    },
+  ];
 
   const filterButtons = [
     { id: "new", label: "NEW COLLECTION" },
@@ -24,22 +50,20 @@ const ProductGrid: React.FC = () => {
 
   return (
     <section className="w-full py-10 sm:py-16 px-4 sm:px-6 lg:px-24 overflow-hidden">
-      {/* Section Header */}
+      {/* Section Header - Banner as background, overlay for text readability */}
       <div
-        className="relative rounded-xl overflow-hidden mb-8 sm:mb-12 py-10 sm:py-16 px-4 sm:px-6 md:px-8"
-        style={{
-          background:
-            "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-        }}
+        className="relative rounded-xl overflow-hidden mb-8 sm:mb-12 py-10 sm:py-16 px-4 sm:px-6 md:px-8 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url(/images/banner.png)" }}
       >
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" aria-hidden />
+        <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
           <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
           <h2 className="text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             Suggestions For You
           </h2>
           <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" />
         </div>
-        <p className="text-white/80 text-center text-sm max-w-xl mx-auto">
+        <p className="relative z-10 text-white/80 text-center text-sm max-w-xl mx-auto">
           We have a lot of options for you here. If you are having trouble, we
           have some suggestions for you.
         </p>
@@ -81,17 +105,19 @@ const ProductGrid: React.FC = () => {
         </button>
       </div>
 
-      {/* Product Grid - single static product */}
+      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <ProductCard
-          key={product.id}
-          id={product.id}
-          image={product.image}
-          title={product.title}
-          price={product.price}
-          rating={product.rating}
-          reviews={product.reviews}
-        />
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            title={product.title}
+            price={product.price}
+            rating={product.rating}
+            reviews={product.reviews}
+          />
+        ))}
       </div>
     </section>
   );

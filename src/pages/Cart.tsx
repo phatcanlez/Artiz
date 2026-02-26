@@ -21,18 +21,16 @@ const Cart: React.FC = () => {
       name: "Men Armor Black Silver",
       price: 3850000,
       quantity: 1,
-      image:
-        "https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400&q=80",
+      image: "/images/airmax.jpg",
       color: "Black",
       size: "M",
     },
     {
       id: 2,
-      name: "Men Armor Black Silver",
-      price: 3850000,
+      name: "AirPods Pro",
+      price: 5990000,
       quantity: 2,
-      image:
-        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80",
+      image: "/images/airpod.jpg",
       color: "Silver",
       size: "L",
     },
@@ -103,16 +101,9 @@ const Cart: React.FC = () => {
               </p>
               <Link
                 to="/products"
-                className="inline-block relative px-12 py-5 rounded-lg overflow-hidden group"
+                className="inline-block px-12 py-5 rounded-lg bg-[#44FF00] text-xl font-bold text-[#102314] hover:opacity-90 transition-opacity"
               >
-                <img
-                  src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-                  className="absolute h-full w-full object-cover inset-0 rounded-lg"
-                  alt=""
-                />
-                <span className="relative z-10 text-xl font-bold text-[#102314] group-hover:opacity-90 transition-opacity">
-                  CONTINUE SHOPPING
-                </span>
+                CONTINUE SHOPPING
               </Link>
             </div>
           ) : (
@@ -276,14 +267,9 @@ const Cart: React.FC = () => {
 
                   <Link
                     to="/checkout"
-                    className="relative w-full aspect-[6.746] flex items-center justify-center text-2xl text-[#102314] font-bold py-4 rounded-md hover:opacity-90 transition-opacity mb-4"
+                    className="block w-full text-center py-4 rounded-md bg-[#44FF00] text-2xl text-[#102314] font-bold hover:opacity-90 transition-opacity mb-4"
                   >
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-                      className="absolute h-full w-full object-cover inset-0 rounded-md"
-                      alt=""
-                    />
-                    <span className="relative text-center">CHECKOUT</span>
+                    CHECKOUT
                   </Link>
 
                   <Link

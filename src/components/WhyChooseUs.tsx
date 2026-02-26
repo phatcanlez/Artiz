@@ -18,12 +18,12 @@ const WhyChooseUs = () => {
 
           {/* Center Content */}
           <div className="lg:col-span-2 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-8">
+            <div className="flex flex-nowrap items-center justify-center gap-2 sm:gap-4 md:gap-8">
               <SparkleIcon className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 shrink-0" />
-              <h2 className="text-5xl md:text-6xl lg:text-8xl font-bold text-foreground uppercase">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-foreground uppercase text-center min-w-0 flex-1">
                 Why Choose Us
               </h2>
-              <RightSparkleIcon className="h-8 w-auto sm:h-12 md:h-16 shrink-0" />
+              <RightSparkleIcon className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 shrink-0" />
             </div>
             <p className="text-sm text-muted-foreground mt-4 max-w-lg mx-auto leading-relaxed">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai

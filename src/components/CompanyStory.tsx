@@ -10,8 +10,8 @@ const CompanyStory: React.FC = () => {
           {/* Left: Image */}
           <div className="order-2 lg:order-1">
             <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80"
-              alt="3D Printing Process"
+              src="/images/iphone.jpg"
+              alt="Our Story - Sản phẩm in 3D"
               className="w-full h-auto rounded-lg object-cover"
             />
           </div>

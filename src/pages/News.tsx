@@ -20,8 +20,7 @@ const News: React.FC = () => {
       title: "Công nghệ in 3D mới nhất năm 2025",
       excerpt:
         "Khám phá những công nghệ in 3D tiên tiến nhất đang được áp dụng trong ngành công nghiệp và thời trang...",
-      image:
-        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+      image: "/images/airmax.jpg",
       date: "15/03/2025",
       category: "blog",
       author: "Artiz Studio",
@@ -31,8 +30,7 @@ const News: React.FC = () => {
       title: "Ưu đãi đặc biệt - Giảm 30% cho đơn hàng đầu tiên",
       excerpt:
         "Nhận ngay ưu đãi giảm 30% cho đơn hàng đầu tiên của bạn. Áp dụng cho tất cả sản phẩm trong bộ sưu tập mới...",
-      image:
-        "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=800&q=80",
+      image: "/images/airpod.jpg",
       date: "20/03/2025",
       category: "promotion",
       author: "Artiz Studio",
@@ -42,8 +40,7 @@ const News: React.FC = () => {
       title: "Hướng dẫn chọn màu sắc phù hợp cho phụ kiện 3D",
       excerpt:
         "Làm thế nào để chọn màu sắc phù hợp cho phụ kiện in 3D của bạn? Hãy cùng tìm hiểu những mẹo hay...",
-      image:
-        "https://images.unsplash.com/photo-1622434641406-a158123450f9?w=800&q=80",
+      image: "/images/iphone.jpg",
       date: "10/03/2025",
       category: "blog",
       author: "Artiz Studio",
@@ -53,8 +50,7 @@ const News: React.FC = () => {
       title: "Sắp ra mắt: Bộ sưu tập mùa hè 2025",
       excerpt:
         "Chúng tôi sắp ra mắt bộ sưu tập mùa hè với những thiết kế độc đáo và màu sắc tươi mới. Đăng ký nhận thông báo ngay...",
-      image:
-        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800&q=80",
+      image: "/images/lipstick.jpg",
       date: "25/03/2025",
       category: "promotion",
       author: "Artiz Studio",
@@ -64,8 +60,7 @@ const News: React.FC = () => {
       title: "5 lý do nên chọn in 3D cho phụ kiện cá nhân",
       excerpt:
         "In 3D mang lại nhiều lợi ích vượt trội so với phương pháp sản xuất truyền thống. Hãy khám phá 5 lý do hàng đầu...",
-      image:
-        "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=800&q=80",
+      image: "/images/airmax.jpg",
       date: "05/03/2025",
       category: "blog",
       author: "Artiz Studio",
@@ -75,8 +70,7 @@ const News: React.FC = () => {
       title: "Flash Sale - Chỉ trong 24 giờ!",
       excerpt:
         "Cơ hội mua sắm với giá cực kỳ ưu đãi chỉ trong 24 giờ. Nhanh tay đặt hàng để không bỏ lỡ...",
-      image:
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+      image: "/images/airpod.jpg",
       date: "22/03/2025",
       category: "promotion",
       author: "Artiz Studio",

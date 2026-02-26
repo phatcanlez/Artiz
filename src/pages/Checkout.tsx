@@ -100,8 +100,13 @@ const Checkout: React.FC = () => {
 
       <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
         <div className="w-full max-w-[1240px] min-w-0">
-          <div className="flex items-center justify-center gap-4 mb-6 sm:mb-10">
-            <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">Checkout</h1>
+          <div className="text-center mb-6 sm:mb-10">
+            <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
+              Thanh toán
+            </h1>
+            <p className="text-[#F3FAF4]/70 text-base mt-2">
+              Điền thông tin giao hàng và xác nhận đơn hàng
+            </p>
           </div>
 
           <form
@@ -111,29 +116,22 @@ const Checkout: React.FC = () => {
             {/* Checkout Form */}
             <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               {/* Shipping Information */}
-              <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6">
                 <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-                  Shipping Information
+                  Thông tin giao hàng
                 </h2>
 
                 <div className="space-y-4">
                   <div>
-                    <label
-                      htmlFor="fullName"
-                      className="text-[#F3FAF4] text-lg mb-2 block"
-                    >
-                      Họ và tên *
-                    </label>
+                    <label htmlFor="fullName" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Họ và tên *</label>
                     <input
                       type="text"
                       id="fullName"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                        errors.fullName
-                          ? "border-red-500"
-                          : "border-neutral-400"
+                      className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${
+                        errors.fullName ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"
                       }`}
                       placeholder="Nhập họ và tên"
                     />
@@ -146,46 +144,29 @@ const Checkout: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label
-                        htmlFor="email"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Email *
-                      </label>
+                      <label htmlFor="email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Email *</label>
                       <input
                         type="email"
                         id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.email ? "border-red-500" : "border-neutral-400"
-                        }`}
+                        className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${errors.email ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"}`}
                         placeholder="Nhập email"
                       />
                       {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.email}
-                        </p>
+                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                       )}
                     </div>
-
                     <div>
-                      <label
-                        htmlFor="phone"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Số điện thoại *
-                      </label>
+                      <label htmlFor="phone" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Số điện thoại *</label>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.phone ? "border-red-500" : "border-neutral-400"
-                        }`}
+                        className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${errors.phone ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"}`}
                         placeholder="Nhập số điện thoại"
                       />
                       {errors.phone && (
@@ -197,21 +178,14 @@ const Checkout: React.FC = () => {
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="address"
-                      className="text-[#F3FAF4] text-lg mb-2 block"
-                    >
-                      Địa chỉ *
-                    </label>
+                    <label htmlFor="address" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Địa chỉ *</label>
                     <textarea
                       id="address"
                       name="address"
                       value={formData.address}
                       onChange={handleInputChange}
                       rows={3}
-                      className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] resize-none ${
-                        errors.address ? "border-red-500" : "border-neutral-400"
-                      }`}
+                      className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 resize-none ${errors.address ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"}`}
                       placeholder="Nhập địa chỉ giao hàng"
                     />
                     {errors.address && (
@@ -223,48 +197,29 @@ const Checkout: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label
-                        htmlFor="city"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Thành phố *
-                      </label>
+                      <label htmlFor="city" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Thành phố *</label>
                       <input
                         type="text"
                         id="city"
                         name="city"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.city ? "border-red-500" : "border-neutral-400"
-                        }`}
+                        className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${errors.city ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"}`}
                         placeholder="Nhập thành phố"
                       />
                       {errors.city && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.city}
-                        </p>
+                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
                       )}
                     </div>
-
                     <div>
-                      <label
-                        htmlFor="postalCode"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Mã bưu điện *
-                      </label>
+                      <label htmlFor="postalCode" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Mã bưu điện *</label>
                       <input
                         type="text"
                         id="postalCode"
                         name="postalCode"
                         value={formData.postalCode}
                         onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md border-solid outline-none focus:border-[#D9D9D9] ${
-                          errors.postalCode
-                            ? "border-red-500"
-                            : "border-neutral-400"
-                        }`}
+                        className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${errors.postalCode ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"}`}
                         placeholder="Nhập mã bưu điện"
                       />
                       {errors.postalCode && (
@@ -278,9 +233,9 @@ const Checkout: React.FC = () => {
               </div>
 
               {/* Payment Method */}
-              <div className="bg-white/5 border border-white/10 rounded-lg p-6">
-                <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
-                  Payment Method
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                <h2 className="text-[#F3FAF4] text-xl font-bold mb-6">
+                  Phương thức thanh toán
                 </h2>
 
                 <div className="space-y-3">
@@ -291,7 +246,7 @@ const Checkout: React.FC = () => {
                       value="cod"
                       checked={formData.paymentMethod === "cod"}
                       onChange={handleInputChange}
-                      className="w-5 h-5 accent-[#D9D9D9]"
+                      className="w-5 h-5 accent-[#44FF00]"
                     />
                     <div className="flex-1">
                       <span className="text-[#F3FAF4] text-lg font-medium">
@@ -310,7 +265,7 @@ const Checkout: React.FC = () => {
                       value="bank"
                       checked={formData.paymentMethod === "bank"}
                       onChange={handleInputChange}
-                      className="w-5 h-5 accent-[#D9D9D9]"
+                      className="w-5 h-5 accent-[#44FF00]"
                     />
                     <div className="flex-1">
                       <span className="text-[#F3FAF4] text-lg font-medium">
@@ -327,9 +282,9 @@ const Checkout: React.FC = () => {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white/5 border border-white/10 rounded-lg p-6 sticky top-4">
-                <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
-                  Order Summary
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 sticky top-4">
+                <h2 className="text-[#F3FAF4] text-xl font-bold mb-6">
+                  Tóm tắt đơn hàng
                 </h2>
 
                 <div className="space-y-4 mb-6">

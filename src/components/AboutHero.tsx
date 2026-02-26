@@ -6,9 +6,9 @@ const AboutHero: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=1200&q=80"
+          src="/images/banner.png"
           alt="About Us Background"
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity-40"
         />
       </div>
 

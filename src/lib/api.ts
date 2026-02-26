@@ -99,7 +99,7 @@ class ApiClient {
       products = products.filter(
         (p) =>
           p.name.toLowerCase().includes(lower) ||
-          p.description.toLowerCase().includes(lower)
+          p.description.toLowerCase().includes(lower),
       );
     }
 
@@ -129,7 +129,9 @@ class ApiClient {
     // Dashboard summary
     if (endpoint === "/admin/dashboard/summary" && method === "GET") {
       if (!dashboardSummaryCache) {
-        dashboardSummaryCache = await loadMockData("admin-dashboard-summary.json");
+        dashboardSummaryCache = await loadMockData(
+          "admin-dashboard-summary.json",
+        );
       }
       return new Promise<T>((resolve) => {
         setTimeout(() => resolve(dashboardSummaryCache as T), 300);
@@ -183,11 +185,7 @@ class ApiClient {
         ? (JSON.parse(options.body as string) as Partial<Product>)
         : {};
       const mockProduct: Product = {
-        id:
-          productsCache.reduce(
-            (max, p) => Math.max(max, p.id),
-            0
-          ) + 1,
+        id: productsCache.reduce((max, p) => Math.max(max, p.id), 0) + 1,
         name: body.name ?? "New Mock Product",
         description: body.description ?? "",
         price: body.price ?? 0,
@@ -265,7 +263,7 @@ class ApiClient {
         id:
           (adminBlogCache as { id: number }[]).reduce(
             (max, p) => Math.max(max, p.id),
-            0
+            0,
           ) + 1,
         createdAt: new Date().toISOString(),
         isPublished: true,
