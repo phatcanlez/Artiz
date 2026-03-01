@@ -23,7 +23,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="w-full bg-white border-b border-black">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-20 py-4 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+      <div className="w-full px-6 md:px-10 lg:px-16 py-4 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
         {/* LEFT: Nav */}
         <nav className="flex items-center gap-5 lg:gap-8 text-base lg:text-lg font-medium text-black">
           <Link
@@ -88,27 +88,11 @@ const Header: React.FC = () => {
               className="shrink-0 hover:opacity-70 transition-opacity"
               aria-label="Submit search"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                  stroke="#CFCDCD"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M16.5 16.5L21 21"
-                  stroke="#CFCDCD"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <img
+                src="/icon/Duyệt mẫu.svg"
+                className="w-5 h-5 object-contain invert"
+                alt="Search"
+              />
             </button>
           </form>
 

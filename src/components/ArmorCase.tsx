@@ -3,14 +3,14 @@ import { SegmentedRing } from "./ui/SegmentedRing";
 
 const models = [
   {
-    src: "/3d/NeilArmstrong.glb",
-    name: "Neil Armstrong",
-    desc: "Mô hình phi hành gia độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.",
-  },
-  {
     src: "/3d/hộp .glb",
     name: "Armor Case",
     desc: "Bộ sưu tập các mẫu in 3D độc quyền. Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.",
+  },
+  {
+    src: "/3d/NeilArmstrong.glb",
+    name: "Neil Armstrong",
+    desc: "Mô hình phi hành gia độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.",
   },
 ];
 
