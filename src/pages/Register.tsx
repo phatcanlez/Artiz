@@ -112,45 +112,136 @@ const Register: React.FC = () => {
               )}
 
               <div>
-                <label htmlFor="name" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Họ và tên *</label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Nhập họ và tên"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors" />
+                <label
+                  htmlFor="name"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
+                  Họ và tên *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Nhập họ và tên"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
+                />
               </div>
               <div>
-                <label htmlFor="email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Email *</label>
-                <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Nhập email của bạn"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors" />
+                <label
+                  htmlFor="email"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Nhập email của bạn"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
+                />
               </div>
               <div>
-                <label htmlFor="phone" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Số điện thoại</label>
-                <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Nhập số điện thoại (tùy chọn)"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors" />
+                <label
+                  htmlFor="phone"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
+                  Số điện thoại
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Nhập số điện thoại (tùy chọn)"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
+                />
               </div>
               <div>
-                <label htmlFor="password" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Mật khẩu *</label>
-                <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors" />
+                <label
+                  htmlFor="password"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
+                  Mật khẩu *
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
+                />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Xác nhận mật khẩu *</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required placeholder="Nhập lại mật khẩu"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors" />
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
+                  Xác nhận mật khẩu *
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Nhập lại mật khẩu"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
+                />
               </div>
               <label className="flex items-start gap-2 cursor-pointer">
-                <input type="checkbox" checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.checked)} className="w-4 h-4 mt-0.5 rounded accent-[#44FF00]" />
+                <input
+                  type="checkbox"
+                  checked={acceptTerms}
+                  onChange={(e) => setAcceptTerms(e.target.checked)}
+                  className="w-4 h-4 mt-0.5 rounded accent-[#44FF00]"
+                />
                 <span className="text-[#F3FAF4] text-sm">
-                  Tôi đồng ý với <Link to="#terms" className="text-[#44FF00] underline hover:opacity-90">Điều khoản sử dụng</Link> và <Link to="#privacy" className="text-[#44FF00] underline hover:opacity-90">Chính sách bảo mật</Link>
+                  Tôi đồng ý với{" "}
+                  <Link
+                    to="#terms"
+                    className="text-[#44FF00] underline hover:opacity-90"
+                  >
+                    Điều khoản sử dụng
+                  </Link>{" "}
+                  và{" "}
+                  <Link
+                    to="#privacy"
+                    className="text-[#44FF00] underline hover:opacity-90"
+                  >
+                    Chính sách bảo mật
+                  </Link>
                 </span>
               </label>
-              <button type="submit" disabled={loading}
-                className="w-full mt-2 py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full mt-2 py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 {loading ? "Đang đăng ký..." : "Đăng ký"}
               </button>
             </form>
           </div>
 
           <p className="text-center mt-6 text-[#F3FAF4]/70 text-sm">
-            Đã có tài khoản? <Link to="/login" className="text-[#44FF00] font-semibold hover:opacity-90">Đăng nhập ngay</Link>
+            Đã có tài khoản?{" "}
+            <Link
+              to="/login"
+              className="text-[#44FF00] font-semibold hover:opacity-90"
+            >
+              Đăng nhập ngay
+            </Link>
           </p>
         </div>
       </main>

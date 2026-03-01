@@ -123,7 +123,12 @@ const Checkout: React.FC = () => {
 
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="fullName" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Họ và tên *</label>
+                    <label
+                      htmlFor="fullName"
+                      className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                    >
+                      Họ và tên *
+                    </label>
                     <input
                       type="text"
                       id="fullName"
@@ -131,7 +136,9 @@ const Checkout: React.FC = () => {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       className={`w-full bg-white/10 border rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:ring-1 focus:ring-[#44FF00]/50 ${
-                        errors.fullName ? "border-red-500" : "border-white/20 focus:border-[#44FF00]"
+                        errors.fullName
+                          ? "border-red-500"
+                          : "border-white/20 focus:border-[#44FF00]"
                       }`}
                       placeholder="Nhập họ và tên"
                     />
@@ -144,7 +151,12 @@ const Checkout: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Email *</label>
+                      <label
+                        htmlFor="email"
+                        className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                      >
+                        Email *
+                      </label>
                       <input
                         type="email"
                         id="email"
@@ -155,11 +167,18 @@ const Checkout: React.FC = () => {
                         placeholder="Nhập email"
                       />
                       {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
                     <div>
-                      <label htmlFor="phone" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Số điện thoại *</label>
+                      <label
+                        htmlFor="phone"
+                        className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                      >
+                        Số điện thoại *
+                      </label>
                       <input
                         type="tel"
                         id="phone"
@@ -178,7 +197,12 @@ const Checkout: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="address" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Địa chỉ *</label>
+                    <label
+                      htmlFor="address"
+                      className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                    >
+                      Địa chỉ *
+                    </label>
                     <textarea
                       id="address"
                       name="address"
@@ -197,7 +221,12 @@ const Checkout: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="city" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Thành phố *</label>
+                      <label
+                        htmlFor="city"
+                        className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                      >
+                        Thành phố *
+                      </label>
                       <input
                         type="text"
                         id="city"
@@ -208,11 +237,18 @@ const Checkout: React.FC = () => {
                         placeholder="Nhập thành phố"
                       />
                       {errors.city && (
-                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.city}
+                        </p>
                       )}
                     </div>
                     <div>
-                      <label htmlFor="postalCode" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Mã bưu điện *</label>
+                      <label
+                        htmlFor="postalCode"
+                        className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                      >
+                        Mã bưu điện *
+                      </label>
                       <input
                         type="text"
                         id="postalCode"

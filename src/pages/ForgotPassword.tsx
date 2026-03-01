@@ -53,15 +53,31 @@ const ForgotPassword: React.FC = () => {
             {success ? (
               <div className="text-center">
                 <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#44FF00]/20 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-[#44FF00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-[#44FF00]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <p className="text-[#F3FAF4] text-lg font-semibold mb-2">Email đã được gửi!</p>
-                <p className="text-[#F3FAF4]/70 text-sm mb-6">
-                  Chúng tôi đã gửi link đặt lại mật khẩu đến email của bạn. Vui lòng kiểm tra hộp thư.
+                <p className="text-[#F3FAF4] text-lg font-semibold mb-2">
+                  Email đã được gửi!
                 </p>
-                <Link to="/login" className="inline-block w-full py-3 rounded-lg bg-[#44FF00] text-[#102314] font-bold text-center hover:opacity-90 transition-opacity">
+                <p className="text-[#F3FAF4]/70 text-sm mb-6">
+                  Chúng tôi đã gửi link đặt lại mật khẩu đến email của bạn. Vui
+                  lòng kiểm tra hộp thư.
+                </p>
+                <Link
+                  to="/login"
+                  className="inline-block w-full py-3 rounded-lg bg-[#44FF00] text-[#102314] font-bold text-center hover:opacity-90 transition-opacity"
+                >
                   Quay lại đăng nhập
                 </Link>
               </div>
@@ -73,19 +89,30 @@ const ForgotPassword: React.FC = () => {
                   </div>
                 )}
                 <div>
-                  <label htmlFor="email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Email *</label>
+                  <label
+                    htmlFor="email"
+                    className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                  >
+                    Email *
+                  </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={email}
-                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setError("");
+                    }}
                     required
                     placeholder="Nhập email của bạn"
                     className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4] placeholder-[#F3FAF4]/40 outline-none focus:border-[#44FF00] focus:ring-1 focus:ring-[#44FF00]/50 transition-colors"
                   />
                 </div>
-                <button type="submit" className="w-full py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity">
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity"
+                >
                   Gửi yêu cầu
                 </button>
               </form>
@@ -93,7 +120,10 @@ const ForgotPassword: React.FC = () => {
           </div>
 
           <p className="text-center mt-6">
-            <Link to="/login" className="text-[#44FF00] text-sm hover:opacity-90 transition-opacity">
+            <Link
+              to="/login"
+              className="text-[#44FF00] text-sm hover:opacity-90 transition-opacity"
+            >
               ← Quay lại đăng nhập
             </Link>
           </p>

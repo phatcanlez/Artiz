@@ -25,7 +25,9 @@ const ReviewForm: React.FC = () => {
 
   return (
     <aside className="flex flex-col text-[#F3FAF4] w-full max-w-full">
-      <h2 className="text-xl sm:text-2xl md:text-[32px] font-bold mb-4">Your review</h2>
+      <h2 className="text-xl sm:text-2xl md:text-[32px] font-bold mb-4">
+        Your review
+      </h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>

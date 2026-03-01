@@ -81,7 +81,10 @@ const Login: React.FC = () => {
               )}
 
               <div>
-                <label htmlFor="email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">
+                <label
+                  htmlFor="email"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
                   Email *
                 </label>
                 <input
@@ -97,7 +100,10 @@ const Login: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="text-[#F3FAF4] text-sm font-medium mb-2 block">
+                <label
+                  htmlFor="password"
+                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
+                >
                   Mật khẩu *
                 </label>
                 <input
@@ -114,7 +120,10 @@ const Login: React.FC = () => {
 
               <div className="flex items-center justify-between">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded accent-[#44FF00]" />
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 rounded accent-[#44FF00]"
+                  />
                   <span className="text-[#F3FAF4] text-sm">Remember me</span>
                 </label>
                 <Link
@@ -137,7 +146,10 @@ const Login: React.FC = () => {
 
           <p className="text-center mt-6 text-[#F3FAF4]/70 text-sm">
             Chưa có tài khoản?{" "}
-            <Link to="/register" className="text-[#44FF00] font-semibold hover:opacity-90">
+            <Link
+              to="/register"
+              className="text-[#44FF00] font-semibold hover:opacity-90"
+            >
               Đăng ký ngay
             </Link>
           </p>

@@ -25,10 +25,16 @@ const ProductShowcaseDetail: React.FC = () => {
             type="button"
             onClick={() => setActiveIndex(index)}
             className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-sm overflow-hidden border transition-colors flex-shrink-0 ${
-              index === activeIndex ? "border-[#44FF00]" : "border-white/20 hover:border-white/60"
+              index === activeIndex
+                ? "border-[#44FF00]"
+                : "border-white/20 hover:border-white/60"
             }`}
           >
-            <img src={src} className="w-full h-full object-cover" alt={`Thumbnail ${index + 1}`} />
+            <img
+              src={src}
+              className="w-full h-full object-cover"
+              alt={`Thumbnail ${index + 1}`}
+            />
           </button>
         ))}
       </div>

@@ -55,7 +55,10 @@ const ProductGrid: React.FC = () => {
         className="relative rounded-xl overflow-hidden mb-8 sm:mb-12 py-10 sm:py-16 px-4 sm:px-6 md:px-8 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url(/images/banner.png)" }}
       >
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" aria-hidden />
+        <div
+          className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"
+          aria-hidden
+        />
         <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
           <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
           <h2 className="text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">

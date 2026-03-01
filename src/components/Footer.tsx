@@ -16,16 +16,32 @@ const Footer: React.FC = () => {
             />
             {/* Social Icons */}
             <div className="flex gap-4 mt-2">
-              <a href="#" title="Facebook" className="hover:text-gray-300 transition-colors">
+              <a
+                href="#"
+                title="Facebook"
+                className="hover:text-gray-300 transition-colors"
+              >
                 <Facebook size={20} fill="white" className="text-white" />
               </a>
-              <a href="#" title="Twitter" className="hover:text-gray-300 transition-colors">
+              <a
+                href="#"
+                title="Twitter"
+                className="hover:text-gray-300 transition-colors"
+              >
                 <Twitter size={20} fill="white" className="text-white" />
               </a>
-              <a href="#" title="YouTube" className="hover:text-gray-300 transition-colors">
+              <a
+                href="#"
+                title="YouTube"
+                className="hover:text-gray-300 transition-colors"
+              >
                 <Youtube size={20} fill="white" className="text-white" />
               </a>
-              <a href="#" title="Instagram" className="hover:text-gray-300 transition-colors">
+              <a
+                href="#"
+                title="Instagram"
+                className="hover:text-gray-300 transition-colors"
+              >
                 <Instagram size={20} className="text-white" />
               </a>
             </div>
@@ -33,7 +49,9 @@ const Footer: React.FC = () => {
 
           {/* Column 2: POLICY */}
           <div className="flex flex-col p-8 border-b md:border-b-0 md:border-r border-white">
-            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">POLICY</h3>
+            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">
+              POLICY
+            </h3>
             <ul className="space-y-4 text-sm font-light text-gray-300">
               <li>
                 <a href="/login" className="hover:text-white transition-colors">
@@ -65,7 +83,9 @@ const Footer: React.FC = () => {
 
           {/* Column 3: LINK */}
           <div className="flex flex-col p-8 border-b md:border-b-0 md:border-r border-white">
-            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">LINK</h3>
+            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">
+              LINK
+            </h3>
             <ul className="space-y-4 text-sm font-light text-gray-300">
               <li>
                 <a href="/about" className="hover:text-white transition-colors">
@@ -73,17 +93,26 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#scan-ai" className="hover:text-white transition-colors">
+                <a
+                  href="#scan-ai"
+                  className="hover:text-white transition-colors"
+                >
                   Scan Ai
                 </a>
               </li>
               <li>
-                <a href="/products" className="hover:text-white transition-colors">
+                <a
+                  href="/products"
+                  className="hover:text-white transition-colors"
+                >
                   Products
                 </a>
               </li>
               <li>
-                <a href="/contact" className="hover:text-white transition-colors">
+                <a
+                  href="/contact"
+                  className="hover:text-white transition-colors"
+                >
                   Contact Us
                 </a>
               </li>
@@ -107,7 +136,10 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/contact" className="hover:text-white transition-colors">
+                <a
+                  href="/contact"
+                  className="hover:text-white transition-colors"
+                >
                   Contact
                 </a>
               </li>
