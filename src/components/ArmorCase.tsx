@@ -33,10 +33,12 @@ const ArmorCase = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <SparkleIcon className="w-8 h-8 shrink-0" />
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
                 Armor Case
               </h2>
+              <RightSparkleIcon className="h-8 w-auto shrink-0" />
             </div>
             <img
               src="https://api.builder.io/api/v1/image/assets/TEMP/6c29d9b0b6f725075dd14c455c008cf4661ea7e8?placeholderIfAbsent=true"

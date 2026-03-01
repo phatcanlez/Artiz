@@ -66,11 +66,6 @@ const Index = () => {
           </Link>
         </div>
 
-        <ProductShowcase
-          images={productImages3}
-          className="mt-16 md:mt-24 px-4 md:px-8"
-        />
-
         <WhyChooseUs />
 
         <div className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20">

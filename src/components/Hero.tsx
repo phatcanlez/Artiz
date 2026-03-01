@@ -2,11 +2,11 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="w-full px-4 md:px-8 mt-4 sm:mt-8 md:mt-12 overflow-hidden">
-      <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-xl sm:rounded-2xl min-w-0">
+    <section className="w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden">
         <img
           src="/images/banner.png"
-          className="w-full h-auto object-cover min-w-0"
+          className="w-full h-auto object-cover"
           alt="Hero banner showcasing 3D printing services"
         />
         {/* Overlay gradient */}
