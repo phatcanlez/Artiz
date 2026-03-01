@@ -2,28 +2,58 @@ import React from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 
+const StarDivider = () => (
+  <img
+    src="/element/kẻ ngang.png"
+    alt=""
+    aria-hidden="true"
+    className="w-full h-auto object-cover block"
+  />
+);
+
 const LatestNews = () => {
   return (
-    <section className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto text-center min-w-0">
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-8">
-          <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-            Latest News
-          </h2>
-          <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" />
+    <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
+      <div className="w-full overflow-hidden px-[10px]">
+
+        {/* ① Dải sao trên */}
+        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
+          <StarDivider />
         </div>
-        <p className="text-sm text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed">
-          Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu
-          cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế
-          tinh tế, sẵn sàng giao ngay. Sản phẩm custom: Nhận thiết kế và in theo
-          yêu cầu riêng.
-        </p>
+
+        {/* ② Header + SparkleIcon */}
+        <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
+          <div className="absolute top-0 left-0 pointer-events-none">
+            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+          </div>
+          <div className="absolute top-0 right-0 pointer-events-none">
+            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          </div>
+
+          <div className="relative z-10 px-40 sm:px-44 md:px-48">
+            <h2
+              className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
+              style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}
+            >
+              Latest News
+            </h2>
+            <p className="text-white/70 text-sm mt-4 leading-6">
+              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
+              <br />
+              Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.
+              <br />
+              Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng.
+            </p>
+          </div>
+        </div>
+
+        {/* ③ Content */}
         <img
           src="https://api.builder.io/api/v1/image/assets/TEMP/62bb4814a86effad73728445463f0cf9f31f12ed?placeholderIfAbsent=true"
-          className="w-full h-auto mt-10 rounded-2xl"
+          className="w-full h-auto mt-4 rounded-2xl"
           alt="Latest news showcase"
         />
+
       </div>
     </section>
   );

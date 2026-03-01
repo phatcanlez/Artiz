@@ -67,7 +67,7 @@ const WhyChooseUs = () => {
     <section className="w-full bg-[#000311]">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
           <StarDivider />
         </div>
 
@@ -180,7 +180,7 @@ const WhyChooseUs = () => {
         </div>
 
         {/* ④ Dải sao dưới */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
           <StarDivider />
         </div>
       </div>

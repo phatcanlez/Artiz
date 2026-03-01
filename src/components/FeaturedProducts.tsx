@@ -32,7 +32,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
     <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên — thu vào theo margin */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
           <StarDivider />
         </div>
 
@@ -134,7 +134,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
         </div>
 
         {/* ④ Dải sao dưới — cùng StarDivider component */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
           <StarDivider />
         </div>
       </div>
