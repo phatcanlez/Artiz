@@ -87,7 +87,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
                 style={cornerCutStyle}
               >
                 {/* Ảnh */}
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden mb-2">
                   <img
                     src={cat.image}
                     alt={cat.label}

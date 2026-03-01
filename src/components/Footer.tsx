@@ -1,58 +1,104 @@
 import React from "react";
-import { Facebook, Twitter, Youtube, Instagram, Copyright } from "lucide-react";
+import { Facebook, Twitter, Youtube, Instagram } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="w-full flex flex-col justify-center items-center mt-20">
-      {/* Main Framework with White Border */}
-      <div className="w-full max-w-[1240px] border border-white mx-5 md:mx-14 bg-black text-white px-5 md:px-0">
-        <div className="grid grid-cols-1 md:grid-cols-4">
-          {/* Column 1: Logo & Social Media */}
-          <div className="flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-white">
-            <img
-              src="/images/logo.png"
-              className="w-24 md:w-32 object-contain mb-6 brightness-0 invert"
-              alt="Artiz Logo"
-            />
-            {/* Social Icons */}
-            <div className="flex gap-4 mt-2">
+    <footer
+      className="bg-black mt-20"
+      style={{ marginLeft: "-4vw", marginRight: "-4vw" }}
+    >
+      <div className="relative w-full">
+        <img
+          src="/element/footer.png"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-auto block"
+        />
+
+        {/* Nội dung đè lên khớp theo khung ảnh */}
+        <div
+          className="absolute inset-0 flex text-white"
+          style={{
+            paddingTop: "3%",
+            paddingBottom: "10%",
+            paddingLeft: "3%",
+            paddingRight: "3%",
+          }}
+        >
+          {/* Cột 1: Logo + Social — ~38% khớp ô trái */}
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{ width: "38%" }}
+          >
+            {/* Logo: layer trắng (invert) + layer xanh gốc chồng lên */}
+            <div className="relative mb-4" style={{ width: "28%" }}>
+              {/* Layer 1: toàn bộ trắng */}
+              <img
+                src="/images/logo.png"
+                className="object-contain w-full"
+                style={{ filter: "brightness(0) invert(1)" }}
+                alt="Artiz Logo"
+              />
+              {/* Layer 2: chỉ phần màu (xanh lá) hiện lên — dùng mix-blend-mode */}
+              <img
+                src="/images/logo.png"
+                className="object-contain w-full absolute inset-0"
+                style={{ mixBlendMode: "screen" }}
+                alt=""
+                aria-hidden="true"
+              />
+            </div>
+            <div className="flex gap-4">
               <a
                 href="#"
                 title="Facebook"
-                className="hover:text-gray-300 transition-colors"
+                className="hover:opacity-70 transition-opacity"
               >
-                <Facebook size={20} fill="white" className="text-white" />
+                <Facebook size={22} fill="white" className="text-white" />
               </a>
               <a
                 href="#"
                 title="Twitter"
-                className="hover:text-gray-300 transition-colors"
+                className="hover:opacity-70 transition-opacity"
               >
-                <Twitter size={20} fill="white" className="text-white" />
+                <Twitter size={22} fill="white" className="text-white" />
               </a>
               <a
                 href="#"
                 title="YouTube"
-                className="hover:text-gray-300 transition-colors"
+                className="hover:opacity-70 transition-opacity"
               >
-                <Youtube size={20} fill="white" className="text-white" />
+                <Youtube size={22} fill="white" className="text-white" />
               </a>
               <a
                 href="#"
                 title="Instagram"
-                className="hover:text-gray-300 transition-colors"
+                className="hover:opacity-70 transition-opacity"
               >
-                <Instagram size={20} className="text-white" />
+                <Instagram size={22} className="text-white" />
               </a>
             </div>
           </div>
 
-          {/* Column 2: POLICY */}
-          <div className="flex flex-col p-8 border-b md:border-b-0 md:border-r border-white">
-            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">
+          {/* Cột 2: POLICY — ~20% */}
+          <div
+            className="flex flex-col"
+            style={{ width: "20%", paddingLeft: "50px", paddingTop: "3%" }}
+          >
+            <h3
+              className="font-black uppercase mb-3"
+              style={{
+                fontFamily: "'Arial Black', Impact, sans-serif",
+                fontSize: "clamp(14px,1.4vw,20px)",
+                letterSpacing: "0.05em",
+              }}
+            >
               POLICY
             </h3>
-            <ul className="space-y-4 text-sm font-light text-gray-300">
+            <ul
+              className="text-gray-300"
+              style={{ fontSize: "clamp(11px,1vw,14px)", lineHeight: "2.2" }}
+            >
               <li>
                 <a href="/login" className="hover:text-white transition-colors">
                   Login
@@ -81,22 +127,32 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: LINK */}
-          <div className="flex flex-col p-8 border-b md:border-b-0 md:border-r border-white">
-            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">
+          {/* Cột 3: LINK — ~20% */}
+          <div
+            className="flex flex-col"
+            style={{ width: "20%", paddingTop: "3%" }}
+          >
+            <h3
+              className="font-black uppercase mb-3"
+              style={{
+                fontFamily: "'Arial Black', Impact, sans-serif",
+                fontSize: "clamp(14px,1.4vw,20px)",
+                letterSpacing: "0.05em",
+              }}
+            >
               LINK
             </h3>
-            <ul className="space-y-4 text-sm font-light text-gray-300">
+            <ul
+              className="text-gray-300"
+              style={{ fontSize: "clamp(11px,1vw,14px)", lineHeight: "2.2" }}
+            >
               <li>
                 <a href="/about" className="hover:text-white transition-colors">
                   About Us
                 </a>
               </li>
               <li>
-                <a
-                  href="#scan-ai"
-                  className="hover:text-white transition-colors"
-                >
+                <a href="#" className="hover:text-white transition-colors">
                   Scan Ai
                 </a>
               </li>
@@ -124,12 +180,25 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 4: CUSTOMER SUPPORT */}
-          <div className="flex flex-col p-8">
-            <h3 className="text-lg font-bold mb-6 tracking-wide text-[#44FF00]">
+          {/* Cột 4: CUSTOMER SUPPORT — ~22% */}
+          <div
+            className="flex flex-col"
+            style={{ width: "22%", paddingTop: "3%", marginLeft: "-6.5%" }}
+          >
+            <h3
+              className="font-black uppercase mb-3"
+              style={{
+                fontFamily: "'Arial Black', Impact, sans-serif",
+                fontSize: "clamp(14px,1.4vw,20px)",
+                letterSpacing: "0.05em",
+              }}
+            >
               CUSTOMER SUPPORT
             </h3>
-            <ul className="space-y-4 text-sm font-light text-gray-300">
+            <ul
+              className="text-gray-300"
+              style={{ fontSize: "clamp(11px,1vw,14px)", lineHeight: "2.2" }}
+            >
               <li>
                 <a href="#" className="hover:text-white transition-colors">
                   Ordering Guide
@@ -151,12 +220,13 @@ const Footer: React.FC = () => {
             </ul>
           </div>
         </div>
-      </div>
 
-      {/* Copyright Line */}
-      <div className="w-full max-w-[1240px] mx-5 md:mx-14 text-center pt-4 pb-5 text-[10px] md:text-xs font-light text-gray-400">
-        <div className="flex items-center justify-center gap-1">
-          <Copyright size={12} /> 2025 Copyright by Artiz Studio
+        {/* Copyright */}
+        <div
+          className="absolute left-0 right-0 text-center text-gray-400"
+          style={{ bottom: "3%", fontSize: "clamp(10px,0.85vw,13px)" }}
+        >
+          © 2025 Copyright by Artiz Studio
         </div>
       </div>
     </footer>

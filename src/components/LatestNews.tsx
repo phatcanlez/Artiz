@@ -15,7 +15,6 @@ const LatestNews = () => {
   return (
     <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
       <div className="w-full overflow-hidden px-[10px]">
-
         {/* ① Dải sao trên */}
         <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
           <StarDivider />
@@ -38,9 +37,11 @@ const LatestNews = () => {
               Latest News
             </h2>
             <p className="text-white/70 text-sm mt-4 leading-6">
-              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:
+              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
+              nhu cầu:
               <br />
-              Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.
+              Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh
+              tế, sẵn sàng giao ngay.
               <br />
               Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng.
             </p>
@@ -53,7 +54,6 @@ const LatestNews = () => {
           className="w-full h-auto mt-4 rounded-2xl"
           alt="Latest news showcase"
         />
-
       </div>
     </section>
   );
