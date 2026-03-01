@@ -1,113 +1,201 @@
-import React, { useState, useRef } from "react";
-import { SparkleIcon } from "./ui/SparkleIcon";
-import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import React, { useState } from "react";
 import { SegmentedRing } from "./ui/SegmentedRing";
 
+const models = [
+  {
+    src: "/3d/NeilArmstrong.glb",
+    name: "Neil Armstrong",
+    desc: "Mô hình phi hành gia độc quyền, thiết kế tinh tế, sẵn sàng giao ngay.",
+  },
+  {
+    src: "/3d/hộp .glb",
+    name: "Armor Case",
+    desc: "Bộ sưu tập các mẫu in 3D độc quyền. Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.",
+  },
+];
+
+/* Dấu ✦ góc */
+const CornerStar = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      d="M8 0L9 7L16 8L9 9L8 16L7 9L0 8L7 7L8 0Z"
+      fill="white"
+      opacity="0.7"
+    />
+  </svg>
+);
+
+/* Dải ✦ ─── */
+const StarDividerLine = () => (
+  <div className="flex items-center gap-2 w-full">
+    <CornerStar />
+    <div className="flex-1 border-t border-white/20" />
+    <CornerStar />
+    <div className="w-2" />
+    <CornerStar />
+    <div className="flex-1 border-t border-white/20" />
+    <CornerStar />
+  </div>
+);
+
 const ArmorCase = () => {
-  const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0 });
-  const imageRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageRef.current) return;
-
-    const rect = imageRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-
-    setTransform({ rotateX, rotateY });
-  };
-
-  const handleMouseLeave = () => {
-    setTransform({ rotateX: 0, rotateY: 0 });
-  };
+  const [current, setCurrent] = useState(0);
+  const prev = () => setCurrent((i) => (i - 1 + models.length) % models.length);
+  const next = () => setCurrent((i) => (i + 1) % models.length);
+  const model = models[current];
 
   return (
-    <section className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Content */}
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-3">
-              <SparkleIcon className="w-8 h-8 shrink-0" />
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-                Armor Case
-              </h2>
-              <RightSparkleIcon className="h-8 w-auto shrink-0" />
-            </div>
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/6c29d9b0b6f725075dd14c455c008cf4661ea7e8?placeholderIfAbsent=true"
-              className="w-full max-w-sm h-auto mt-8 md:mt-12"
-              alt="Armor case product showcase"
-            />
-            <p className="text-sm text-muted-foreground mt-6 max-w-xs leading-relaxed">
-              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
-              nhu cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền,
-              thiết kế tinh tế, sẵn sàng giao ngay.
+    <section className="w-full bg-black text-white overflow-hidden">
+      {/* Border top với ✦ góc */}
+      <div className="relative border border-white/15 mx-2 sm:mx-4 md:mx-8">
+        {/* ✦ 4 góc */}
+        <span className="absolute -top-2 -left-2">
+          <CornerStar />
+        </span>
+        <span className="absolute -top-2 -right-2">
+          <CornerStar />
+        </span>
+        <span className="absolute -bottom-2 -left-2">
+          <CornerStar />
+        </span>
+        <span className="absolute -bottom-2 -right-2">
+          <CornerStar />
+        </span>
+
+        {/* Dải trên */}
+        <div className="px-6 pt-4">
+          <StarDividerLine />
+        </div>
+
+        {/* MADE BY US */}
+        <p className="text-center text-white/50 text-xs tracking-[0.3em] uppercase mt-3">
+          MADE BY US
+        </p>
+
+        {/* Tiêu đề + gạch ngang */}
+        <div className="px-6 sm:px-10 mt-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-black text-white leading-none">
+            Armor Case
+          </h2>
+          <div className="flex gap-3 mt-3">
+            <div className="w-24 h-[2px] bg-white/40 rounded" />
+            <div className="w-24 h-[2px] bg-white/40 rounded" />
+          </div>
+        </div>
+
+        {/* Main content: 3 cột */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 sm:px-10 py-8">
+          {/* Trái: text mô tả + nút < */}
+          <div className="flex flex-col gap-6 lg:items-start items-center">
+            <p className="text-sm text-white/60 leading-7 max-w-xs">
+              {model.desc}
             </p>
+            {/* Đường nối + chấm tròn */}
+            <div className="flex items-center gap-2 w-full">
+              <div className="w-3 h-3 rounded-full border border-white/40" />
+              <div className="flex-1 border-t border-white/20 border-dashed" />
+            </div>
+            {/* Nút điều hướng trái */}
             <button
-              className="w-20 h-20 rounded-full bg-muted-foreground/30 hover:bg-muted-foreground/50 transition-colors mt-10"
-              aria-label="View product details"
-            />
+              onClick={prev}
+              className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:border-white/70 transition-colors"
+              aria-label="Previous"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M12 5L7 10L12 15"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
 
-          {/* Center: Khung vòng tròn cũ (trắng) bên ngoài, 3D ở giữa */}
-          <div className="flex items-center justify-center mt-10 lg:mt-0">
+          {/* Giữa: Vòng tròn kỹ thuật số + 3D */}
+          <div className="flex flex-col items-center gap-4">
             <SegmentedRing
-              size={380}
-              strokeWidth={10}
+              size={340}
+              strokeWidth={8}
               segments={6}
               className="scale-75 sm:scale-90 md:scale-100"
             >
               <model-viewer
-                src="/3d/hộp .glb"
-                alt="Armor Case 3D"
+                key={model.src}
+                src={model.src}
+                alt={model.name}
                 auto-rotate
                 camera-controls
-                interaction-prompt="auto"
+                interaction-prompt="none"
                 shadow-intensity="1"
                 environment-image="neutral"
                 loading="eager"
                 reveal="auto"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "block",
-                }}
+                style={{ width: "100%", height: "100%", display: "block" }}
               >
                 <div
                   slot="poster"
-                  className="flex items-center justify-center h-full text-white/70 text-sm"
+                  className="flex items-center justify-center h-full text-white/50 text-xs"
                 >
-                  Đang tải 3D...
+                  Đang tải...
                 </div>
               </model-viewer>
             </SegmentedRing>
+
+            {/* Dot indicators */}
+            <div className="flex gap-2">
+              {models.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-[#44FF00]" : "bg-white/30"}`}
+                  aria-label={`Model ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Thanh xanh lá + EXPLORE MORE */}
+            <div className="flex flex-col items-center gap-3 mt-1">
+              <div className="w-12 h-[3px] bg-[#44FF00] rounded" />
+              <button className="px-10 py-3 bg-white/10 border border-white/20 text-white text-xs font-black tracking-[0.2em] uppercase hover:bg-white/20 transition-colors">
+                EXPLORE MORE
+              </button>
+            </div>
           </div>
 
-          {/* Right Content */}
-          <div className="flex flex-col justify-center">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
-              nhu cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền,
-              thiết kế tinh tế, sẵn sàng giao ngay. Sản phẩm custom: Nhận thiết
-              kế và in theo yêu cầu riêng.
+          {/* Phải: text mô tả + nút > */}
+          <div className="flex flex-col gap-6 lg:items-end items-center">
+            <p className="text-sm text-white/60 leading-7 max-w-xs lg:text-right">
+              {model.desc}
             </p>
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/58876fc99918f5c425dc2d356bc0266afba717f1?placeholderIfAbsent=true"
-              className="w-full max-w-sm h-auto mt-10"
-              alt="Additional product showcase"
-            />
+            {/* Đường nối + chấm tròn */}
+            <div className="flex items-center gap-2 w-full">
+              <div className="flex-1 border-t border-white/20 border-dashed" />
+              <div className="w-3 h-3 rounded-full border border-white/40" />
+            </div>
+            {/* Nút điều hướng phải */}
             <button
-              className="w-20 h-20 rounded-full bg-muted-foreground/30 hover:bg-muted-foreground/50 transition-colors mt-10 md:mt-20"
-              aria-label="View more products"
-            />
+              onClick={next}
+              className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:border-white/70 transition-colors"
+              aria-label="Next"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M8 5L13 10L8 15"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
+        </div>
+
+        {/* Dải dưới */}
+        <div className="px-6 pb-4">
+          <StarDividerLine />
         </div>
       </div>
     </section>

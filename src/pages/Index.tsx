@@ -39,18 +39,10 @@ const Index = () => {
 
         <FeaturedProducts />
 
-        <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 mt-10 sm:mt-12 md:mt-16 px-4">
-          <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" />
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center">
-            Made by Us
-          </h2>
-          <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" />
-        </div>
-
         <ArmorCase />
 
         {/* Explore More Button */}
-        <div className="flex justify-center mt-8 sm:mt-10 px-4">
+        {/* <div className="flex justify-center mt-8 sm:mt-10 px-4">
           <Link
             to="/products"
             className="relative inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 rounded-lg overflow-hidden group w-full max-w-sm touch-manipulation"
@@ -64,7 +56,7 @@ const Index = () => {
               EXPLORE MORE
             </span>
           </Link>
-        </div>
+        </div> */}
 
         <WhyChooseUs />
 
