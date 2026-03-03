@@ -1,6 +1,7 @@
 import React from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import StarDivider from "./ui/StarDivider";
 
 const categories = [
   { id: "bestseller", label: "BEST SELLER", image: "/images/col1.jpg" },
@@ -17,24 +18,12 @@ const cornerCutStyle: React.CSSProperties = {
   clipPath: "polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%)",
 };
 
-/* Dải kẻ ngang — 1 component dùng chung trên & dưới */
-const StarDivider = () => (
-  <img
-    src="/element/kẻ ngang.png"
-    alt=""
-    aria-hidden="true"
-    className="w-full h-auto object-cover block"
-  />
-);
-
 const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
   return (
     <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên — thu vào theo margin */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
-          <StarDivider />
-        </div>
+        <StarDivider />
 
         {/* ② Header + SparkleIcon */}
         <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
@@ -134,9 +123,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
         </div>
 
         {/* ④ Dải sao dưới — cùng StarDivider component */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
-          <StarDivider />
-        </div>
+        <StarDivider />
       </div>
     </section>
   );

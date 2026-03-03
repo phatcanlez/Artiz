@@ -1,6 +1,15 @@
 /* Custom font imports - must be at the top */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+/* SVN-VT Redzone Classic */
+@font-face {
+  font-family: "SVN-Redzone";
+  src: url("/fonts/SVN-VT Redzone Classic.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -100,24 +109,6 @@
     @apply bg-background text-foreground;
     overflow-x: hidden;
   }
-}
-
-/* Global hover effect for links and buttons to use the green color */
-@layer components {
-  .hover-effect {
-    @apply transition-colors duration-200;
-  }
-
-  .hover-effect:hover {
-    color: rgb(68 255 0 / var(--tw-bg-opacity, 1));
-  }
-}
-
-/* Override default anchor hover globally if desired, or apply specific class */
-a:hover,
-button:hover {
-  color: rgb(68 255 0 / 1);
-  transition: color 0.2s ease-in-out;
 }
 
 body {

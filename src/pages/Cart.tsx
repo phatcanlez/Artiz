@@ -150,7 +150,7 @@ const Cart: React.FC = () => {
                         </div>
                         <button
                           onClick={() => removeItem(item.id)}
-                          className="text-[#F3FAF4]/70 hover:text-red-500 transition-colors"
+                          className="text-[#F3FAF4]/70 transition-colors"
                           aria-label="Remove item"
                         >
                           <svg
@@ -274,7 +274,7 @@ const Cart: React.FC = () => {
 
                   <Link
                     to="/products"
-                    className="block text-center text-[#F3FAF4]/70 hover:text-[#F3FAF4] transition-colors text-sm"
+                    className="block text-center text-[#F3FAF4]/70 transition-colors text-sm"
                   >
                     ← Continue Shopping
                   </Link>

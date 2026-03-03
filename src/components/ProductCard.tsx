@@ -45,7 +45,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <Link to={`/detail/${id}`} className="block">
+    <Link
+      to={`/detail/${id}`}
+      className="block text-white no-underline hover:text-white"
+      style={{ color: "inherit" }}
+    >
       <article className="group relative">
         {/* Product Image — xẻo góc trên phải */}
         <div

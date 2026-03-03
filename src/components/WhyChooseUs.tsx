@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import StarDivider from "./ui/StarDivider";
 
 const features = [
   {
@@ -30,14 +31,6 @@ const features = [
 ];
 
 /* Dải kẻ ngang — dùng chung */
-const StarDivider = () => (
-  <img
-    src="/element/kẻ ngang.png"
-    alt=""
-    aria-hidden="true"
-    className="w-full h-auto object-cover block"
-  />
-);
 
 /* Hexagon clip */
 const HexIcon = ({ src, active }: { src: string; active: boolean }) => (
@@ -67,9 +60,7 @@ const WhyChooseUs = () => {
     <section className="w-full bg-[#000311]">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
-          <StarDivider />
-        </div>
+        <StarDivider />
 
         {/* ② Header + SparkleIcon — giống FeaturedProducts */}
         <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
@@ -180,9 +171,7 @@ const WhyChooseUs = () => {
         </div>
 
         {/* ④ Dải sao dưới */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
-          <StarDivider />
-        </div>
+        <StarDivider />
       </div>
     </section>
   );

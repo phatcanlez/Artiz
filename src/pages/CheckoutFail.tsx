@@ -81,7 +81,7 @@ const CheckoutFail: React.FC = () => {
             </button>
             <Link
               to="/cart"
-              className="px-12 py-5 rounded-lg border-2 border-white text-white font-bold text-xl hover:bg-white hover:text-black transition-colors"
+              className="px-12 py-5 rounded-lg border-2 border-white text-white font-bold text-xl hover:bg-white transition-colors"
             >
               BACK TO CART
             </Link>

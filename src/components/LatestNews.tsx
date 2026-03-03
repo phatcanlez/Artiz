@@ -1,24 +1,14 @@
 import React from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
-
-const StarDivider = () => (
-  <img
-    src="/element/kẻ ngang.png"
-    alt=""
-    aria-hidden="true"
-    className="w-full h-auto object-cover block"
-  />
-);
+import StarDivider from "./ui/StarDivider";
 
 const LatestNews = () => {
   return (
     <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên */}
-        <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] my-4">
-          <StarDivider />
-        </div>
+        <StarDivider />
 
         {/* ② Header + SparkleIcon */}
         <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
