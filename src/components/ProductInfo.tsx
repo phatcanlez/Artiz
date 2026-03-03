@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useCartFly } from "@/hooks/useCartFly";
 
 interface AccordionItemProps {
   title: string;
@@ -78,6 +79,8 @@ const StarRating = ({
 const ProductInfo: React.FC = () => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const [quantity, setQuantity] = useState(1);
+  const addToCartRef = useRef<HTMLButtonElement>(null);
+  const { flyToCart } = useCartFly();
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -187,6 +190,10 @@ const ProductInfo: React.FC = () => {
 
         {/* Add to Cart — cắt góc dưới-phải, nền xám */}
         <button
+          ref={addToCartRef}
+          onClick={() =>
+            addToCartRef.current && flyToCart(addToCartRef.current)
+          }
           className="flex-1 bg-[#D9D9D9] text-black font-extrabold text-sm tracking-wide hover:bg-white transition-colors flex items-center justify-center"
           style={{
             clipPath:

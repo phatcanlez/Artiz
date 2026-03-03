@@ -112,7 +112,8 @@ const Header: React.FC = () => {
           {/* Cart icon (Shoping.svg) */}
           <Link
             to="/cart"
-            className="hover:opacity-60 transition-opacity"
+            id="cart-icon"
+            className="hover:opacity-60 transition-opacity inline-block"
             aria-label="Shopping cart"
           >
             <img

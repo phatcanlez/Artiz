@@ -6,7 +6,7 @@ import StarDivider from "./ui/StarDivider";
 const categories = [
   { id: "bestseller", label: "BEST SELLER", image: "/images/col1.jpg" },
   { id: "myproduct", label: "MY PRODUCT", image: "/images/col2.jpg" },
-  { id: "3dprint", label: "3D PRINT + AI", image: "/images/col3.jpg" },
+  { id: "3dprint", label: "3D PRINT", image: "/images/col3.jpg" },
 ];
 
 interface FeaturedProductsProps {
