@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Product3DViewer from "./Product3DViewer";
-import { SparkleIcon } from "./ui/SparkleIcon";
 
 const imageList = [
   "/images/airmax.jpg",
@@ -39,48 +38,67 @@ const ProductShowcaseDetail: React.FC = () => {
         ))}
       </div>
 
-      {/* Main Display */}
-      <div className="flex-1 relative border border-white/20 p-1 group h-[420px] sm:h-[520px] lg:h-[600px]">
-        <SparkleIcon className="absolute -bottom-3 -left-3 w-8 h-8 z-10 text-white" />
-        <SparkleIcon className="absolute -bottom-3 -right-3 w-8 h-8 z-10 text-white" />
+      {/* Main Display + star dải dưới */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="relative border border-white/20 p-1 group h-[420px] sm:h-[520px] lg:h-[600px]">
+          {/* Corner sparkles dùng star.png */}
+          <img
+            src="/element/star.png"
+            alt=""
+            className="absolute -bottom-2 -left-2 w-5 h-5 z-10 object-contain"
+          />
+          <img
+            src="/element/star.png"
+            alt=""
+            className="absolute -bottom-2 -right-2 w-5 h-5 z-10 object-contain"
+          />
 
-        {/* Toggle buttons */}
-        <div className="absolute top-4 right-4 z-20 flex gap-2">
-          <button
-            onClick={() => setViewMode("3d")}
-            className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
-              viewMode === "3d"
-                ? "bg-white text-black"
-                : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
-            }`}
-          >
-            3D
-          </button>
-          <button
-            onClick={() => setViewMode("image")}
-            className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
-              viewMode === "image"
-                ? "bg-white text-black"
-                : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
-            }`}
-          >
-            IMG
-          </button>
-        </div>
+          {/* Toggle buttons */}
+          <div className="absolute top-4 right-4 z-20 flex gap-2">
+            <button
+              onClick={() => setViewMode("3d")}
+              className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
+                viewMode === "3d"
+                  ? "bg-white text-black"
+                  : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
+              }`}
+            >
+              3D
+            </button>
+            <button
+              onClick={() => setViewMode("image")}
+              className={`px-3 py-1 rounded text-xs font-bold transition-colors uppercase ${
+                viewMode === "image"
+                  ? "bg-white text-black"
+                  : "bg-black/50 text-white border border-white/20 hover:bg-black/70 backdrop-blur-sm"
+              }`}
+            >
+              IMG
+            </button>
+          </div>
 
-        {/* Content */}
-        <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-          {viewMode === "3d" ? (
-            <Product3DViewer className="w-full h-full" />
-          ) : (
-            <img
-              src={activeImage}
-              className="w-full h-full object-contain"
-              alt="Product detail"
-            />
-          )}
+          {/* Content */}
+          <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
+            {viewMode === "3d" ? (
+              <Product3DViewer className="w-full h-full" />
+            ) : (
+              <img
+                src={activeImage}
+                className="w-full h-full object-contain"
+                alt="Product detail"
+              />
+            )}
+          </div>
         </div>
+        {/* end relative border div */}
+        {/* star.png — dải trang trí bên dưới khung */}
+        <img
+          src="/element/star.png"
+          alt=""
+          className="w-full h-auto block mt-3"
+        />
       </div>
+      {/* end flex-col wrapper */}
     </div>
   );
 };

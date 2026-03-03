@@ -1,33 +1,43 @@
 import React from "react";
 import { SparkleIcon } from "./ui/SparkleIcon";
 import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import StarDivider from "./ui/StarDivider";
+
+const socialPosts = [
+  { id: "tigo", handle: "@Tigo_mee", image: "/images/col1.jpg" },
+  { id: "phong", handle: "@_Phong2402_", image: "/images/col2.jpg" },
+  { id: "poll", handle: "@PollOFf", image: "/images/col3.jpg" },
+];
+
+/* Góc mẻ trên-phải kiểu cyber — giống FeaturedProducts */
+const cornerCutStyle: React.CSSProperties = {
+  clipPath: "polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%)",
+};
 
 const SocialProof: React.FC = () => {
   return (
-    <section className="mt-10">
-      <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
-        <div className="w-[33%] max-md:w-full max-md:ml-0">
-          <img
-            src="/images/left2.png"
-            className="aspect-[0.55] object-contain w-full grow"
-            alt="Social proof image 1"
-          />
-        </div>
-        <div className="w-[33%] ml-5 max-md:w-full max-md:ml-0">
-          <div className="flex flex-col items-center mt-[76px] max-md:mt-10">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/5561a4c249e1e62ffcd67110f57cb3442827f9b5?placeholderIfAbsent=true"
-              className="aspect-[8.93] object-contain w-[401px] max-w-full"
-              alt="Company logo"
-            />
-            <div className="flex items-center gap-4 mt-[59px] max-md:mt-10">
-              <SparkleIcon className="w-12 h-12 shrink-0 md:w-16 md:h-16" />
-              <h2 className="text-white text-[64px] font-normal max-md:text-[40px]">
-                SOCIAL PROOF
-              </h2>
-              <RightSparkleIcon className="h-12 md:h-16 w-auto shrink-0" />
-            </div>
-            <p className="text-white text-sm font-normal text-center self-stretch mt-[9px]">
+    <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
+      <div className="w-full overflow-hidden px-[10px]">
+        {/* ① Dải sao trên */}
+        <StarDivider />
+
+        {/* ② Header + SparkleIcon */}
+        <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
+          <div className="absolute top-0 left-0 pointer-events-none">
+            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+          </div>
+          <div className="absolute top-0 right-0 pointer-events-none">
+            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          </div>
+
+          <div className="relative z-10 px-40 sm:px-44 md:px-48">
+            <h2
+              className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
+              style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}
+            >
+              Social Proof
+            </h2>
+            <p className="text-white/70 text-sm mt-4 leading-6">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
               nhu cầu:
               <br />
@@ -37,37 +47,71 @@ const SocialProof: React.FC = () => {
               Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô
               hình, phụ kiện, đến vật dụng cá nhân hoá.
             </p>
-            <img
-              src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9c7480d2842ff3d62d9115a8cf40fb1f3db4249e?placeholderIfAbsent=true"
-              className="aspect-[0.97] object-contain w-[397px] max-w-full mt-16 max-md:mt-10"
-              alt="Social media post"
-            />
-            <div className="flex w-[396px] max-w-full items-stretch gap-1 mt-[13px]">
-              <div className="flex flex-col items-stretch grow shrink-0 basis-0 w-fit">
-                <h3 className="text-white text-2xl font-bold">@_Phong2402_</h3>
-                <div className="flex items-center">
-                  <div className="border flex w-3.5 shrink-0 h-3.5 mt-[13px] rounded-full border-white border-solid" />
+          </div>
+        </div>
+
+        {/* ③ 3 cột ảnh social — cùng kiểu FeaturedProducts */}
+        <div className="relative mt-4 mb-2">
+          {/* Khung cyber overlay */}
+          <img
+            src="/element/element 1.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-fill pointer-events-none z-10"
+          />
+
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5 px-[3%] pt-[2.5%] pb-[2.5%]">
+            {socialPosts.map((post) => (
+              <div
+                key={post.id}
+                className="group cursor-pointer overflow-hidden"
+                style={cornerCutStyle}
+              >
+                {/* Ảnh */}
+                <div className="relative overflow-hidden mb-2">
                   <img
-                    src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/7a134e46d22aa70e5ecaa266895705308b169d67?placeholderIfAbsent=true"
-                    className="aspect-[14.29] object-contain w-fit grow shrink-0 basis-0"
-                    alt="Social media verification"
+                    src={post.image}
+                    alt={post.handle}
+                    className="w-full aspect-[3/4] object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Viền góc mẻ */}
+                  <svg
+                    className="absolute top-0 right-0 pointer-events-none z-10"
+                    width="44"
+                    height="44"
+                    viewBox="0 0 44 44"
+                    fill="none"
+                  >
+                    <polyline
+                      points="0,2 42,2 42,44"
+                      stroke="rgba(255,255,255,0.45)"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                </div>
+
+                {/* Handle + element 2 */}
+                <div className="relative bg-black">
+                  <div className="absolute top-0 left-0 z-10 px-3 pt-2 sm:pt-3">
+                    <span
+                      className="text-white font-black text-xs sm:text-sm md:text-base tracking-widest whitespace-nowrap"
+                      style={{
+                        fontFamily: "'Arial Black', Impact, sans-serif",
+                      }}
+                    >
+                      {post.handle}
+                    </span>
+                  </div>
+                  <img
+                    src="/element/element 2.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-auto object-fill"
                   />
                 </div>
               </div>
-              <img
-                src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/88ca87d22080ee1b4d0c8075f9af8271ec9522b3?placeholderIfAbsent=true"
-                className="aspect-[2.94] object-contain w-[94px] shrink-0 mt-2"
-                alt="Social media platform logo"
-              />
-            </div>
+            ))}
           </div>
-        </div>
-        <div className="w-[33%] ml-5 max-md:w-full max-md:ml-0">
-          <img
-            src="/images/right2.png"
-            className="aspect-[0.56] object-contain w-full grow"
-            alt="Social proof image 2"
-          />
         </div>
       </div>
     </section>

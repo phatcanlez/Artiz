@@ -32,12 +32,12 @@ const Header: React.FC = () => {
           >
             About Us
           </Link>
-          <Link
+          {/* <Link
             to="/scan-ai"
             className="hover:opacity-60 transition-opacity whitespace-nowrap"
           >
             Scan Ai
-          </Link>
+          </Link> */}
           <a
             href="/products"
             className="hover:opacity-60 transition-opacity whitespace-nowrap"

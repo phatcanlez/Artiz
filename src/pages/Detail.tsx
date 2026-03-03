@@ -7,7 +7,6 @@ import ReviewsSection from "@/components/ReviewsSection";
 import ReviewForm from "@/components/ReviewForm";
 import SocialProof from "@/components/SocialProof";
 import Footer from "@/components/Footer";
-import { SparkleIcon } from "@/components/ui/SparkleIcon";
 
 const Detail = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,20 +29,26 @@ const Detail = () => {
 
           {/* Divider */}
           <div className="w-full h-px bg-white/20 my-10 sm:my-16 relative">
-            <div className="absolute left-0 -top-4 text-white">
-              <SparkleIcon className="w-10 h-10" />
-            </div>
-            <div className="absolute left-[30%] -top-3 text-white">
-              {/* Center-left sparkle */}
-              <SparkleIcon className="w-6 h-6" />
-            </div>
-            <div className="absolute right-[30%] -top-3 text-white">
-              {/* Center-right sparkle */}
-              <SparkleIcon className="w-6 h-6" />
-            </div>
-            <div className="absolute right-0 -top-4 text-white">
-              <SparkleIcon className="w-10 h-10" />
-            </div>
+            <img
+              src="/element/star.png"
+              alt=""
+              className="absolute left-0 -top-[10px] w-5 h-5 object-contain"
+            />
+            <img
+              src="/element/star.png"
+              alt=""
+              className="absolute left-[30%] -top-[8px] w-4 h-4 object-contain"
+            />
+            <img
+              src="/element/star.png"
+              alt=""
+              className="absolute right-[30%] -top-[8px] w-4 h-4 object-contain"
+            />
+            <img
+              src="/element/star.png"
+              alt=""
+              className="absolute right-0 -top-[10px] w-5 h-5 object-contain"
+            />
           </div>
 
           {/* Reviews Section */}
@@ -61,7 +66,8 @@ const Detail = () => {
           </section>
         </div>
 
-        <div className="w-full max-w-[1240px] px-4 sm:px-5 mt-12 sm:mt-20 min-w-0">
+        {/* SocialProof — full width, không bị max-w constraint */}
+        <div className="w-full mt-12 sm:mt-20">
           <SocialProof />
         </div>
       </main>
