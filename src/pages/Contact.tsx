@@ -1,423 +1,209 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StarDivider from "@/components/ui/StarDivider";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
+import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
+
+const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
+const ARIAL = "'Arial Black', Impact, sans-serif";
+
+const S = ({ style }: { style?: React.CSSProperties }) => (
+  <img
+    src="/element/image 58.png"
+    alt=""
+    className="absolute w-5 h-5 object-contain pointer-events-none select-none z-20"
+    style={{ transform: "translate(-50%, -50%)", ...style }}
+  />
+);
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    type: "feedback", // feedback or contact
-  });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (errors[name]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Vui lòng nhập họ và tên";
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Vui lòng nhập email";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Email không hợp lệ";
-    }
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Vui lòng nhập số điện thoại";
-    }
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Vui lòng nhập chủ đề";
-    }
-    if (!formData.message.trim()) {
-      newErrors.message = "Vui lòng nhập nội dung";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    // Simulate form submission
-    console.log("Contact form submitted:", formData);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
+    setSent(true);
     setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-        type: "feedback",
-      });
+      setSent(false);
+      setForm({ name: "", phone: "", email: "", message: "" });
     }, 3000);
   };
 
   return (
-    <div className="flex flex-col overflow-x-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
 
-      <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
-        <div className="w-full max-w-[1240px] min-w-0">
-          {/* Header Section */}
-          <div className="text-center mb-8 sm:mb-12 flex flex-col items-center">
-            <div className="flex items-center justify-center gap-4">
-              <h1 className="text-[#F3FAF4] text-3xl sm:text-4xl md:text-[48px] font-bold">
-                Contact Us
-              </h1>
+      {/* HERO TITLE */}
+      <div className="text-center pt-12 pb-4 px-6">
+        <h1
+          className="text-white uppercase leading-none"
+          style={{ fontFamily: SVN, fontSize: "clamp(56px, 12vw, 160px)", letterSpacing: "-0.02em" }}
+        >
+          Contact
+        </h1>
+      </div>
+
+      <StarDivider />
+
+      {/* CONTACT US */}
+      <section className="py-10 px-6">
+        <div className="relative flex flex-col items-center text-center py-6">
+          <div className="absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
+            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+          </div>
+          <div className="absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
+            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          </div>
+          <h2 className="text-white uppercase text-2xl sm:text-3xl mb-4" style={{ fontFamily: SVN }}>
+            Contact Us
+          </h2>
+          <p className="text-white/60 text-sm leading-relaxed max-w-xl">
+            {"Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu:"}
+            <br />
+            {"Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay."}
+            <br />
+            {"Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá."}
+          </p>
+        </div>
+
+        {/* INFO CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 max-w-4xl mx-auto">
+          {[
+            { value: "+8969921233", desc: "Đây là số điện thoại chính thức của Artiz Studio" },
+            { value: "quocphong1@gmail.com", desc: "Đây là email chính thức của Artiz Studio" },
+            { value: "TP. HCM, Việt Nam", desc: "Vincom MeGa Mall, Vinhomes Grand Park TP Thủ Đức, TP.HCM" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-[#e8e8e8] text-black flex flex-col items-center text-center px-6 pt-10 pb-8 gap-3"
+              style={{ clipPath: "polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)" }}
+            >
+              <p className="font-black text-2xl uppercase tracking-wide" style={{ fontFamily: ARIAL }}>ICON</p>
+              <p className="font-bold text-sm">{item.value}</p>
+              <p className="text-black/60 text-sm leading-relaxed">{item.desc}</p>
             </div>
-            <p className="text-[#F3FAF4]/70 text-lg mt-4">
-              Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn
-            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* DIVIDER */}
+      <div className="relative">
+        <StarDivider />
+        <S style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+      </div>
+
+      {/* JOIN AS A PARTNER */}
+      <section className="py-10 px-6">
+        <div className="text-center mb-8">
+          <h2 className="text-white uppercase text-2xl sm:text-3xl md:text-4xl leading-none" style={{ fontFamily: SVN }}>
+            Join As A Partner
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Form */}
+          <div>
+            {sent ? (
+              <div className="bg-[#e8e8e8] p-8 text-center">
+                <p className="text-green-600 font-semibold text-sm">{"Gửi thành công! Chúng tôi sẽ liên hệ sớm."}</p>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="flex flex-col gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-white font-bold text-sm mb-1 block">Name:</label>
+                    <input
+                      name="name" value={form.name} onChange={handle}
+                      placeholder="Quốc Phong"
+                      className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none focus:ring-2 focus:ring-white/40 placeholder:text-black/40 border-0"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white font-bold text-sm mb-1 block">Phone :</label>
+                    <input
+                      name="phone" value={form.phone} onChange={handle}
+                      placeholder="Phone..."
+                      className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none focus:ring-2 focus:ring-white/40 placeholder:text-black/40 border-0"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-white font-bold text-sm mb-1 block">Email:</label>
+                  <input
+                    name="email" value={form.email} onChange={handle}
+                    placeholder="Email..." type="email"
+                    className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none focus:ring-2 focus:ring-white/40 placeholder:text-black/40 border-0"
+                  />
+                </div>
+                <div>
+                  <label className="text-white font-bold text-sm mb-1 block">Message:</label>
+                  <textarea
+                    name="message" value={form.message} onChange={handle}
+                    placeholder="Massege..." rows={5}
+                    className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none focus:ring-2 focus:ring-white/40 placeholder:text-black/40 border-0 resize-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-white text-black text-sm font-bold uppercase py-3 hover:bg-white/90 transition-colors tracking-widest"
+                  style={{ fontFamily: ARIAL, clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))" }}
+                >
+                  Send a message
+                </button>
+              </form>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
-            {/* Contact Form */}
-            <div className="bg-white/5 border border-white/10 rounded-lg p-5 sm:p-6 md:p-8">
-              <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-                Send us a Message
-              </h2>
-
-              {isSubmitted ? (
-                <div className="bg-green-500/20 border border-green-500 text-[#F3FAF4] p-6 rounded-md text-center">
-                  <svg
-                    className="w-12 h-12 mx-auto mb-4 text-green-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <p className="text-lg font-semibold mb-2">Cảm ơn bạn!</p>
-                  <p className="text-sm">
-                    Chúng tôi đã nhận được tin nhắn của bạn và sẽ phản hồi sớm
-                    nhất có thể.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Type Selection */}
-                  <div>
-                    <label className="text-[#F3FAF4] text-lg mb-2 block">
-                      Loại liên hệ *
-                    </label>
-                    <select
-                      name="type"
-                      value={formData.type}
-                      onChange={handleInputChange}
-                      className="w-full bg-white border border-neutral-400 text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9]"
-                    >
-                      <option value="feedback">Feedback / Góp ý</option>
-                      <option value="contact">Liên hệ nhân viên</option>
-                      <option value="support">Hỗ trợ kỹ thuật</option>
-                      <option value="partnership">Hợp tác</option>
-                    </select>
-                  </div>
-
-                  {/* Name */}
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="text-[#F3FAF4] text-lg mb-2 block"
-                    >
-                      Họ và tên *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                        errors.name ? "border-red-500" : "border-neutral-400"
-                      }`}
-                      placeholder="Nhập họ và tên"
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                    )}
-                  </div>
-
-                  {/* Email & Phone */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                          errors.email ? "border-red-500" : "border-neutral-400"
-                        }`}
-                        placeholder="Nhập email"
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="text-[#F3FAF4] text-lg mb-2 block"
-                      >
-                        Số điện thoại *
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                          errors.phone ? "border-red-500" : "border-neutral-400"
-                        }`}
-                        placeholder="Nhập số điện thoại"
-                      />
-                      {errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Subject */}
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="text-[#F3FAF4] text-lg mb-2 block"
-                    >
-                      Chủ đề *
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] ${
-                        errors.subject ? "border-red-500" : "border-neutral-400"
-                      }`}
-                      placeholder="Nhập chủ đề"
-                    />
-                    {errors.subject && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.subject}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Message */}
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="text-[#F3FAF4] text-lg mb-2 block"
-                    >
-                      Nội dung *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows={6}
-                      className={`w-full bg-white border text-base text-[rgba(152,152,152,1)] px-4 py-3 rounded-md outline-none focus:border-[#D9D9D9] resize-none ${
-                        errors.message ? "border-red-500" : "border-neutral-400"
-                      }`}
-                      placeholder="Nhập nội dung tin nhắn của bạn"
-                    />
-                    {errors.message && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full relative aspect-[6.746] flex items-center justify-center text-2xl text-[#102314] font-bold py-4 rounded-md hover:opacity-90 transition-opacity"
-                  >
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-                      className="absolute h-full w-full object-cover inset-0 rounded-md"
-                      alt=""
-                    />
-                    <span className="relative text-center">SEND MESSAGE</span>
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Contact Information */}
-            <div className="space-y-6 sm:space-y-8">
-              <div className="bg-white/5 border border-white/10 rounded-lg p-5 sm:p-6 md:p-8">
-                <h2 className="text-[#F3FAF4] text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-                  Contact Information
-                </h2>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg
-                        className="w-6 h-6 text-[#F3FAF4]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-[#F3FAF4] font-bold mb-1">Email</h3>
-                      <p className="text-[#F3FAF4]/70">
-                        support@artizstudio.com
-                      </p>
-                      <p className="text-[#F3FAF4]/70">info@artizstudio.com</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg
-                        className="w-6 h-6 text-[#F3FAF4]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-[#F3FAF4] font-bold mb-1">Phone</h3>
-                      <p className="text-[#F3FAF4]/70">+84 123 456 789</p>
-                      <p className="text-[#F3FAF4]/70">+84 987 654 321</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg
-                        className="w-6 h-6 text-[#F3FAF4]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-[#F3FAF4] font-bold mb-1">Address</h3>
-                      <p className="text-[#F3FAF4]/70">
-                        123 Đường ABC, Quận XYZ
-                        <br />
-                        Thành phố Hồ Chí Minh, Việt Nam
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg
-                        className="w-6 h-6 text-[#F3FAF4]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-[#F3FAF4] font-bold mb-1">
-                        Business Hours
-                      </h3>
-                      <p className="text-[#F3FAF4]/70">
-                        Monday - Friday: 9:00 AM - 6:00 PM
-                      </p>
-                      <p className="text-[#F3FAF4]/70">
-                        Saturday: 9:00 AM - 4:00 PM
-                      </p>
-                      <p className="text-[#F3FAF4]/70">Sunday: Closed</p>
-                    </div>
-                  </div>
-                </div>
+          {/* Benefits */}
+          <div className="bg-[#e8e8e8] p-6 flex flex-col gap-4">
+            <h3 className="text-black font-black text-xl leading-snug" style={{ fontFamily: ARIAL }}>
+              {"Grow With Us \u2013 See What You'll Gain"}
+            </h3>
+            {[
+              { title: "Nguồn hàng chất lượng", desc: "Trái cây đặc sản Sơn La đạt chuẩn VietGAP/GlobalGAP." },
+              { title: "Giá cả cạnh tranh", desc: "Chính sách ưu đãi giúp tối ưu lợi nhuận." },
+              { title: "Hỗ trợ marketing", desc: "Cung cấp nội dung quảng bá chuyên nghiệp." },
+              { title: "Chính sách linh hoạt", desc: "Hỗ trợ vận chuyển, thanh toán thuận tiện." },
+              { title: "Hợp tác bền vững", desc: "Cam kết đồng hành, mở rộng thị trường." },
+            ].map((item, i) => (
+              <div key={i}>
+                <span className="text-black font-bold text-sm">{item.title}</span>
+                <span className="text-black/60 text-sm">{" \u2013 "}{item.desc}</span>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </main>
+      </section>
+
+      {/* DIVIDER */}
+      <div className="relative">
+        <StarDivider />
+        <S style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+      </div>
+
+      {/* MAP */}
+      <section className="py-10 px-6 pb-16">
+        <div className="text-center mb-8">
+          <h2 className="text-white uppercase text-2xl sm:text-3xl md:text-4xl leading-none" style={{ fontFamily: SVN }}>
+            {"Bản Đồ"}
+          </h2>
+        </div>
+        <div className="max-w-4xl mx-auto border border-white/20 overflow-hidden" style={{ height: "360px" }}>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4894869583!2d106.8002816!3d10.841187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175272e94f6fb0b%3A0x9af877e7f76b9c3d!2sVinhomes%20Grand%20Park!5e0!3m2!1svi!2svn!4v1701000000000"
+            width="100%"
+            height="100%"
+            style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
 
       <Footer />
     </div>
