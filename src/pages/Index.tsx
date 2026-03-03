@@ -60,11 +60,24 @@ const Index = () => {
 
         <WhyChooseUs />
 
-        <div className="w-full px-4 md:px-8 mt-10 sm:mt-12 md:mt-20">
+        {/* GET EXCLUSIVE OFFERS */}
+        <div className="relative mx-[60px] sm:mx-[80px] md:mx-[100px] mt-10 sm:mt-12 md:mt-20">
           <img
-            src="https://api.builder.io/api/v1/image/assets/TEMP/18d6c9c73b8a201c748f3a744b7273bfb990b8ab?placeholderIfAbsent=true"
-            className="w-full max-w-6xl mx-auto h-auto rounded-xl sm:rounded-2xl min-w-0"
-            alt="Company showcase banner"
+            src="/element/GET EXCLUSIVE OFFERS.png"
+            alt="Get Exclusive Offers"
+            className="w-full h-auto block"
+          />
+          {/* Input email đè lên ô Email của ảnh */}
+          <input
+            type="email"
+            className="absolute bg-transparent text-white/70 placeholder-white/40 text-sm outline-none"
+            style={{ left: "31%", top: "62%", width: "55%", height: "10%" }}
+          />
+          {/* Button Subscribe đè lên ô Subscribe của ảnh */}
+          <button
+            className="absolute cursor-pointer"
+            aria-label="Subscribe"
+            style={{ left: "8%", top: "62%", width: "22%", height: "10%" }}
           />
         </div>
 

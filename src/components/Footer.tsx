@@ -30,22 +30,12 @@ const Footer: React.FC = () => {
             className="flex flex-col items-center justify-center"
             style={{ width: "38%" }}
           >
-            {/* Logo: layer trắng (invert) + layer xanh gốc chồng lên */}
+            {/* Logo: Asset 8 1.png */}
             <div className="relative mb-4" style={{ width: "28%" }}>
-              {/* Layer 1: toàn bộ trắng */}
               <img
-                src="/images/logo.png"
+                src="/element/Asset 8 1.png"
                 className="object-contain w-full"
-                style={{ filter: "brightness(0) invert(1)" }}
                 alt="Artiz Logo"
-              />
-              {/* Layer 2: chỉ phần màu (xanh lá) hiện lên — dùng mix-blend-mode */}
-              <img
-                src="/images/logo.png"
-                className="object-contain w-full absolute inset-0"
-                style={{ mixBlendMode: "screen" }}
-                alt=""
-                aria-hidden="true"
               />
             </div>
             <div className="flex gap-4">
