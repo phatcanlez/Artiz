@@ -63,15 +63,15 @@ const WhyChooseUs = () => {
         <StarDivider />
 
         {/* ② Header + SparkleIcon — giống FeaturedProducts */}
-        <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
-          <div className="absolute top-0 left-0 pointer-events-none">
-            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+        <div className="relative py-10 text-center mx-2 sm:mx-[80px] md:mx-[100px]">
+          <div className="hidden sm:block absolute top-0 left-0 pointer-events-none">
+            <SparkleIcon className="w-32 sm:w-32 md:w-40" />
           </div>
-          <div className="absolute top-0 right-0 pointer-events-none">
-            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          <div className="hidden sm:block absolute top-0 right-0 pointer-events-none">
+            <RightSparkleIcon className="h-28 sm:h-28 md:h-36 w-auto" />
           </div>
 
-          <div className="relative z-10 px-40 sm:px-44 md:px-48">
+          <div className="relative z-10 px-4 sm:px-24 md:px-40 lg:px-48">
             <h2
               className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
               style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}
@@ -89,86 +89,100 @@ const WhyChooseUs = () => {
         </div>
 
         {/* ③ Diagram: Vector 64 + 4 hexagon */}
-        {/* Container đủ rộng để hex thò ra 4 phía */}
+        {/* Wrapper height = (480 + 40px overflow) × scale, pt = 20px × scale */}
         <div
-          className="relative mx-auto select-none"
-          style={{ width: 680, height: 480 }}
+          className="overflow-visible flex justify-center
+                        h-[250px] sm:h-[338px] md:h-[442px] lg:h-[520px]
+                        pt-[10px] sm:pt-[13px] md:pt-[17px] lg:pt-[20px]"
         >
-          {/* Vector 64 — nhỏ, căn giữa container */}
-          <img
-            src="/element/Vector 64.png"
-            alt=""
-            aria-hidden="true"
-            className="absolute pointer-events-none"
-            style={{
-              width: 560,
-              height: "auto",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-
-          {/* TOP — giữa ngang, trùm lên cạnh trên Vector */}
-          <button
-            onClick={() => setActive("thiet-ke")}
-            className="absolute z-10"
-            style={{ top: -20, left: "50%", transform: "translateX(-50%)" }}
-          >
-            <HexIcon
-              src="/icon/Chuẩn thiết kế.svg"
-              active={active === "thiet-ke"}
-            />
-          </button>
-
-          {/* LEFT — giữa dọc, trùm ra cạnh trái Vector */}
-          <button
-            onClick={() => setActive("doi-tra")}
-            className="absolute z-10"
-            style={{ top: "50%", left: 0, transform: "translateY(-50%)" }}
-          >
-            <HexIcon src="/icon/Shoping.svg" active={active === "doi-tra"} />
-          </button>
-
-          {/* CENTER */}
           <div
-            className="absolute text-center z-10"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 180,
-            }}
+            className="relative flex-shrink-0 select-none origin-top scale-[0.48] sm:scale-[0.65] md:scale-[0.85] lg:scale-100"
+            style={{ width: 680, height: 480 }}
           >
-            <p className="text-white font-black text-base leading-tight">
-              {current.label}
-            </p>
-            <p className="text-white/50 text-xs mt-2 leading-5">
-              {current.desc}
-            </p>
-          </div>
-
-          {/* RIGHT — giữa dọc, trùm ra cạnh phải Vector */}
-          <button
-            onClick={() => setActive("giao-hang")}
-            className="absolute z-10"
-            style={{ top: "50%", right: 0, transform: "translateY(-50%)" }}
-          >
-            <HexIcon src="/icon/Đổi trả.svg" active={active === "giao-hang"} />
-          </button>
-
-          {/* BOTTOM — giữa ngang, trùm xuống cạnh dưới Vector */}
-          <button
-            onClick={() => setActive("duyet-mau")}
-            className="absolute z-10"
-            style={{ bottom: -20, left: "50%", transform: "translateX(-50%)" }}
-          >
-            <HexIcon
-              src="/icon/Duyệt mẫu.svg"
-              active={active === "duyet-mau"}
+            {/* Vector 64 — nhỏ, căn giữa container */}
+            <img
+              src="/element/Vector 64.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute pointer-events-none"
+              style={{
+                width: 560,
+                height: "auto",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
             />
-          </button>
+
+            {/* TOP — giữa ngang, trùm lên cạnh trên Vector */}
+            <button
+              onClick={() => setActive("thiet-ke")}
+              className="absolute z-10"
+              style={{ top: -20, left: "50%", transform: "translateX(-50%)" }}
+            >
+              <HexIcon
+                src="/icon/Chuẩn thiết kế.svg"
+                active={active === "thiet-ke"}
+              />
+            </button>
+
+            {/* LEFT — giữa dọc, trùm ra cạnh trái Vector */}
+            <button
+              onClick={() => setActive("doi-tra")}
+              className="absolute z-10"
+              style={{ top: "50%", left: 0, transform: "translateY(-50%)" }}
+            >
+              <HexIcon src="/icon/Shoping.svg" active={active === "doi-tra"} />
+            </button>
+
+            {/* CENTER */}
+            <div
+              className="absolute text-center z-10"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 180,
+              }}
+            >
+              <p className="text-white font-black text-base leading-tight">
+                {current.label}
+              </p>
+              <p className="text-white/50 text-xs mt-2 leading-5">
+                {current.desc}
+              </p>
+            </div>
+
+            {/* RIGHT — giữa dọc, trùm ra cạnh phải Vector */}
+            <button
+              onClick={() => setActive("giao-hang")}
+              className="absolute z-10"
+              style={{ top: "50%", right: 0, transform: "translateY(-50%)" }}
+            >
+              <HexIcon
+                src="/icon/Đổi trả.svg"
+                active={active === "giao-hang"}
+              />
+            </button>
+
+            {/* BOTTOM — giữa ngang, trùm xuống cạnh dưới Vector */}
+            <button
+              onClick={() => setActive("duyet-mau")}
+              className="absolute z-10"
+              style={{
+                bottom: -20,
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            >
+              <HexIcon
+                src="/icon/Duyệt mẫu.svg"
+                active={active === "duyet-mau"}
+              />
+            </button>
+          </div>
         </div>
+        {/* end diagram wrapper */}
 
         {/* ④ Dải sao dưới */}
         <StarDivider />

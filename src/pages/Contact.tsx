@@ -62,11 +62,11 @@ const Contact: React.FC = () => {
       {/* CONTACT US */}
       <section className="py-10 px-6">
         <div className="relative flex flex-col items-center text-center py-6">
-          <div className="absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
-            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+          <div className="hidden sm:block absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
+            <SparkleIcon className="w-32 sm:w-32 md:w-40" />
           </div>
-          <div className="absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
-            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          <div className="hidden sm:block absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
+            <RightSparkleIcon className="h-28 sm:h-28 md:h-36 w-auto" />
           </div>
           <h2
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl mb-4"
@@ -162,7 +162,7 @@ const Contact: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={submit} className="flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-white font-bold text-sm mb-1 block">
                       Name:
@@ -297,7 +297,7 @@ const Contact: React.FC = () => {
         </div>
         <div
           className="max-w-4xl mx-auto border border-white/20 overflow-hidden"
-          style={{ height: "360px" }}
+          style={{ height: "clamp(240px, 50vw, 360px)" }}
         >
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4894869583!2d106.8002816!3d10.841187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175272e94f6fb0b%3A0x9af877e7f76b9c3d!2sVinhomes%20Grand%20Park!5e0!3m2!1svi!2svn!4v1701000000000"

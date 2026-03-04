@@ -354,7 +354,7 @@ const NewsDetail: React.FC = () => {
       {/* ── BANNER ── */}
       <div
         className="relative w-full overflow-hidden"
-        style={{ height: "380px" }}
+        style={{ height: "clamp(180px, 35vw, 380px)" }}
       >
         <img
           src={post.image}
@@ -390,10 +390,10 @@ const NewsDetail: React.FC = () => {
       <main className="flex-1 w-full pb-12">
         {/* Wrapper: border ngoài + relative để đặt ngôi sao 4 góc */}
         <div className="relative border border-white/25 flex flex-col lg:flex-row w-full overflow-visible">
-          {/* ═══ LEFT COLUMN (60%) ═══ */}
+          {/* ═══ LEFT COLUMN (60% on lg) ═══ */}
           <div
-            className="relative flex-1 min-w-0 flex flex-col border-r border-white/25 overflow-visible"
-            style={{ flex: "0 0 60%" }}
+            className="relative w-full min-w-0 flex flex-col border-b lg:border-b-0 border-r-0 lg:border-r border-white/25 overflow-visible"
+            style={{ flex: "1 1 60%" }}
           >
             {/* ★ T-top: border-r gặp cạnh trên */}
             <S
@@ -478,10 +478,10 @@ const NewsDetail: React.FC = () => {
           </div>
           {/* end LEFT */}
 
-          {/* ═══ RIGHT COLUMN (40%) ═══ */}
+          {/* ═══ RIGHT COLUMN (40% on lg) ═══ */}
           <div
-            className="flex-shrink-0 flex flex-col overflow-visible"
-            style={{ flex: "0 0 40%" }}
+            className="w-full flex-shrink-0 flex flex-col overflow-visible"
+            style={{ flex: "1 1 40%" }}
           >
             {/* Zone 2: Stats */}
             <div className="relative p-6 lg:p-8 flex items-center justify-start border-b border-white/25 overflow-visible">
@@ -490,7 +490,9 @@ const NewsDetail: React.FC = () => {
                   onClick={() => setLiked((v) => !v)}
                   className="flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity cursor-pointer"
                 >
-                  <span className={liked ? "text-red-500" : "text-red-400/50"}>{liked ? "❤" : "♡"}</span>
+                  <span className={liked ? "text-red-500" : "text-red-400/50"}>
+                    {liked ? "❤" : "♡"}
+                  </span>
                   <span className="font-semibold text-white text-xs">
                     {post.likes}
                   </span>
@@ -508,7 +510,9 @@ const NewsDetail: React.FC = () => {
                   className="flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity cursor-pointer"
                   title={copied ? "Copied!" : "Copy link"}
                 >
-                  <span className={copied ? "text-green-400" : "text-white/70"}>{copied ? "✓" : "↑"}</span>
+                  <span className={copied ? "text-green-400" : "text-white/70"}>
+                    {copied ? "✓" : "↑"}
+                  </span>
                   <span className="font-semibold text-white text-xs">
                     {post.shares}
                   </span>
@@ -590,7 +594,9 @@ const NewsDetail: React.FC = () => {
         <div className="flex items-center justify-between mt-6 mb-6">
           <h2
             className="text-white uppercase text-2xl sm:text-3xl md:text-4xl leading-none"
-            style={{ fontFamily: "'SVN-Redzone', 'Arial Black', 'Impact', sans-serif" }}
+            style={{
+              fontFamily: "'SVN-Redzone', 'Arial Black', 'Impact', sans-serif",
+            }}
           >
             Similar News
           </h2>

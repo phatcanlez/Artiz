@@ -247,7 +247,7 @@ const News: React.FC = () => {
                 to={`/news/${post.id}`}
                 className="group flex gap-4 py-4 first:pt-0 last:pb-0"
               >
-                <div className="w-[240px] flex-shrink-0 overflow-hidden">
+                <div className="w-[120px] sm:w-[180px] md:w-[240px] flex-shrink-0 overflow-hidden">
                   <img
                     src={post.image}
                     alt={post.title}
@@ -281,9 +281,9 @@ const News: React.FC = () => {
         {/* ── Bài 5: full width, ảnh trái + text phải ── */}
         <Link
           to={`/news/${wideCard.id}`}
-          className="group flex gap-6 border-t border-white/20 pt-6 mt-2 mb-10"
+          className="group flex flex-col sm:flex-row gap-6 border-t border-white/20 pt-6 mt-2 mb-10"
         >
-          <div className="w-[48%] flex-shrink-0 overflow-hidden">
+          <div className="w-full sm:w-[48%] flex-shrink-0 overflow-hidden">
             <img
               src={wideCard.image}
               alt={wideCard.title}

@@ -16,8 +16,8 @@ const ProductShowcaseDetail: React.FC = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 w-full min-w-0 lg:w-[60%] lg:h-[600px]">
-      {/* Thumbnails - vertical slide */}
-      <div className="flex flex-row lg:flex-col gap-2 sm:gap-3 shrink-0 overflow-x-auto lg:overflow-y-auto max-h-full scrollbar-none py-1 pr-1 lg:pr-0">
+      {/* Thumbnails - horizontal on mobile, vertical on desktop */}
+      <div className="flex flex-row lg:flex-col gap-2 sm:gap-3 shrink-0 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto max-h-full scrollbar-none py-1 pr-1 lg:pr-0 max-w-full">
         {imageList.map((src, index) => (
           <button
             key={index}

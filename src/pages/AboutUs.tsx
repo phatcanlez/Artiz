@@ -62,11 +62,11 @@ const AboutUs: React.FC = () => {
       {/* OUR STORY */}
       <section className="py-14 px-6">
         <div className="relative flex flex-col items-center text-center py-4 mb-10">
-          <div className="absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
-            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+          <div className="hidden sm:block absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
+            <SparkleIcon className="w-32 sm:w-32 md:w-40" />
           </div>
-          <div className="absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
-            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          <div className="hidden sm:block absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
+            <RightSparkleIcon className="h-28 sm:h-28 md:h-36 w-auto" />
           </div>
           <h2
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl"

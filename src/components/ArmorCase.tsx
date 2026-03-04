@@ -33,16 +33,16 @@ const ArmorCase = () => {
 
       {/* Main layout */}
       <div
-        className="relative flex items-center justify-center"
-        style={{ minHeight: "560px" }}
+        className="relative flex flex-col items-center justify-center"
+        style={{ minHeight: "340px" }}
       >
-        {/* Ring + 3D — absolute center */}
-        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-          <div className="relative flex items-center justify-center pointer-events-auto">
+        {/* Ring + 3D — center */}
+        <div className="relative flex items-center justify-center z-10">
+          <div className="relative flex items-center justify-center">
             <img
               src="/element/circle.png"
               alt=""
-              className="w-[400px] h-[400px] sm:w-[480px] sm:h-[480px] md:w-[560px] md:h-[560px] object-contain select-none"
+              className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] md:w-[480px] md:h-[480px] lg:w-[560px] lg:h-[560px] object-contain select-none"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <model-viewer
@@ -56,7 +56,11 @@ const ArmorCase = () => {
                 environment-image="neutral"
                 loading="eager"
                 reveal="auto"
-                style={{ width: "340px", height: "340px", display: "block" }}
+                style={{
+                  width: "min(280px, 75vw)",
+                  height: "min(280px, 75vw)",
+                  display: "block",
+                }}
               >
                 <div
                   slot="poster"
@@ -69,8 +73,8 @@ const ArmorCase = () => {
           </div>
         </div>
 
-        {/* Overlay: 3-col grid so content hugs the ring */}
-        <div className="absolute inset-0 z-20 grid grid-cols-[1fr_560px_1fr] pointer-events-none">
+        {/* Overlay (desktop only): 3-col grid so content hugs the ring */}
+        <div className="hidden lg:grid absolute inset-0 z-20 grid-cols-[1fr_560px_1fr] pointer-events-none">
           {/* Left col */}
           <div className="flex flex-col justify-center items-end pr-6 pointer-events-auto">
             <div>
@@ -99,10 +103,23 @@ const ArmorCase = () => {
         </div>
       </div>
 
+      {/* Mobile info (below ring on mobile, hidden on lg+) */}
+      <div className="lg:hidden text-center px-6 mt-4">
+        <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-1">
+          Model
+        </p>
+        <h3 className="text-2xl font-black text-white leading-none mb-2">
+          {model.name}
+        </h3>
+        <p className="text-sm text-white/60 leading-6 max-w-xs mx-auto">
+          {model.desc}
+        </p>
+      </div>
+
       {/* Bottom: nav + strip + explore */}
       <div className="flex flex-col items-center gap-3 mt-6">
         {/* Row: prev + strip + next */}
-        <div className="flex items-center gap-40">
+        <div className="flex items-center gap-6 sm:gap-16 md:gap-24 lg:gap-32">
           {/* Nav prev */}
           <button
             onClick={prev}

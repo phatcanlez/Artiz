@@ -22,15 +22,15 @@ const SocialProof: React.FC = () => {
         <StarDivider />
 
         {/* ② Header + SparkleIcon */}
-        <div className="relative py-10 text-center mx-[60px] sm:mx-[80px] md:mx-[100px]">
-          <div className="absolute top-0 left-0 pointer-events-none">
-            <SparkleIcon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" />
+        <div className="relative py-10 text-center mx-2 sm:mx-[80px] md:mx-[100px]">
+          <div className="hidden sm:block absolute top-0 left-0 pointer-events-none">
+            <SparkleIcon className="w-32 sm:w-32 md:w-40" />
           </div>
-          <div className="absolute top-0 right-0 pointer-events-none">
-            <RightSparkleIcon className="h-20 sm:h-28 md:h-36 w-auto" />
+          <div className="hidden sm:block absolute top-0 right-0 pointer-events-none">
+            <RightSparkleIcon className="h-28 sm:h-28 md:h-36 w-auto" />
           </div>
 
-          <div className="relative z-10 px-40 sm:px-44 md:px-48">
+          <div className="relative z-10 px-4 sm:px-24 md:px-40 lg:px-48">
             <h2
               className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
               style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}

@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
+const navLinks = [
+  { to: "/about", label: "About Us" },
+  { to: "/products", label: "Shop" },
+  { to: "/news", label: "News" },
+  { to: "/contact", label: "Contact" },
+];
+
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -22,41 +30,40 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="w-full bg-white border-b border-black">
+    <header className="w-full bg-white border-b border-black relative z-50">
       <div className="w-full px-6 md:px-10 lg:px-16 py-4 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-        {/* LEFT: Nav */}
-        <nav className="flex items-center gap-5 lg:gap-8 text-base lg:text-lg font-medium text-black">
-          <Link
-            to="/about"
-            className="hover:opacity-60 transition-opacity whitespace-nowrap"
+        {/* LEFT: Nav (desktop) / Hamburger (mobile) */}
+        <div className="flex items-center">
+          {/* Hamburger — mobile only */}
+          <button
+            className="flex flex-col gap-[5px] md:hidden"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
           >
-            About Us
-          </Link>
-          {/* <Link
-            to="/scan-ai"
-            className="hover:opacity-60 transition-opacity whitespace-nowrap"
-          >
-            Scan Ai
-          </Link> */}
-          <a
-            href="/products"
-            className="hover:opacity-60 transition-opacity whitespace-nowrap"
-          >
-            Shop
-          </a>
-          <Link
-            to="/news"
-            className="hover:opacity-60 transition-opacity whitespace-nowrap"
-          >
-            News
-          </Link>
-          <Link
-            to="/contact"
-            className="hover:opacity-60 transition-opacity whitespace-nowrap"
-          >
-            Contact
-          </Link>
-        </nav>
+            <span
+              className={`block w-6 h-[2px] bg-black transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`}
+            />
+            <span
+              className={`block w-6 h-[2px] bg-black transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block w-6 h-[2px] bg-black transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`}
+            />
+          </button>
+
+          {/* Nav links — desktop only */}
+          <nav className="hidden md:flex items-center gap-5 lg:gap-8 text-base lg:text-lg font-medium text-black">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="hover:opacity-60 transition-opacity whitespace-nowrap"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         {/* CENTER: Logo */}
         <Link to="/" className="flex justify-center">
@@ -69,10 +76,10 @@ const Header: React.FC = () => {
 
         {/* RIGHT: Search + Icons */}
         <div className="flex items-center justify-end gap-3 lg:gap-4">
-          {/* Search bar */}
+          {/* Search bar — hidden on mobile */}
           <form
             onSubmit={handleSearchSubmit}
-            className="bg-black flex items-center gap-2 text-[#CFCDCD] font-normal px-5 py-3 rounded-full"
+            className="hidden sm:flex bg-black items-center gap-2 text-[#CFCDCD] font-normal px-5 py-3 rounded-full"
           >
             <input
               type="search"
@@ -82,7 +89,6 @@ const Header: React.FC = () => {
               className="bg-transparent outline-none placeholder-[#CFCDCD] w-28 lg:w-36 text-sm"
               aria-label="Search products"
             />
-            {/* Search icon */}
             <button
               type="submit"
               className="shrink-0 hover:opacity-70 transition-opacity"
@@ -96,7 +102,7 @@ const Header: React.FC = () => {
             </button>
           </form>
 
-          {/* Account icon (Avatar.svg) */}
+          {/* Account icon */}
           <button
             onClick={handleAccountClick}
             className="hover:opacity-60 transition-opacity touch-manipulation"
@@ -109,7 +115,7 @@ const Header: React.FC = () => {
             />
           </button>
 
-          {/* Cart icon (Shoping.svg) */}
+          {/* Cart icon */}
           <Link
             to="/cart"
             id="cart-icon"
@@ -124,6 +130,42 @@ const Header: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      {/* Mobile dropdown nav */}
+      {menuOpen && (
+        <nav className="md:hidden bg-white border-t border-black flex flex-col">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMenuOpen(false)}
+              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+          {/* Search on mobile */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center gap-2 px-6 py-4"
+          >
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Tìm kiếm..."
+              className="flex-1 bg-black/5 rounded-full px-4 py-2 text-sm outline-none"
+            />
+            <button type="submit" aria-label="Search">
+              <img
+                src="/icon/Duyệt mẫu.svg"
+                className="w-5 h-5 object-contain"
+                alt="Search"
+              />
+            </button>
+          </form>
+        </nav>
+      )}
     </header>
   );
 };
