@@ -13,7 +13,7 @@ const Detail = () => {
   console.log("Product ID:", id);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#000311] overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-black overflow-x-hidden">
       <Header />
 
       <main className="flex flex-col items-center pt-4 sm:pt-8 pb-10 sm:pb-20">

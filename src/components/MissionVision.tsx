@@ -2,7 +2,7 @@ import React from "react";
 
 const MissionVision: React.FC = () => {
   return (
-    <section className="w-full py-16 px-6 lg:px-24 bg-gradient-to-b from-[#000311] to-[#0a0a1a]">
+    <section className="w-full py-16 px-6 lg:px-24 bg-black">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Mission */}

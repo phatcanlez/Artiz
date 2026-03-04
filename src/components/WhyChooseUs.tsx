@@ -57,7 +57,7 @@ const WhyChooseUs = () => {
   const current = features.find((f) => f.id === active)!;
 
   return (
-    <section className="w-full bg-[#000311]">
+    <section className="w-full bg-black">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên */}
         <StarDivider />

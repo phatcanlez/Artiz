@@ -48,7 +48,7 @@ const AdminLayout: React.FC = () => {
   // }
 
   return (
-    <div className="min-h-screen bg-[#000311] text-white">
+    <div className="min-h-screen bg-black text-white">
       <SidebarProvider defaultOpen>
         <Sidebar
           collapsible="icon"
@@ -151,7 +151,7 @@ const AdminLayout: React.FC = () => {
         </Sidebar>
 
         <SidebarInset className={cn("bg-[#020617] text-white")}>
-          <header className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-[#000311]/80 backdrop-blur">
+          <header className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-black/80 backdrop-blur">
             <div className="flex items-center gap-3">
               <SidebarTrigger className="text-white border border-white/10 bg-transparent hover:bg-white/10" />
               <div>

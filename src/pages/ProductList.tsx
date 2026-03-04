@@ -1,12 +1,12 @@
-import React from 'react';
-import Header from '@/components/Header';
-import HeroProductList from '@/components/HeroProductList';
-import ProductGrid from '@/components/ProductGrid';
-import Footer from '@/components/Footer';
+import React from "react";
+import Header from "@/components/Header";
+import HeroProductList from "@/components/HeroProductList";
+import ProductGrid from "@/components/ProductGrid";
+import Footer from "@/components/Footer";
 
 const ProductList = () => {
   return (
-    <div className="w-full min-h-screen bg-[#000311] overflow-x-hidden">
+    <div className="w-full min-h-screen bg-black overflow-x-hidden">
       <Header />
       <main className="overflow-x-hidden">
         <HeroProductList />
@@ -18,4 +18,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-

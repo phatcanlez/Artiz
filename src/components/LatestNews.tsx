@@ -5,7 +5,7 @@ import StarDivider from "./ui/StarDivider";
 
 const LatestNews = () => {
   return (
-    <section className="w-full bg-[#000311] px-2 sm:px-3 md:px-4">
+    <section className="w-full bg-black px-2 sm:px-3 md:px-4">
       <div className="w-full overflow-hidden px-[10px]">
         {/* ① Dải sao trên */}
         <StarDivider />

@@ -8,7 +8,7 @@ const CheckoutSuccess: React.FC = () => {
   const orderData = location.state?.orderData;
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-hidden items-stretch bg-black min-h-screen">
       <Header />
 
       <main className="flex flex-col items-center justify-center flex-1 py-16 px-5">

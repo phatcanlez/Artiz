@@ -38,7 +38,7 @@ const View3D = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden items-stretch bg-[#000311] min-h-screen">
+    <div className="flex flex-col overflow-hidden items-stretch bg-black min-h-screen">
       <Header />
 
       <main className="flex flex-col items-center flex-1 py-8 px-4">
