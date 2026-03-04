@@ -195,24 +195,14 @@ const ProductInfo: React.FC = () => {
             addToCartRef.current && flyToCart(addToCartRef.current)
           }
           className="flex-1 bg-[#D9D9D9] text-black font-extrabold text-sm tracking-wide hover:bg-white transition-colors flex items-center justify-center"
-          style={{
-            clipPath:
-              "polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%)",
-            marginLeft: "3px",
-          }}
+          style={{ marginLeft: "3px" }}
         >
           Add to Cart
         </button>
       </div>
 
       {/* Buy Now — cắt góc trên-trái + dưới-phải (đối xứng với 2 nút trên) */}
-      <button
-        className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors"
-        style={{
-          clipPath:
-            "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-        }}
-      >
+      <button className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors">
         Buy it now
       </button>
 

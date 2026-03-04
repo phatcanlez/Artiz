@@ -74,8 +74,12 @@ const ArmorCase = () => {
           {/* Left col */}
           <div className="flex flex-col justify-center items-end pr-6 pointer-events-auto">
             <div>
-              <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-2">Model</p>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-none">{model.name}</h3>
+              <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-2">
+                Model
+              </p>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-none">
+                {model.name}
+              </h3>
               <div className="flex gap-2 mt-3">
                 <div className="w-20 h-[2px] bg-white/40" />
                 <div className="w-12 h-[2px] bg-white/40" />
@@ -88,63 +92,70 @@ const ArmorCase = () => {
 
           {/* Right col */}
           <div className="flex flex-col justify-center items-start pl-6 pointer-events-auto">
-            <p className="text-sm text-white/60 leading-7 max-w-[220px]">{model.desc}</p>
+            <p className="text-sm text-white/60 leading-7 max-w-[220px]">
+              {model.desc}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom: nav + dots + explore + green bar */}
-      <div className="flex items-center justify-center gap-6 px-6 mt-6">
-        {/* Nav prev */}
-        <button
-          onClick={prev}
-          className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:border-white/70 transition-colors"
-          aria-label="Previous"
-        >
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M12 5L7 10L12 15"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      {/* Bottom: nav + strip + explore */}
+      <div className="flex flex-col items-center gap-3 mt-6">
+        {/* Row: prev + strip + next */}
+        <div className="flex items-center gap-40">
+          {/* Nav prev */}
+          <button
+            onClick={prev}
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+            style={{ backgroundColor: "#D9D9D9" }}
+            aria-label="Previous"
+          >
+            <img
+              src="/icon/Qua trang.svg"
+              alt="prev"
+              className="w-3 h-3"
+              style={{ transform: "rotate(180deg)" }}
             />
-          </svg>
-        </button>
+          </button>
 
-        {/* Center: dots + explore */}
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex gap-2">
+          {/* Progress strip */}
+          <div className="flex gap-1.5 items-center">
             {models.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-[#44FF00]" : "bg-white/30"}`}
+                className="h-[3px] rounded-full transition-all duration-300"
+                style={{
+                  width: i === current ? "40px" : "20px",
+                  backgroundColor:
+                    i === current ? "#44FF00" : "rgba(255,255,255,0.3)",
+                }}
                 aria-label={`Model ${i + 1}`}
               />
             ))}
           </div>
-          <button className="px-10 py-2.5 bg-white/10 border border-white/20 text-white text-[10px] font-black tracking-[0.2em] uppercase hover:bg-white/20 transition-colors">
-            EXPLORE MORE
+
+          {/* Nav next */}
+          <button
+            onClick={next}
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+            style={{ backgroundColor: "#D9D9D9" }}
+            aria-label="Next"
+          >
+            <img src="/icon/Qua trang.svg" alt="next" className="w-3 h-3" />
           </button>
         </div>
 
-        {/* Nav next + green bar */}
+        {/* Explore More */}
         <button
-            onClick={next}
-            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:border-white/70 transition-colors"
-            aria-label="Next"
-          >
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M8 5L13 10L8 15"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+          className="px-10 py-2.5 bg-white/10 border border-white/20 text-white text-[10px] font-black tracking-[0.2em] uppercase transition-colors"
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = "#44FF00")
+          }
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
+        >
+          EXPLORE MORE
+        </button>
       </div>
     </section>
   );

@@ -78,7 +78,7 @@ const ProductGrid: React.FC = () => {
             <button
               key={btn.id}
               onClick={() => setActiveFilter(btn.id)}
-              className={`px-6 sm:px-8 py-3 font-bold text-xs sm:text-sm tracking-widest border transition-all duration-200 touch-manipulation ${
+              className={`px-6 sm:px-8 py-3 font-bold text-xs sm:text-sm tracking-widest border rounded-md transition-all duration-200 touch-manipulation ${
                 activeFilter === btn.id
                   ? "bg-[#44FF00] text-black border-[#44FF00]"
                   : "bg-[#D9D7D7] text-black border-white hover:bg-[#44FF00] hover:border-[#44FF00]"

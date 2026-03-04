@@ -102,9 +102,11 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
                 <div className="relative bg-black">
                   <div className="absolute top-0 left-0 z-10 px-3 pt-2 sm:pt-3">
                     <span
-                      className="text-white font-black uppercase text-xs sm:text-sm md:text-base tracking-widest whitespace-nowrap"
+                      className="text-white font-black uppercase tracking-widest whitespace-nowrap"
                       style={{
-                        fontFamily: "'Arial Black', Impact, sans-serif",
+                        fontFamily:
+                          "'SVN-Redzone', 'Arial Black', Impact, sans-serif",
+                        fontSize: "32px",
                       }}
                     >
                       {cat.label}
