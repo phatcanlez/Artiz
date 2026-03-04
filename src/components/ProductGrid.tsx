@@ -81,7 +81,7 @@ const ProductGrid: React.FC = () => {
               className={`px-6 sm:px-8 py-3 font-bold text-xs sm:text-sm tracking-widest border rounded-md transition-all duration-200 touch-manipulation ${
                 activeFilter === btn.id
                   ? "bg-[#44FF00] text-black border-[#44FF00]"
-                  : "bg-[#D9D7D7] text-black border-white hover:bg-[#44FF00] hover:border-[#44FF00]"
+                  : "bg-black text-white border-white/30 hover:bg-[#44FF00] hover:text-black hover:border-[#44FF00]"
               }`}
             >
               {btn.label}

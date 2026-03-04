@@ -348,14 +348,9 @@ const Checkout: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full relative aspect-[6.746] items-center text-2xl text-[#102314] font-bold justify-center py-4 rounded-md hover:opacity-90 transition-opacity mb-4"
+                  className="w-full text-2xl font-bold py-4 rounded-md mb-4 bg-black border border-white/30 text-white hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
                 >
-                  <img
-                    src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/9b53520bce9de0cf2078b44d4a428d007d603d90?placeholderIfAbsent=true"
-                    className="absolute h-full w-full object-cover inset-0 rounded-md"
-                    alt=""
-                  />
-                  <span className="relative">PLACE ORDER</span>
+                  PLACE ORDER
                 </button>
               </div>
             </div>

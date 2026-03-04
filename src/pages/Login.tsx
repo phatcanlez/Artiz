@@ -137,7 +137,7 @@ const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-2 py-4 rounded-lg bg-black border border-white/30 text-white text-lg font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Đang đăng nhập..." : "Đăng nhập"}
               </button>

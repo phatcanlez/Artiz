@@ -106,7 +106,7 @@ const Account: React.FC = () => {
 
             <button
               onClick={() => navigate("/cart")}
-              className="w-full py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity"
+              className="w-full py-4 rounded-lg bg-black border border-white/30 text-white text-lg font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
             >
               Xem giỏ hàng
             </button>

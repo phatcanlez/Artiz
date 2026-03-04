@@ -76,7 +76,7 @@ const ForgotPassword: React.FC = () => {
                 </p>
                 <Link
                   to="/login"
-                  className="inline-block w-full py-3 rounded-lg bg-[#44FF00] text-[#102314] font-bold text-center hover:opacity-90 transition-opacity"
+                  className="inline-block w-full py-3 rounded-lg bg-black border border-white/30 text-white font-bold text-center hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
                 >
                   Quay lại đăng nhập
                 </Link>
@@ -111,7 +111,7 @@ const ForgotPassword: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-lg bg-[#44FF00] text-[#102314] text-lg font-bold hover:opacity-90 transition-opacity"
+                  className="w-full py-4 rounded-lg bg-black border border-white/30 text-white text-lg font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
                 >
                   Gửi yêu cầu
                 </button>

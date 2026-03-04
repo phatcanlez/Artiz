@@ -101,7 +101,7 @@ const Cart: React.FC = () => {
               </p>
               <Link
                 to="/products"
-                className="inline-block px-12 py-5 rounded-lg bg-[#44FF00] text-xl font-bold text-[#102314] hover:opacity-90 transition-opacity"
+                className="inline-block px-12 py-5 rounded-lg bg-black border border-white/30 text-white text-xl font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
               >
                 CONTINUE SHOPPING
               </Link>
@@ -267,7 +267,7 @@ const Cart: React.FC = () => {
 
                   <Link
                     to="/checkout"
-                    className="block w-full text-center py-4 rounded-md bg-[#44FF00] text-2xl text-[#102314] font-bold hover:opacity-90 transition-opacity mb-4"
+                    className="block w-full text-center py-4 rounded-md bg-black border border-white/30 text-white text-2xl font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors mb-4"
                   >
                     CHECKOUT
                   </Link>
