@@ -100,8 +100,9 @@ export interface OrderDto {
 
 function getApiBaseUrl(): string {
   const env = (import.meta as unknown as { env?: { VITE_API_URL?: string } }).env;
-  // Ưu tiên biến môi trường VITE_API_URL; mặc định trỏ về backend đã deploy trên Fly.io
-  return env?.VITE_API_URL ?? "https://artiz-be.fly.dev";
+  // Ưu tiên biến môi trường VITE_API_URL (dùng cho FE deploy trên Vercel trỏ đến BE Fly.io)
+  // Khi dev local, nếu không set gì, mặc định dùng backend local trên http://localhost:5050
+  return env?.VITE_API_URL ?? "http://localhost:5050";
 }
 
 // NOTE: Dự án đã chuyển sang dùng API thật từ BE. Không còn dùng mock cache trong FE.
