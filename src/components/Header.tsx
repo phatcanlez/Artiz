@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
   { to: "/about", label: "About Us" },
@@ -12,7 +13,8 @@ const navLinks = [
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
+  const { cartCount } = useCart();
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -62,6 +64,14 @@ const Header: React.FC = () => {
                 {link.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="hover:opacity-60 transition-opacity whitespace-nowrap text-black font-medium"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
         </div>
 
@@ -119,7 +129,7 @@ const Header: React.FC = () => {
           <Link
             to="/cart"
             id="cart-icon"
-            className="hover:opacity-60 transition-opacity inline-block"
+            className="hover:opacity-60 transition-opacity inline-block relative"
             aria-label="Shopping cart"
           >
             <img
@@ -127,6 +137,11 @@ const Header: React.FC = () => {
               className="w-9 h-9 object-contain"
               alt="Cart"
             />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-black text-white text-xs font-bold px-1">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
         </div>
       </div>
@@ -144,6 +159,15 @@ const Header: React.FC = () => {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              onClick={() => setMenuOpen(false)}
+              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors"
+            >
+              Admin
+            </Link>
+          )}
           {/* Search on mobile */}
           <form
             onSubmit={handleSearchSubmit}

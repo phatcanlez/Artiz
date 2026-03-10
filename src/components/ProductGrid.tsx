@@ -1,47 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
-import { SparkleIcon } from "./ui/SparkleIcon";
-import { RightSparkleIcon } from "./ui/RightSparkleIcon";
+import { apiClient, type Product } from "@/lib/api";
+import { Spinner } from "@/components/ui/Spinner";
 
 const ProductGrid: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("new");
   const [showFilterPanel, setShowFilterPanel] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Products using local images: airmax, airpod, iphone, lipstick
-  const products = [
-    {
-      id: 1,
-      image: "/images/airmax.jpg",
-      title: "Men Armor Black Silver",
-      price: "3.850.000 VND",
-      rating: 5,
-      reviews: 2,
-    },
-    {
-      id: 2,
-      image: "/images/airpod.jpg",
-      title: "AirPods Pro",
-      price: "5.990.000 VND",
-      rating: 5,
-      reviews: 12,
-    },
-    {
-      id: 3,
-      image: "/images/iphone.jpg",
-      title: "iPhone Case Spider",
-      price: "450.000 VND",
-      rating: 4,
-      reviews: 8,
-    },
-    {
-      id: 4,
-      image: "/images/lipstick.jpg",
-      title: "3D Printed Lipstick",
-      price: "280.000 VND",
-      rating: 5,
-      reviews: 5,
-    },
-  ];
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    setError(null);
+    apiClient
+      .getProducts()
+      .then((data) => {
+        if (!mounted) return;
+        setProducts(data);
+      })
+      .catch((e) => {
+        if (!mounted) return;
+        setError(e instanceof Error ? e.message : "Không thể tải sản phẩm");
+      })
+      .finally(() => {
+        if (!mounted) return;
+        setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const cards = useMemo(
+    () =>
+      products.map((p) => ({
+        id: p.id,
+        image: p.imageUrl,
+        title: p.name,
+        price: `${new Intl.NumberFormat("vi-VN").format(p.price)} VND`,
+        rating: Math.round(p.averageRating ?? 0),
+        reviews: p.reviewCount ?? 0,
+        outOfStock: (p.stock ?? 0) <= 0,
+      })),
+    [products],
+  );
 
   const filterButtons = [
     { id: "new", label: "NEW COLLECTION" },
@@ -169,17 +173,29 @@ const ProductGrid: React.FC = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            title={product.title}
-            price={product.price}
-            rating={product.rating}
-            reviews={product.reviews}
-          />
-        ))}
+        {loading ? (
+          <div className="text-white/70 col-span-full text-center py-10 flex items-center justify-center gap-3">
+            <Spinner sizeClassName="h-6 w-6" />
+            <span>Đang tải sản phẩm...</span>
+          </div>
+        ) : error ? (
+          <div className="text-red-400 col-span-full text-center py-10">
+            {error}
+          </div>
+        ) : (
+          cards.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.image}
+              title={product.title}
+              price={product.price}
+              rating={product.rating}
+              reviews={product.reviews}
+              outOfStock={product.outOfStock}
+            />
+          ))
+        )}
       </div>
     </section>
   );

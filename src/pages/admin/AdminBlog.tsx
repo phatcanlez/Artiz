@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Spinner } from "@/components/ui/Spinner";
 
 interface BlogPost {
   id: number;
@@ -30,6 +31,8 @@ interface BlogPost {
   thumbnailUrl?: string;
   createdAt: string;
   isPublished: boolean;
+  isDeleted?: boolean;
+  deletedAt?: string | null;
 }
 
 interface BlogFormState {
@@ -61,6 +64,8 @@ const AdminBlog: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<BlogFormState>(emptyBlogForm);
+  const [showDeleted, setShowDeleted] = useState(false);
+  const [loadingPost, setLoadingPost] = useState(false);
 
   const openCreate = () => {
     setEditing(false);
@@ -68,17 +73,23 @@ const AdminBlog: React.FC = () => {
     setDialogOpen(true);
   };
 
-  const openEdit = (post: BlogPost) => {
+  const openEdit = async (post: BlogPost) => {
     setEditing(true);
-    setForm({
-      id: post.id,
-      title: post.title,
-      slug: post.slug,
-      summary: post.summary,
-      content: post.summary, // Placeholder, backend không có content tách biệt trong DTO list
-      thumbnailUrl: post.thumbnailUrl ?? "",
-      isPublished: post.isPublished,
-    });
+    setLoadingPost(true);
+    try {
+      const detail = await apiClient.request<BlogPost>(`/admin/blog/${post.id}`);
+      setForm({
+        id: detail.id,
+        title: detail.title,
+        slug: detail.slug,
+        summary: detail.summary,
+        content: (detail as any).content ?? detail.summary,
+        thumbnailUrl: detail.thumbnailUrl ?? "",
+        isPublished: detail.isPublished,
+      });
+    } finally {
+      setLoadingPost(false);
+    }
     setDialogOpen(true);
   };
 
@@ -130,6 +141,21 @@ const AdminBlog: React.FC = () => {
     },
   });
 
+  const restoreMutation = useMutation({
+    mutationFn: (id: number) =>
+      apiClient.request<void>(`/admin/blog/${id}/restore`, {
+        method: "POST",
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-blog"] });
+    },
+  });
+
+  const rows = useMemo(() => {
+    const list = data ?? [];
+    return showDeleted ? list : list.filter((p) => !p.isDeleted);
+  }, [data, showDeleted]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editing && form.id) {
@@ -147,6 +173,14 @@ const AdminBlog: React.FC = () => {
           <p className="text-xs text-white/60 mt-1">
             Thêm mới, chỉnh sửa và quản lý bài viết blog.
           </p>
+          <label className="inline-flex items-center gap-2 text-xs text-white/70 mt-2 select-none">
+            <input
+              type="checkbox"
+              checked={showDeleted}
+              onChange={(e) => setShowDeleted(e.target.checked)}
+            />
+            Hiện cả bài đã xóa mềm
+          </label>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
@@ -165,6 +199,9 @@ const AdminBlog: React.FC = () => {
               </DialogTitle>
             </DialogHeader>
             <form className="space-y-4 mt-2" onSubmit={handleSubmit}>
+              {loadingPost && (
+                <p className="text-xs text-white/60">Đang tải nội dung bài viết...</p>
+              )}
               <div>
                 <label className="block text-sm mb-1">Tiêu đề</label>
                 <Input
@@ -262,21 +299,60 @@ const AdminBlog: React.FC = () => {
                 <TableHead className="text-white/70">ID</TableHead>
                 <TableHead className="text-white/70">Tiêu đề</TableHead>
                 <TableHead className="text-white/70">Slug</TableHead>
+                <TableHead className="text-white/70">Xuất bản</TableHead>
                 <TableHead className="text-white/70">Trạng thái</TableHead>
                 <TableHead className="text-white/70">Ngày tạo</TableHead>
+                <TableHead className="text-white/70 text-right">Hành động</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((post) => (
-                <TableRow key={post.id}>
+              {rows.map((post) => (
+                <TableRow key={post.id} className={post.isDeleted ? "opacity-60" : ""}>
                   <TableCell>{post.id}</TableCell>
                   <TableCell>{post.title}</TableCell>
                   <TableCell>{post.slug}</TableCell>
                   <TableCell>
                     {post.isPublished ? "Đã xuất bản" : "Nháp"}
                   </TableCell>
+                  <TableCell>{post.isDeleted ? "Đã xóa mềm" : "Bình thường"}</TableCell>
                   <TableCell>
                     {new Date(post.createdAt).toLocaleString("vi-VN")}
+                  </TableCell>
+                  <TableCell className="text-right space-x-2">
+                    <Button
+                      size="sm"
+                      className="h-8 px-3 bg-sky-500 hover:bg-sky-600 text-white text-xs"
+                      disabled={!!post.isDeleted}
+                      onClick={() => void openEdit(post)}
+                    >
+                      Sửa
+                    </Button>
+                    {post.isDeleted ? (
+                      <Button
+                        size="sm"
+                        className="h-8 px-3 bg-emerald-500 hover:bg-emerald-600 text-white text-xs"
+                        disabled={restoreMutation.isPending}
+                        onClick={() => restoreMutation.mutate(post.id)}
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          {restoreMutation.isPending && <Spinner sizeClassName="h-3 w-3" />}
+                          Khôi phục
+                        </span>
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        className="h-8 px-3 text-xs"
+                        disabled={deleteMutation.isPending}
+                        onClick={() => deleteMutation.mutate(post.id)}
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          {deleteMutation.isPending && <Spinner sizeClassName="h-3 w-3" />}
+                          Xóa (mềm)
+                        </span>
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

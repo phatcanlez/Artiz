@@ -1,12 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
+import { apiClient, type OrderDto } from "@/lib/api";
+
+const statusLabel: Record<string, string> = {
+  // Trạng thái tiếng Anh cũ
+  Pending: "Chờ thanh toán",
+  Processing: "Đã xác nhận và đang chuẩn bị",
+  Shipped: "Đang giao hàng",
+  Delivered: "Thành công",
+  Cancelled: "Đã hủy",
+  // Trạng thái tiếng Việt mới
+  "Đã đặt hàng": "Đã đặt hàng",
+  "Chờ thanh toán": "Chờ thanh toán",
+  "Chờ xác nhận": "Chờ xác nhận",
+  "Đã xác nhận và đang chuẩn bị": "Đã xác nhận và đang chuẩn bị",
+  "Đang giao hàng": "Đang giao hàng",
+  "Thành công": "Thành công",
+  "Đã hủy": "Đã hủy",
+};
+
+const paymentStatusLabel: Record<string, string> = {
+  Pending: "Chờ thanh toán",
+  Processing: "Đã thanh toán",
+  Shipped: "Đã thanh toán",
+  Delivered: "Đã thanh toán",
+  Cancelled: "Đã hủy",
+  "Chờ thanh toán": "Chờ thanh toán",
+  "Chờ xác nhận": "Chờ thanh toán (COD)",
+  "Đã xác nhận và đang chuẩn bị": "Đã thanh toán / chuẩn bị",
+  "Đang giao hàng": "Đang giao / đã thanh toán",
+  "Thành công": "Thành công",
+  "Đã hủy": "Đã hủy",
+};
 
 const Account: React.FC = () => {
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const [orders, setOrders] = useState<OrderDto[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+  const [ordersError, setOrdersError] = useState<string | null>(null);
+  const [payingOrderId, setPayingOrderId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -14,9 +50,82 @@ const Account: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    setOrdersLoading(true);
+    setOrdersError(null);
+    apiClient
+      .getMyOrders()
+      .then(setOrders)
+      .catch((e) => setOrdersError(e instanceof Error ? e.message : "Không tải được đơn hàng"))
+      .finally(() => setOrdersLoading(false));
+  }, [isAuthenticated]);
+
   const handleLogout = () => {
     logout();
     navigate("/");
+  };
+
+  const formatPrice = (n: number) => new Intl.NumberFormat("vi-VN").format(n);
+  const formatDate = (s: string) => {
+    try {
+      return new Date(s).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return s;
+    }
+  };
+
+  const submitSePayForm = (checkoutUrl: string, fields: Record<string, string>) => {
+    // Thứ tự input theo doc SePay (có payment_method).
+    const formFieldOrder = [
+      "merchant",
+      "currency",
+      "order_amount",
+      "operation",
+      "payment_method",
+      "order_description",
+      "order_invoice_number",
+      "customer_id",
+      "success_url",
+      "error_url",
+      "cancel_url",
+      "signature",
+    ];
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = checkoutUrl;
+    for (const name of formFieldOrder) {
+      const value = fields[name];
+      if (value == null) continue;
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    }
+    document.body.appendChild(form);
+    form.submit();
+  };
+
+  const handlePayNow = async (order: OrderDto, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setOrdersError(null);
+    setPayingOrderId(order.id);
+    try {
+      const sepay = await apiClient.createSePayCheckoutForOrder(order.id);
+      submitSePayForm(sepay.checkoutUrl, sepay.fields);
+    } catch (err) {
+      setOrdersError(err instanceof Error ? err.message : "Không thể tạo thanh toán SePay");
+    } finally {
+      setPayingOrderId(null);
+    }
   };
 
   if (!isAuthenticated || !user) {
@@ -27,8 +136,8 @@ const Account: React.FC = () => {
     <div className="flex flex-col overflow-x-hidden items-stretch bg-black min-h-screen">
       <Header />
 
-      <main className="flex flex-col items-center justify-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
-        <div className="w-full max-w-[500px] min-w-0">
+      <main className="flex flex-col items-center flex-1 py-8 sm:py-12 md:py-16 px-4 sm:px-5">
+        <div className="w-full max-w-[700px] min-w-0">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold mb-2">
               Tài khoản của tôi
@@ -38,72 +147,55 @@ const Account: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6 sm:p-8">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 sm:p-8 mb-8">
             <div className="flex flex-col gap-5 mb-8">
               <div>
-                <label
-                  htmlFor="name"
-                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
-                >
-                  Họ và tên
-                </label>
+                <label htmlFor="account-name" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Họ và tên</label>
                 <input
+                  id="account-name"
                   type="text"
-                  id="name"
                   value={user.name}
                   readOnly
+                  aria-label="Họ và tên"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4]/90 cursor-not-allowed outline-none"
                 />
               </div>
               <div>
-                <label
-                  htmlFor="email"
-                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
-                >
-                  Email
-                </label>
+                <label htmlFor="account-email" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Email</label>
                 <input
+                  id="account-email"
                   type="email"
-                  id="email"
                   value={user.email}
                   readOnly
+                  aria-label="Email"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4]/90 cursor-not-allowed outline-none"
                 />
               </div>
               {user.phone && (
                 <div>
-                  <label
-                    htmlFor="phone"
-                    className="text-[#F3FAF4] text-sm font-medium mb-2 block"
-                  >
-                    Số điện thoại
-                  </label>
+                  <label htmlFor="account-phone" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Số điện thoại</label>
                   <input
+                    id="account-phone"
                     type="tel"
-                    id="phone"
                     value={user.phone}
                     readOnly
+                    aria-label="Số điện thoại"
                     className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4]/90 cursor-not-allowed outline-none"
                   />
                 </div>
               )}
               <div>
-                <label
-                  htmlFor="role"
-                  className="text-[#F3FAF4] text-sm font-medium mb-2 block"
-                >
-                  Vai trò
-                </label>
+                <label htmlFor="account-role" className="text-[#F3FAF4] text-sm font-medium mb-2 block">Vai trò</label>
                 <input
+                  id="account-role"
                   type="text"
-                  id="role"
                   value={isAdmin ? "Admin" : "User"}
                   readOnly
+                  aria-label="Vai trò"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-[#F3FAF4]/90 cursor-not-allowed outline-none"
                 />
               </div>
             </div>
-
             <button
               onClick={() => navigate("/cart")}
               className="w-full py-4 rounded-lg bg-black border border-white/30 text-white text-lg font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
@@ -117,6 +209,94 @@ const Account: React.FC = () => {
               Đăng xuất
             </button>
           </div>
+
+          {/* Lịch sử đơn hàng */}
+          <section className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
+            <h2 className="text-[#F3FAF4] text-xl font-bold mb-4">Lịch sử đơn hàng</h2>
+            {ordersLoading ? (
+              <p className="text-[#F3FAF4]/70">Đang tải...</p>
+            ) : ordersError ? (
+              <p className="text-red-400">{ordersError}</p>
+            ) : orders.length === 0 ? (
+              <p className="text-[#F3FAF4]/70">Bạn chưa có đơn hàng nào.</p>
+            ) : (
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <div
+                    key={order.id}
+                    className="bg-white/5 border border-white/10 rounded-lg p-4 cursor-pointer hover:border-[#44FF00]/60 transition-colors"
+                    onClick={() => navigate(`/orders/${order.id}`)}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                      <span className="text-[#F3FAF4] font-semibold">{order.orderInvoiceNumber}</span>
+                      <span className="text-[#F3FAF4]/70 text-sm">{formatDate(order.createdAt)}</span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                      <span className="text-[#F3FAF4]/70">
+                        {order.items.length} sản phẩm · {formatPrice(order.totalAmount)} VND
+                      </span>
+                      <span className="text-[#44FF00]">
+                        {statusLabel[order.status] ?? order.status}
+                      </span>
+                    </div>
+                    {(order.status === "Chờ thanh toán" || order.status === "Pending") && (
+                      <div className="mt-3 flex justify-end">
+                        <button
+                          onClick={(e) => handlePayNow(order, e)}
+                          disabled={payingOrderId === order.id}
+                          className="px-4 py-2 rounded-md bg-[#44FF00] text-[#102314] font-bold text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {payingOrderId === order.id ? "Đang chuyển..." : "Thanh toán ngay"}
+                        </button>
+                      </div>
+                    )}
+                    {order.shippingAddress && (
+                      <p className="text-[#F3FAF4]/50 text-xs mt-2 truncate" title={order.shippingAddress}>
+                        {order.shippingAddress}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* Lịch sử thanh toán */}
+          <section className="bg-white/5 border border-white/10 rounded-xl p-6">
+            <h2 className="text-[#F3FAF4] text-xl font-bold mb-4">Lịch sử thanh toán</h2>
+            {ordersLoading ? (
+              <p className="text-[#F3FAF4]/70">Đang tải...</p>
+            ) : ordersError ? (
+              <p className="text-red-400">{ordersError}</p>
+            ) : orders.length === 0 ? (
+              <p className="text-[#F3FAF4]/70">Chưa có giao dịch thanh toán nào.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="text-[#F3FAF4]/70 border-b border-white/20">
+                      <th className="py-2 pr-2">Mã đơn</th>
+                      <th className="py-2 pr-2">Số tiền</th>
+                      <th className="py-2 pr-2">Ngày</th>
+                      <th className="py-2">Trạng thái</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order.id} className="border-b border-white/10">
+                        <td className="py-3 pr-2 text-[#F3FAF4] font-medium">{order.orderInvoiceNumber}</td>
+                        <td className="py-3 pr-2 text-[#F3FAF4]">{formatPrice(order.totalAmount)} VND</td>
+                        <td className="py-3 pr-2 text-[#F3FAF4]/80">{formatDate(order.createdAt)}</td>
+                        <td className="py-3 text-[#44FF00]">
+                          {paymentStatusLabel[order.status] ?? order.status}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
         </div>
       </main>
 

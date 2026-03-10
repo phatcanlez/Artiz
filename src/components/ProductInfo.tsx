@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useCartFly } from "@/hooks/useCartFly";
+import { useCart } from "@/contexts/CartContext";
 
 interface AccordionItemProps {
   title: string;
@@ -18,7 +19,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
     <button
       onClick={onToggle}
       className="relative flex items-center justify-between w-full text-left text-base text-white font-medium py-[21px]"
-      aria-expanded={isOpen}
     >
       <span>{title}</span>
       <span className="text-xl font-light leading-none">
@@ -76,11 +76,36 @@ const StarRating = ({
   </div>
 );
 
-const ProductInfo: React.FC = () => {
+interface ProductInfoProps {
+  product?: {
+    id: number;
+    name: string;
+    price: number;
+    imageUrl: string;
+    stock?: number;
+    averageRating?: number;
+    reviewCount?: number;
+    description?: string;
+    size?: string;
+    material?: string;
+    productPolicy?: string;
+    productPreservation?: string;
+    deliveryTax?: string;
+  };
+}
+
+const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const [quantity, setQuantity] = useState(1);
   const addToCartRef = useRef<HTMLButtonElement>(null);
   const { flyToCart } = useCartFly();
+  const { addToCart } = useCart();
+  const product = productProp ?? {
+    id: 1,
+    name: "Men Armor Black Silver",
+    price: 3850000,
+    imageUrl: "/images/airmax.jpg",
+  };
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -95,52 +120,28 @@ const ProductInfo: React.FC = () => {
     "Delivery & TAX",
   ];
 
-  const rating = 4.3;
-  const reviews = 2;
+  const rating = product.averageRating ?? 0;
+  const reviews = product.reviewCount ?? 0;
+  const isOutOfStock = (product.stock ?? 0) <= 0;
 
   const sectionContent: Record<string, React.ReactNode> = {
     "Product Description": (
-      <p>
-        Men Armor Black Silver là sản phẩm case bảo vệ cao cấp được thiết kế
-        theo phong cách Armor — kết hợp giữa tính năng bảo vệ tối ưu và thẩm mỹ
-        độc đáo. Phù hợp cho những ai yêu thích phong cách cá tính, mạnh mẽ.
-      </p>
+      <p>{product.description || "Chưa có mô tả sản phẩm."}</p>
     ),
     Size: (
-      <ul className="space-y-1">
-        <li>• Phù hợp: AirPods Pro 1 &amp; 2</li>
-        <li>• Kích thước: 60 × 45 × 25 mm</li>
-        <li>• Trọng lượng: ~18g</li>
-      </ul>
+      <p>{product.size || "Chưa có thông tin kích thước."}</p>
     ),
     Material: (
-      <ul className="space-y-1">
-        <li>• Chất liệu chính: TPU cao cấp kết hợp PC cứng</li>
-        <li>• Lớp phủ: Sơn mờ chống vân tay</li>
-        <li>• Màu sắc: Đen & Bạc (Black Silver)</li>
-      </ul>
+      <p>{product.material || "Chưa có thông tin chất liệu."}</p>
     ),
     "Product policy": (
-      <ul className="space-y-1">
-        <li>• Bảo hành: 6 tháng lỗi nhà sản xuất</li>
-        <li>• Đổi trả: Trong vòng 7 ngày nếu có lỗi</li>
-        <li>• Không áp dụng đổi trả do thay đổi ý kiến sau khi nhận hàng</li>
-      </ul>
+      <p>{product.productPolicy || "Chưa có chính sách sản phẩm."}</p>
     ),
     "Product Preservation": (
-      <ul className="space-y-1">
-        <li>• Tránh tiếp xúc trực tiếp với hóa chất, dung môi</li>
-        <li>• Lau chùi bằng khăn mềm khô hoặc hơi ẩm</li>
-        <li>• Bảo quản nơi khô ráo, thoáng mát</li>
-      </ul>
+      <p>{product.productPreservation || "Chưa có hướng dẫn bảo quản."}</p>
     ),
     "Delivery & TAX": (
-      <ul className="space-y-1">
-        <li>• Giao hàng toàn quốc: 2–4 ngày làm việc</li>
-        <li>• Giao hàng nhanh (HCM / HN): 1–2 ngày</li>
-        <li>• Phí vận chuyển: Miễn phí cho đơn từ 500.000đ</li>
-        <li>• Thuế VAT đã bao gồm trong giá niêm yết</li>
-      </ul>
+      <p>{product.deliveryTax || "Chưa có thông tin giao hàng & thuế."}</p>
     ),
   };
 
@@ -155,11 +156,13 @@ const ProductInfo: React.FC = () => {
 
       {/* Product Header */}
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight mb-1">
-        Men Armor Black Silver
+        {product.name}
       </h1>
 
       {/* Price */}
-      <div className="text-xl font-normal text-white mb-2">3.850.000 VND</div>
+      <div className="text-xl font-normal text-white mb-2">
+        {new Intl.NumberFormat("vi-VN").format(product.price)} VND
+      </div>
 
       {/* Rating lẻ — SVG ngôi sao */}
       <div className="mb-6">
@@ -191,19 +194,31 @@ const ProductInfo: React.FC = () => {
         {/* Add to Cart — cắt góc dưới-phải, nền xám */}
         <button
           ref={addToCartRef}
-          onClick={() =>
-            addToCartRef.current && flyToCart(addToCartRef.current)
-          }
-          className="flex-1 bg-[#D9D9D9] text-black font-extrabold text-sm tracking-wide hover:bg-white transition-colors flex items-center justify-center"
+          disabled={isOutOfStock}
+          onClick={() => {
+            if (isOutOfStock) return;
+            addToCart({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.imageUrl,
+              quantity: quantity,
+            });
+            if (addToCartRef.current) flyToCart(addToCartRef.current);
+          }}
+          className="flex-1 bg-[#D9D9D9] text-black font-extrabold text-sm tracking-wide hover:bg-white transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#D9D9D9]"
           style={{ marginLeft: "3px" }}
         >
-          Add to Cart
+          {isOutOfStock ? "Hết hàng" : "Add to Cart"}
         </button>
       </div>
 
       {/* Buy Now — cắt góc trên-trái + dưới-phải (đối xứng với 2 nút trên) */}
-      <button className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors">
-        Buy it now
+      <button
+        disabled={isOutOfStock}
+        className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#D9D9D9]"
+      >
+        {isOutOfStock ? "Hết hàng" : "Buy it now"}
       </button>
 
       {/* Accordion List */}

@@ -1,53 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  color?: string;
-  size?: string;
-}
+import { useCart } from "@/contexts/CartContext";
 
 const Cart: React.FC = () => {
-  // Sample cart data - in real app, this would come from state management or API
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Men Armor Black Silver",
-      price: 3850000,
-      quantity: 1,
-      image: "/images/airmax.jpg",
-      color: "Black",
-      size: "M",
-    },
-    {
-      id: 2,
-      name: "AirPods Pro",
-      price: 5990000,
-      quantity: 2,
-      image: "/images/airpod.jpg",
-      color: "Silver",
-      size: "L",
-    },
-  ]);
-
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item,
-      ),
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN").format(price);
@@ -149,7 +107,7 @@ const Cart: React.FC = () => {
                           )}
                         </div>
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeFromCart(item.id)}
                           className="text-[#F3FAF4]/70 transition-colors"
                           aria-label="Remove item"
                         >
@@ -174,7 +132,7 @@ const Cart: React.FC = () => {
                         <div className="flex items-center gap-3">
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
+                              updateQuantity(item.id, Math.max(1, item.quantity - 1))
                             }
                             className="w-8 h-8 rounded border border-white/30 text-[#F3FAF4] hover:bg-white/10 transition-colors flex items-center justify-center"
                             aria-label="Decrease quantity"

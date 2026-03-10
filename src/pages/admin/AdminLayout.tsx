@@ -23,17 +23,16 @@ const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Commented out authentication check to allow viewing admin page without login
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     navigate("/login");
-  //     return;
-  //   }
-  //   if (!isAdmin) {
-  //     navigate("/");
-  //     return;
-  //   }
-  // }, [isAuthenticated, isAdmin, navigate]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    if (!isAdmin) {
+      navigate("/");
+      return;
+    }
+  }, [isAuthenticated, isAdmin, navigate]);
 
   const handleLogout = () => {
     logout();
@@ -42,10 +41,9 @@ const AdminLayout: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Commented out authentication check to allow viewing admin page without login
-  // if (!isAuthenticated || !isAdmin) {
-  //   return null;
-  // }
+  if (!isAuthenticated || !isAdmin) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">

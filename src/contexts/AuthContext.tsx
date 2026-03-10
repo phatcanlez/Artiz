@@ -13,18 +13,26 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<AuthResponse['user'] | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Load auth state from localStorage on mount
+function loadStoredAuth(): { token: string | null; user: AuthResponse['user'] | null } {
+  try {
     const storedToken = localStorage.getItem('authToken');
     const storedUser = localStorage.getItem('authUser');
-    
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      return { token: storedToken, user: JSON.parse(storedUser) as AuthResponse['user'] };
+    }
+  } catch (_) {}
+  return { token: null, user: null };
+}
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<AuthResponse['user'] | null>(() => loadStoredAuth().user);
+  const [token, setToken] = useState<string | null>(() => loadStoredAuth().token);
+
+  useEffect(() => {
+    const { token: t, user: u } = loadStoredAuth();
+    if (t && u) {
+      setToken(t);
+      setUser(u);
     }
   }, []);
 

@@ -8,6 +8,7 @@ interface ProductCardProps {
   price: string;
   rating: number;
   reviews: number;
+  outOfStock?: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -17,6 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   rating,
   reviews,
+  outOfStock,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -64,6 +66,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             alt={title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
+          {outOfStock && (
+            <div className="absolute top-3 left-3 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-md border border-white/20">
+              HẾT HÀNG
+            </div>
+          )}
         </div>
 
         {/* Product Info — title + like ngang hàng */}
@@ -74,6 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <button
             onClick={handleLikeClick}
             className="flex-shrink-0 -mr-0 hover:scale-110 transition-transform"
+            aria-label={isLiked ? "Bỏ yêu thích" : "Yêu thích"}
           >
             <svg
               width="20"

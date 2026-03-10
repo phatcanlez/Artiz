@@ -62,10 +62,16 @@ const Contact: React.FC = () => {
       {/* CONTACT US */}
       <section className="py-10 px-6">
         <div className="relative flex flex-col items-center text-center py-6">
-          <div className="hidden sm:block absolute top-0 left-4 sm:left-8 md:left-12 pointer-events-none">
+          <div
+            className="hidden sm:block absolute top-0 pointer-events-none"
+            style={{ left: "clamp(60px, 8vw, 100px)" }}
+          >
             <SparkleIcon className="w-32 sm:w-32 md:w-40" />
           </div>
-          <div className="hidden sm:block absolute top-0 right-4 sm:right-8 md:right-12 pointer-events-none">
+          <div
+            className="hidden sm:block absolute top-0 pointer-events-none"
+            style={{ right: "clamp(60px, 8vw, 100px)" }}
+          >
             <RightSparkleIcon className="h-28 sm:h-28 md:h-36 w-auto" />
           </div>
           <h2

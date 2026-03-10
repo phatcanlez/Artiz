@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,9 @@ const CheckoutFail: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const orderData = location.state?.orderData;
+  const search = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const orderInvoiceNumber = search.get("orderId") ?? undefined;
+  const payment = search.get("payment") ?? undefined;
 
   const handleRetry = () => {
     // Navigate back to checkout with the same data
@@ -47,6 +50,20 @@ const CheckoutFail: React.FC = () => {
           <p className="text-[#F3FAF4]/70 text-lg mb-4">
             Rất tiếc, thanh toán của bạn không thành công.
           </p>
+          {(orderInvoiceNumber || payment) && (
+            <p className="text-[#F3FAF4]/50 text-sm mb-4">
+              {orderInvoiceNumber && (
+                <>
+                  Mã đơn: <strong className="text-[#F3FAF4]">{orderInvoiceNumber}</strong>{" "}
+                </>
+              )}
+              {payment && (
+                <>
+                  | Trạng thái: <strong className="text-[#F3FAF4]">{payment}</strong>
+                </>
+              )}
+            </p>
+          )}
           <p className="text-[#F3FAF4]/50 text-sm mb-8">
             Vui lòng kiểm tra lại thông tin thanh toán hoặc thử lại sau.
           </p>

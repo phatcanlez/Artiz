@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
+import { apiClient } from "@/lib/api";
+import { Spinner } from "@/components/ui/Spinner";
+
+const SHIPPING_COST = 50000;
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { cartItems, cartSubtotal, clearCart } = useCart();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -16,6 +24,17 @@ const Checkout: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login", { state: { from: "/checkout" } });
+      return;
+    }
+    if (cartItems.length === 0) {
+      navigate("/cart");
+    }
+  }, [isAuthenticated, cartItems.length, navigate]);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -65,24 +84,66 @@ const Checkout: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm() || cartItems.length === 0) return;
 
-    if (!validateForm()) {
-      return;
-    }
+    setSubmitting(true);
+    try {
+      const addressLine = [formData.address, formData.city, formData.postalCode]
+        .filter(Boolean)
+        .join(", ");
+      const order = await apiClient.createOrder({
+        shippingAddress: addressLine || formData.address,
+        phone: formData.phone,
+        fullName: formData.fullName,
+        email: formData.email,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        paymentMethod: formData.paymentMethod,
+        items: cartItems.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      });
 
-    // Simulate payment processing
-    // In real app, this would call payment API
-    console.log("Checkout data:", formData);
+      if (formData.paymentMethod === "bank") {
+        const sepay = await apiClient.createSePayCheckout({
+          OrderInvoiceNumber: order.orderInvoiceNumber,
+          OrderAmount: order.totalAmount,
+          Currency: "VND",
+          OrderDescription: `Don hang ${order.orderInvoiceNumber}`,
+          PaymentMethod: "BANK_TRANSFER",
+        });
+        // Thứ tự input PHẢI đúng form doc SePay. Nếu có payment_method thì nằm sau operation.
+        const formFieldOrder = ["merchant", "currency", "order_amount", "operation", "payment_method", "order_description", "order_invoice_number", "customer_id", "success_url", "error_url", "cancel_url", "signature"];
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = sepay.checkoutUrl;
+        for (const name of formFieldOrder) {
+          const value = sepay.fields[name];
+          if (value == null) continue;
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = value;
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+        return; // Giỏ sẽ được xóa khi user quay lại trang success (CheckoutSuccess)
+      }
 
-    // Simulate random success/failure (90% success rate for demo)
-    const isSuccess = Math.random() > 0.1;
-
-    if (isSuccess) {
-      navigate("/checkout/success", { state: { orderData: formData } });
-    } else {
-      navigate("/checkout/fail", { state: { orderData: formData } });
+      clearCart();
+      navigate("/checkout/success", {
+        state: { orderData: formData, orderId: order.orderId, orderInvoiceNumber: order.orderInvoiceNumber, totalAmount: order.totalAmount },
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Đặt hàng thất bại. Vui lòng thử lại.";
+      setErrors({ submit: message });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -90,8 +151,8 @@ const Checkout: React.FC = () => {
     return new Intl.NumberFormat("vi-VN").format(price);
   };
 
-  const subtotal = 7700000; // Sample data
-  const shipping = 50000;
+  const subtotal = cartSubtotal;
+  const shipping = SHIPPING_COST;
   const total = subtotal + shipping;
 
   return (
@@ -346,11 +407,18 @@ const Checkout: React.FC = () => {
                   </div>
                 </div>
 
+{errors.submit && (
+                  <p className="text-red-500 text-sm mb-2">{errors.submit}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full text-2xl font-bold py-4 rounded-md mb-4 bg-black border border-white/30 text-white hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
+                  disabled={submitting}
+                  className="w-full text-2xl font-bold py-4 rounded-md mb-4 bg-black border border-white/30 text-white hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  PLACE ORDER
+                  <span className="inline-flex items-center justify-center gap-2">
+                    {submitting && <Spinner sizeClassName="h-6 w-6" />}
+                    {submitting ? "Đang xử lý..." : "PLACE ORDER"}
+                  </span>
                 </button>
               </div>
             </div>

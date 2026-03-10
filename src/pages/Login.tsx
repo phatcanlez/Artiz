@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
+import { Spinner } from "@/components/ui/Spinner";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,9 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
+  const from = (location.state as { from?: string } | null)?.from ?? "/";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,7 +48,7 @@ const Login: React.FC = () => {
           return;
         }
       }
-      navigate("/");
+      navigate(from);
     } catch (err) {
       const message =
         err instanceof Error
@@ -139,7 +142,10 @@ const Login: React.FC = () => {
                 disabled={loading}
                 className="w-full mt-2 py-4 rounded-lg bg-black border border-white/30 text-white text-lg font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+                <span className="inline-flex items-center justify-center gap-2">
+                  {loading && <Spinner sizeClassName="h-5 w-5" />}
+                  {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+                </span>
               </button>
             </form>
           </div>

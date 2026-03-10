@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import Product3DViewer from "./Product3DViewer";
+import type { Product } from "@/lib/api";
 
-const imageList = [
-  "/images/airmax.jpg",
-  "/images/airpod.jpg",
-  "/images/lipstick.jpg",
-  "/images/iphone.jpg",
-];
+interface ProductShowcaseDetailProps {
+  product?: Product;
+}
 
-const ProductShowcaseDetail: React.FC = () => {
+const ProductShowcaseDetail: React.FC<ProductShowcaseDetailProps> = ({ product }) => {
   const [viewMode, setViewMode] = useState<"3d" | "image">("3d");
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const imageList = [
+    product?.imageUrl,
+    ...(product?.thumbnailUrls ?? []),
+  ].filter(Boolean) as string[];
+
+  const modelUrl = product?.model3DUrls?.[0];
   const activeImage = imageList[activeIndex] ?? imageList[0];
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 w-full min-w-0 lg:w-[60%] lg:h-[600px]">
       {/* Thumbnails - horizontal on mobile, vertical on desktop */}
       <div className="flex flex-row lg:flex-col gap-2 sm:gap-3 shrink-0 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto max-h-full scrollbar-none py-1 pr-1 lg:pr-0 max-w-full">
-        {imageList.map((src, index) => (
+        {imageList.length > 0 ? imageList.map((src, index) => (
           <button
             key={index}
             type="button"
@@ -35,7 +39,9 @@ const ProductShowcaseDetail: React.FC = () => {
               alt={`Thumbnail ${index + 1}`}
             />
           </button>
-        ))}
+        )) : (
+          <div className="text-white/50 text-xs px-2 py-1">No images</div>
+        )}
       </div>
 
       {/* Main Display + star dải dưới */}
@@ -80,13 +86,17 @@ const ProductShowcaseDetail: React.FC = () => {
           {/* Content */}
           <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
             {viewMode === "3d" ? (
-              <Product3DViewer className="w-full h-full" />
+              <Product3DViewer modelPath={modelUrl} className="w-full h-full" />
             ) : (
-              <img
-                src={activeImage}
-                className="w-full h-full object-contain"
-                alt="Product detail"
-              />
+              activeImage ? (
+                <img
+                  src={activeImage}
+                  className="w-full h-full object-contain"
+                  alt="Product detail"
+                />
+              ) : (
+                <div className="text-white/60 text-sm">Không có ảnh sản phẩm</div>
+              )
             )}
           </div>
         </div>

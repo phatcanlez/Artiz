@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
 import ProductShowcaseDetail from "@/components/ProductShowcaseDetail";
@@ -7,10 +7,38 @@ import ReviewsSection from "@/components/ReviewsSection";
 import ReviewForm from "@/components/ReviewForm";
 import SocialProof from "@/components/SocialProof";
 import Footer from "@/components/Footer";
+import { apiClient, type Product } from "@/lib/api";
 
 const Detail = () => {
   const { id } = useParams<{ id: string }>();
-  console.log("Product ID:", id);
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const numId = id ? parseInt(id, 10) : NaN;
+    if (!Number.isFinite(numId)) return;
+    apiClient
+      .getProduct(numId)
+      .then((p) => setProduct(p))
+      .catch(() => setProduct(null));
+  }, [id]);
+
+  const productForInfo = product
+    ? {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        averageRating: product.averageRating,
+        reviewCount: product.reviewCount,
+        description: product.description,
+        size: product.size,
+        material: product.material,
+        productPolicy: product.productPolicy,
+        productPreservation: product.productPreservation,
+        deliveryTax: product.deliveryTax,
+        stock: product.stock,
+      }
+    : undefined;
 
   return (
     <div className="flex flex-col min-h-screen bg-black overflow-x-hidden">
@@ -20,10 +48,9 @@ const Detail = () => {
         <div className="w-full max-w-[1240px] px-4 sm:px-5 min-w-0">
           {/* Top Section: Showcase + Info */}
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-20 min-w-0">
-            <ProductShowcaseDetail />
-            {/* Product Info - takes remaining width */}
+            <ProductShowcaseDetail product={product ?? undefined} />
             <div className="flex-1 min-w-0 lg:max-w-[500px] mt-6 lg:mt-0">
-              <ProductInfo />
+              <ProductInfo product={productForInfo} />
             </div>
           </div>
 
@@ -66,7 +93,7 @@ const Detail = () => {
           </section>
         </div>
 
-        {/* SocialProof — full width, không bị max-w constraint */}
+        {/* SocialProof — full width, outside constrained container */}
         <div className="w-full mt-12 sm:mt-20">
           <SocialProof />
         </div>

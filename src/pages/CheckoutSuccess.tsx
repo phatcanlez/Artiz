@@ -1,11 +1,47 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCart } from "@/contexts/CartContext";
+import { apiClient, OrderDto } from "@/lib/api";
 
 const CheckoutSuccess: React.FC = () => {
   const location = useLocation();
-  const orderData = location.state?.orderData;
+  const { clearCart } = useCart();
+  const [order, setOrder] = useState<OrderDto | null>(null);
+
+  useEffect(() => {
+    clearCart(); // Xóa giỏ khi vào trang success (từ COD hoặc quay lại từ SePay)
+  }, [clearCart]);
+
+  const search = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const orderInvoiceFromQuery = search.get("orderId") ?? undefined;
+  const paymentFromQuery = search.get("payment") ?? undefined;
+
+  const state = location.state as {
+    orderData?: Record<string, unknown>;
+    orderId?: number;
+    orderInvoiceNumber?: string;
+    totalAmount?: number;
+  } | null;
+  const orderData = state?.orderData;
+  const orderId = state?.orderId;
+  const orderInvoiceNumber = state?.orderInvoiceNumber ?? orderInvoiceFromQuery;
+  const totalAmount = state?.totalAmount ?? order?.totalAmount;
+
+  useEffect(() => {
+    if (!orderInvoiceNumber) return;
+    // Nếu user đang đăng nhập, lấy đơn theo danh sách "my orders" để hiển thị thêm thông tin.
+    (async () => {
+      try {
+        const my = await apiClient.getMyOrders();
+        const found = my.find((o) => o.orderInvoiceNumber === orderInvoiceNumber) ?? null;
+        setOrder(found);
+      } catch {
+        // ignore (chưa đăng nhập / token hết hạn / không fetch được)
+      }
+    })();
+  }, [orderInvoiceNumber]);
 
   return (
     <div className="flex flex-col overflow-x-hidden items-stretch bg-black min-h-screen">
@@ -42,40 +78,63 @@ const CheckoutSuccess: React.FC = () => {
             Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xác nhận và sẽ được
             xử lý sớm nhất.
           </p>
+          {paymentFromQuery && (
+            <p className="text-[#F3FAF4]/50 text-sm mb-6">
+              Trạng thái thanh toán: <strong className="text-[#F3FAF4]">{paymentFromQuery}</strong>
+            </p>
+          )}
 
           {/* Order Details */}
-          {orderData && (
+          {(orderData || orderInvoiceNumber) && (
             <div className="bg-white/5 border border-white/10 rounded-lg p-6 mb-8 text-left">
               <h2 className="text-[#F3FAF4] text-xl font-bold mb-4">
                 Order Details
               </h2>
-              <div className="space-y-2 text-[#F3FAF4]/70">
-                <p>
-                  <span className="text-[#F3FAF4]">Name:</span>{" "}
-                  {orderData.fullName}
+              {(orderInvoiceNumber || orderId) && (
+                <p className="text-[#F3FAF4]/80 mb-2">
+                  Mã đơn: <strong>{orderInvoiceNumber ?? `#${orderId}`}</strong>
                 </p>
-                <p>
-                  <span className="text-[#F3FAF4]">Email:</span>{" "}
-                  {orderData.email}
+              )}
+              {totalAmount != null && (
+                <p className="text-[#F3FAF4]/80 mb-2">
+                  Tổng tiền: <strong>{new Intl.NumberFormat("vi-VN").format(totalAmount)} VND</strong>
                 </p>
-                <p>
-                  <span className="text-[#F3FAF4]">Phone:</span>{" "}
-                  {orderData.phone}
-                </p>
-                <p>
-                  <span className="text-[#F3FAF4]">Address:</span>{" "}
-                  {orderData.address}
-                </p>
-                <p>
-                  <span className="text-[#F3FAF4]">City:</span> {orderData.city}
-                </p>
-                <p>
-                  <span className="text-[#F3FAF4]">Payment:</span>{" "}
-                  {orderData.paymentMethod === "cod"
-                    ? "Cash on Delivery"
-                    : "Bank Transfer"}
-                </p>
-              </div>
+              )}
+              {orderData && (
+                <>
+                  <h2 className="text-[#F3FAF4] text-xl font-bold mb-4 mt-4">
+                    Thông tin giao hàng
+                  </h2>
+                  <div className="space-y-2 text-[#F3FAF4]/70">
+                    <p>
+                      <span className="text-[#F3FAF4]">Name:</span>{" "}
+                      {(orderData as Record<string, unknown>).fullName as string}
+                    </p>
+                    <p>
+                      <span className="text-[#F3FAF4]">Email:</span>{" "}
+                      {(orderData as Record<string, unknown>).email as string}
+                    </p>
+                    <p>
+                      <span className="text-[#F3FAF4]">Phone:</span>{" "}
+                      {(orderData as Record<string, unknown>).phone as string}
+                    </p>
+                    <p>
+                      <span className="text-[#F3FAF4]">Address:</span>{" "}
+                      {(orderData as Record<string, unknown>).address as string}
+                    </p>
+                    <p>
+                      <span className="text-[#F3FAF4]">City:</span>{" "}
+                      {(orderData as Record<string, unknown>).city as string}
+                    </p>
+                    <p>
+                      <span className="text-[#F3FAF4]">Payment:</span>{" "}
+                      {(orderData as Record<string, unknown>).paymentMethod === "cod"
+                        ? "Cash on Delivery"
+                        : "Bank Transfer"}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           )}
 

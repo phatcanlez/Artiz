@@ -27,6 +27,8 @@ export interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  thumbnailUrls?: string[];
+  model3DUrls?: string[];
   size?: string;
   material?: string;
   productPolicy?: string;
@@ -37,269 +39,295 @@ export interface Product {
   reviewCount: number;
 }
 
-// Load mock data from public folder to ensure it works in production builds
-async function loadMockData<T>(filename: string): Promise<T> {
-  try {
-    const response = await fetch(`/mock/${filename}`);
-    if (!response.ok) {
-      throw new Error(`Failed to load ${filename}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(`Error loading mock data ${filename}:`, error);
-    throw error;
-  }
+// Orders (e-commerce)
+export interface CreateOrderItemRequest {
+  productId: number;
+  quantity: number;
+  price: number;
 }
 
-// Cache for loaded mock data
-let productsCache: Product[] | null = null;
-let dashboardSummaryCache: any = null;
-let adminUsersCache: any = null;
-let adminOrdersCache: any = null;
-let adminBlogCache: any = null;
-let authCache: any = null;
+export interface CreateOrderRequest {
+  shippingAddress: string;
+  phone: string;
+  fullName?: string;
+  email?: string;
+  city?: string;
+  postalCode?: string;
+  paymentMethod: string;
+  items: CreateOrderItemRequest[];
+}
+
+export interface CreateOrderResponse {
+  orderId: number;
+  orderInvoiceNumber: string;
+  totalAmount: number;
+}
+
+/** Request body cho API tạo checkout SePay (BE trả về CheckoutUrl + Fields đã ký). */
+export interface SePayCheckoutRequest {
+  OrderInvoiceNumber: string;
+  OrderAmount: number;
+  Currency: string;
+  OrderDescription: string;
+  PaymentMethod?: string;
+  CustomerId?: string;
+}
+
+/** Response từ BE: URL và các field để FE submit form sang SePay (JSON camelCase). */
+export interface SePayCheckoutResponse {
+  checkoutUrl: string;
+  fields: Record<string, string>;
+}
+
+export interface OrderItemDto {
+  productId: number;
+  productName: string;
+  quantity: number;
+  price: number;
+  imageUrl: string;
+}
+
+export interface OrderDto {
+  id: number;
+  orderInvoiceNumber: string;
+  totalAmount: number;
+  status: string;
+  shippingAddress?: string;
+  phone?: string;
+  createdAt: string;
+  items: OrderItemDto[];
+}
+
+function getApiBaseUrl(): string {
+  const env = (import.meta as unknown as { env?: { VITE_API_URL?: string } }).env;
+  // Ưu tiên biến môi trường VITE_API_URL; mặc định trỏ về backend đã deploy trên Fly.io
+  return env?.VITE_API_URL ?? "https://artiz-be.fly.dev";
+}
+
+// NOTE: Dự án đã chuyển sang dùng API thật từ BE. Không còn dùng mock cache trong FE.
 
 class ApiClient {
   private getAuthToken(): string | null {
     return localStorage.getItem("authToken");
   }
 
-  // Auth endpoints
+  // Auth endpoints — gọi API backend thật
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    // Mock login: luôn trả về user mock, bỏ qua mật khẩu (chỉ dùng để demo giao diện)
-    console.info("[MockAPI] login called with", credentials);
-    if (!authCache) {
-      authCache = await loadMockData<AuthResponse>("auth.json");
-    }
-    return new Promise<AuthResponse>((resolve) => {
-      setTimeout(() => resolve(authCache as AuthResponse), 400);
+    const res = await fetch(`${getApiBaseUrl()}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
     });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Đăng nhập thất bại");
+    }
+    return res.json() as Promise<AuthResponse>;
   }
 
   async register(data: RegisterRequest): Promise<AuthResponse> {
-    // Mock register: giả lập đăng ký thành công và trả về user mock
-    console.info("[MockAPI] register called with", data);
-    if (!authCache) {
-      authCache = await loadMockData<AuthResponse>("auth.json");
-    }
-    return new Promise<AuthResponse>((resolve) => {
-      setTimeout(() => resolve(authCache as AuthResponse), 400);
+    const res = await fetch(`${getApiBaseUrl()}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Đăng ký thất bại");
+    }
+    return res.json() as Promise<AuthResponse>;
+  }
+
+  // Orders — tạo đơn hàng và lấy danh sách đơn của user
+  async createOrder(data: CreateOrderRequest): Promise<CreateOrderResponse> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập để đặt hàng");
+    const res = await fetch(`${getApiBaseUrl()}/api/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.status === 401) {
+      // Token hết hạn / không hợp lệ -> bắt user đăng nhập lại
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại trước khi đặt hàng.");
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tạo đơn hàng thất bại");
+    }
+    return res.json() as Promise<CreateOrderResponse>;
+  }
+
+  /** Tạo thông tin checkout SePay (BE ký, FE nhận CheckoutUrl + Fields để submit form). */
+  async createSePayCheckout(data: SePayCheckoutRequest): Promise<SePayCheckoutResponse> {
+    const res = await fetch(`${getApiBaseUrl()}/api/payments/sepay/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tạo checkout SePay thất bại");
+    }
+    return res.json() as Promise<SePayCheckoutResponse>;
+  }
+
+  /** Tạo lại checkout SePay cho đơn đang chờ thanh toán (cần đăng nhập). */
+  async createSePayCheckoutForOrder(orderId: number): Promise<SePayCheckoutResponse> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const res = await fetch(`${getApiBaseUrl()}/api/payments/sepay/checkout/order/${orderId}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tạo checkout SePay thất bại");
+    }
+    return res.json() as Promise<SePayCheckoutResponse>;
+  }
+
+  async getMyOrders(): Promise<OrderDto[]> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const res = await fetch(`${getApiBaseUrl()}/api/orders/my`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+    }
+    if (!res.ok) throw new Error("Không thể tải danh sách đơn hàng");
+    return res.json() as Promise<OrderDto[]>;
+  }
+
+  async getOrder(id: number): Promise<OrderDto> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const res = await fetch(`${getApiBaseUrl()}/api/orders/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+    }
+    if (res.status === 404) {
+      throw new Error("Không tìm thấy đơn hàng.");
+    }
+    if (!res.ok) {
+      throw new Error("Không thể tải chi tiết đơn hàng.");
+    }
+    return res.json() as Promise<OrderDto>;
+  }
+
+  /** Upload ảnh lên R2 (Admin). Trả về URL công khai. */
+  async uploadProductImage(file: File): Promise<{ url: string }> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`${getApiBaseUrl()}/api/storage/upload/image?folder=products`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn.");
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tải ảnh lên thất bại");
+    }
+    return res.json() as Promise<{ url: string }>;
+  }
+
+  /** Upload file 3D (.glb, .gltf) lên R2. Trả về URL công khai. */
+  async uploadProduct3D(file: File): Promise<{ url: string }> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`${getApiBaseUrl()}/api/storage/upload/3d?folder=models`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn.");
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tải file 3D lên thất bại");
+    }
+    return res.json() as Promise<{ url: string }>;
   }
 
   // Product endpoints
   async getProducts(search?: string): Promise<Product[]> {
-    if (!productsCache) {
-      productsCache = await loadMockData<Product[]>("products.json");
-    }
-    let products = productsCache;
-
-    if (search) {
-      const lower = search.toLowerCase();
-      products = products.filter(
-        (p) =>
-          p.name.toLowerCase().includes(lower) ||
-          p.description.toLowerCase().includes(lower),
-      );
-    }
-
-    return new Promise<Product[]>((resolve) => {
-      setTimeout(() => resolve(products), 300);
-    });
+    const url = new URL(`${getApiBaseUrl()}/api/products`);
+    if (search) url.searchParams.set("search", search);
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error("Không thể tải danh sách sản phẩm");
+    return res.json() as Promise<Product[]>;
   }
 
   async getProduct(id: number): Promise<Product> {
-    if (!productsCache) {
-      productsCache = await loadMockData<Product[]>("products.json");
-    }
-    const found = productsCache.find((p) => p.id === id);
-    if (!found) {
-      throw new Error("Product not found in mock data");
-    }
-
-    return new Promise<Product>((resolve) => {
-      setTimeout(() => resolve(found), 300);
-    });
+    const res = await fetch(`${getApiBaseUrl()}/api/products/${id}`);
+    if (res.status === 404) throw new Error("Không tìm thấy sản phẩm");
+    if (!res.ok) throw new Error("Không thể tải thông tin sản phẩm");
+    return res.json() as Promise<Product>;
   }
 
-  // Generic request for admin endpoints or custom calls
+  // Generic request for admin endpoints or custom calls (REAL backend)
   async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const method = (options.method || "GET").toUpperCase();
-
-    // Dashboard summary
-    if (endpoint === "/admin/dashboard/summary" && method === "GET") {
-      if (!dashboardSummaryCache) {
-        dashboardSummaryCache = await loadMockData(
-          "admin-dashboard-summary.json",
-        );
-      }
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(dashboardSummaryCache as T), 300);
-      });
+    const token = this.getAuthToken();
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    };
+    if (token) {
+      (headers as any).Authorization = `Bearer ${token}`;
     }
-
-    // Admin users
-    if (endpoint === "/admin/users" && method === "GET") {
-      if (!adminUsersCache) {
-        adminUsersCache = await loadMockData("admin-users.json");
-      }
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminUsersCache as T), 300);
-      });
-    }
-
-    // Admin orders
-    if (endpoint === "/admin/orders" && method === "GET") {
-      if (!adminOrdersCache) {
-        adminOrdersCache = await loadMockData("admin-orders.json");
-      }
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminOrdersCache as T), 300);
-      });
-    }
-
-    if (endpoint.startsWith("/admin/orders/") && method === "PUT") {
-      // Giả lập cập nhật trạng thái đơn hàng, không lưu lại (UI chỉ cần thành công)
-      console.info("[MockAPI] update order status", endpoint, options.body);
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(undefined as T), 200);
-      });
-    }
-
-    // Admin products
-    if (endpoint === "/admin/products" && method === "GET") {
-      if (!productsCache) {
-        productsCache = await loadMockData<Product[]>("products.json");
-      }
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(productsCache as T), 300);
-      });
-    }
-
-    if (endpoint === "/admin/products" && method === "POST") {
-      console.info("[MockAPI] create product", options.body);
-      if (!productsCache) {
-        productsCache = await loadMockData<Product[]>("products.json");
-      }
-      const body = options.body
-        ? (JSON.parse(options.body as string) as Partial<Product>)
-        : {};
-      const mockProduct: Product = {
-        id: productsCache.reduce((max, p) => Math.max(max, p.id), 0) + 1,
-        name: body.name ?? "New Mock Product",
-        description: body.description ?? "",
-        price: body.price ?? 0,
-        imageUrl:
-          body.imageUrl ??
-          "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
-        size: body.size,
-        material: body.material,
-        productPolicy: body.productPolicy,
-        productPreservation: body.productPreservation,
-        deliveryTax: body.deliveryTax,
-        stock: body.stock ?? 0,
-        averageRating: 5,
-        reviewCount: 0,
-      };
-
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(mockProduct as T), 300);
-      });
-    }
-
-    if (endpoint.startsWith("/admin/products/") && method === "PUT") {
-      console.info("[MockAPI] update product", endpoint, options.body);
-      const body = options.body
-        ? (JSON.parse(options.body as string) as Partial<Product>)
-        : {};
-
-      const mockProduct: Product = {
-        id: Number(endpoint.split("/").pop()),
-        name: body.name ?? "Updated Mock Product",
-        description: body.description ?? "",
-        price: body.price ?? 0,
-        imageUrl:
-          body.imageUrl ??
-          "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
-        size: body.size,
-        material: body.material,
-        productPolicy: body.productPolicy,
-        productPreservation: body.productPreservation,
-        deliveryTax: body.deliveryTax,
-        stock: body.stock ?? 0,
-        averageRating: 5,
-        reviewCount: 0,
-      };
-
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(mockProduct as T), 300);
-      });
-    }
-
-    if (endpoint.startsWith("/admin/products/") && method === "DELETE") {
-      console.info("[MockAPI] delete product", endpoint);
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(undefined as T), 200);
-      });
-    }
-
-    // Admin blog
-    if (endpoint === "/admin/blog" && method === "GET") {
-      if (!adminBlogCache) {
-        adminBlogCache = await loadMockData("admin-blog.json");
-      }
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(adminBlogCache as T), 300);
-      });
-    }
-
-    if (endpoint === "/admin/blog" && method === "POST") {
-      console.info("[MockAPI] create blog", options.body);
-      if (!adminBlogCache) {
-        adminBlogCache = await loadMockData("admin-blog.json");
-      }
-      const body = options.body ? JSON.parse(options.body as string) : {};
-      const mockPost = {
-        id:
-          (adminBlogCache as { id: number }[]).reduce(
-            (max, p) => Math.max(max, p.id),
-            0,
-          ) + 1,
-        createdAt: new Date().toISOString(),
-        isPublished: true,
-        ...body,
-      };
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(mockPost as T), 300);
-      });
-    }
-
-    if (endpoint.startsWith("/admin/blog/") && method === "PUT") {
-      console.info("[MockAPI] update blog", endpoint, options.body);
-      const body = options.body ? JSON.parse(options.body as string) : {};
-      const id = Number(endpoint.split("/").pop());
-      const mockPost = {
-        id,
-        createdAt: new Date().toISOString(),
-        isPublished: true,
-        ...body,
-      };
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(mockPost as T), 300);
-      });
-    }
-
-    if (endpoint.startsWith("/admin/blog/") && method === "DELETE") {
-      console.info("[MockAPI] delete blog", endpoint);
-      return new Promise<T>((resolve) => {
-        setTimeout(() => resolve(undefined as T), 200);
-      });
-    }
-
-    console.warn("[MockAPI] Unhandled mock endpoint", endpoint, options);
-    return new Promise<T>((_resolve, reject) => {
-      reject(new Error(`No mock implemented for endpoint: ${endpoint}`));
+    const path = endpoint.startsWith("/api") ? endpoint : `/api${endpoint.startsWith("/") ? endpoint : "/" + endpoint}`;
+    const res = await fetch(`${getApiBaseUrl()}${path}`, {
+      ...options,
+      headers,
     });
+
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn hoặc bạn không có quyền. Vui lòng đăng nhập lại.");
+    }
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const msg = (err as { message?: string }).message;
+      throw new Error(msg ?? `Yêu cầu thất bại (${res.status})`);
+    }
+
+    if (res.status === 204) {
+      // NoContent
+      return undefined as T;
+    }
+
+    return res.json() as Promise<T>;
   }
 }
 
