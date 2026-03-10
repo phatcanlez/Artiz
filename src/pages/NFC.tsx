@@ -335,33 +335,16 @@ const PulseOfMatter: React.FC = () => (
 const CraftingFuture: React.FC = () => (
   <section className="w-full bg-black py-0">
     {/* Inset container — same margins as StarDivider */}
-    <div
-      className="mx-[60px] sm:mx-[80px] md:mx-[100px] relative overflow-hidden"
-      style={{ minHeight: "clamp(260px, 40vw, 500px)" }}
-    >
-      {/* Background image */}
-      <img
-        src="/images/image 55.png"
-        alt="Crafting the Future"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+    <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] relative overflow-hidden">
+      <video
+        src="/video/quá trình.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-full object-cover block"
+        style={{ minHeight: "clamp(260px, 40vw, 500px)" }}
       />
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50" />
-
-      {/* Centred text block */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-10 sm:px-16 text-center">
-        <h2
-          className="text-white font-black uppercase leading-tight"
-          style={{ fontFamily: SVN, fontSize: "clamp(22px, 4vw, 60px)" }}
-        >
-          CRAFTING THE FUTURE – THE FUSION
-          <br />
-          OF ALGORITHM AND ARTISAN.
-        </h2>
-        <p className="text-white text-xs sm:text-sm mt-3 tracking-[0.25em] uppercase font-semibold">
-          Artiz 3d studio
-        </p>
-      </div>
     </div>
   </section>
 );
