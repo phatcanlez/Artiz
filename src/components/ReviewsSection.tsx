@@ -1,4 +1,7 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient, type ReviewDto } from "@/lib/api";
+import { Spinner } from "@/components/ui/Spinner";
 
 interface ReviewProps {
   name: string;
@@ -7,7 +10,20 @@ interface ReviewProps {
   comment: string;
 }
 
-const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
+const Stars: React.FC<{ rating: number }> = ({ rating }) => {
+  const r = Math.max(0, Math.min(5, Math.round(rating)));
+  return (
+    <div className="flex items-center gap-1">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className={i < r ? "text-[#facc15]" : "text-white/30"}>
+          ★
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const Review: React.FC<ReviewProps> = ({ name, date, rating, comment }) => {
   return (
     <article className="mb-[25px]">
       <div className="flex w-full items-stretch gap-5 flex-wrap justify-between">
@@ -21,12 +37,7 @@ const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
           </div>
         </div>
         <div className="flex items-center gap-2 mt-[43px] max-md:mt-10">
-          <img
-            src="https://api.builder.io/api/v1/image/assets/7c252285b2084f26866cf7cf5b5da26b/43bc5df14a6e20815bace5f66747152a3533e6e9?placeholderIfAbsent=true"
-            className="aspect-[6.25] object-contain w-[206px] shrink-0 max-w-full"
-            alt="Rating stars"
-          />
-          <span className="text-[#F3FAF4] text-xs">(120)</span>
+          <Stars rating={rating} />
         </div>
       </div>
       <p className="text-[#F3FAF4] text-xl font-normal mt-[25px]">{comment}</p>
@@ -34,45 +45,54 @@ const Review: React.FC<ReviewProps> = ({ name, date, comment }) => {
   );
 };
 
-const ReviewsSection: React.FC = () => {
-  const reviews = [
-    {
-      name: "Quốc Phong",
-      date: "17/03/2025",
-      rating: 5,
-      comment:
-        "Mình không nghĩ chiếc nhẫn này lại đẹp đến vậy cho đến khi nhận hàng. Thiết kế đơn giản nhưng tinh tế, đeo lên tay nhìn rất hài hòa và sang. Mình đeo suốt cả tuần, rửa tay hay làm việc cũng không bị trầy hay xỉn màu gì cả. Cảm giác chất liệu chắc, mịn và thoải mái. Nói chung là quá ưng, nhìn ngoài còn đẹp hơn ảnh nhiều luôn.",
-    },
-    {
-      name: "Quốc Phong",
-      date: "17/03/2025",
-      rating: 5,
-      comment:
-        "Mình mua tặng bạn mà nhìn ngoài còn đẹp hơn trong ảnh. Form chắc tay, sáng nhẹ kiểu tinh tế, bạn mình thích lắm.",
-    },
-    {
-      name: "Quốc Phong",
-      date: "17/03/2025",
-      rating: 5,
-      comment:
-        "Giao hàng nhanh, hộp đóng gói cẩn thận. Nhẫn đeo vừa tay, kiểu dáng hợp trend. Sẽ ủng hộ thêm mẫu khác.",
-    },
-  ];
+const formatDate = (s: string) => {
+  try {
+    return new Date(s).toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  } catch {
+    return s;
+  }
+};
+
+const ReviewsSection: React.FC<{ productId?: number }> = ({ productId }) => {
+  const { data, isLoading, error } = useQuery<ReviewDto[]>({
+    queryKey: ["reviews", productId],
+    enabled: typeof productId === "number",
+    queryFn: () => apiClient.getReviewsByProduct(productId as number),
+  });
 
   return (
     <section className="flex-1">
       <h2 className="text-[#F3FAF4] text-xl sm:text-2xl md:text-[32px] font-bold mb-4 sm:mb-[30px]">
         Recent Reviews
       </h2>
-      {reviews.map((review, index) => (
-        <Review
-          key={index}
-          name={review.name}
-          date={review.date}
-          rating={review.rating}
-          comment={review.comment}
-        />
-      ))}
+      {!productId ? (
+        <p className="text-white/60">Đang tải sản phẩm...</p>
+      ) : isLoading ? (
+        <div className="text-white/70 py-8 flex items-center gap-2">
+          <Spinner sizeClassName="h-5 w-5" />
+          <span>Đang tải đánh giá...</span>
+        </div>
+      ) : error ? (
+        <p className="text-red-400 py-4">
+          Không thể tải đánh giá. {(error as Error).message}
+        </p>
+      ) : !data || data.length === 0 ? (
+        <p className="text-white/60">Chưa có đánh giá nào.</p>
+      ) : (
+        data.map((r) => (
+          <Review
+            key={r.id}
+            name={r.reviewerName}
+            date={formatDate(r.createdAt)}
+            rating={r.rating}
+            comment={r.comment}
+          />
+        ))
+      )}
     </section>
   );
 };

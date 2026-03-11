@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 
@@ -16,10 +16,22 @@ const Header: React.FC = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Đồng bộ ô tìm kiếm với query khi vào /products?search=...
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("search");
+    if (location.pathname === "/products" && q != null) {
+      setSearchQuery(q);
+    }
+  }, [location.pathname, location.search]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search query:", searchQuery);
+    const q = searchQuery.trim();
+    navigate(q ? `/products?search=${encodeURIComponent(q)}` : "/products");
+    setMenuOpen(false);
   };
 
   const handleAccountClick = (e: React.MouseEvent) => {

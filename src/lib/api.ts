@@ -98,6 +98,46 @@ export interface OrderDto {
   items: OrderItemDto[];
 }
 
+/** Gửi phản hồi từ trang Contact (khách, không cần đăng nhập). */
+export interface FeedbackSubmitRequest {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+}
+
+/** Một bản ghi phản hồi (admin xem / trả lời). */
+export interface FeedbackDto {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  adminReply?: string;
+  createdAt: string;
+  repliedAt?: string;
+}
+
+export interface ReviewDto {
+  id: number;
+  productId: number;
+  reviewerName: string;
+  reviewerEmail: string;
+  rating: number;
+  comment: string;
+  helpfulVotes: number;
+  createdAt: string;
+  isHidden?: boolean;
+}
+
+export interface ReviewCreateRequest {
+  productId: number;
+  reviewerName: string;
+  reviewerEmail: string;
+  rating: number;
+  comment: string;
+}
+
 function getApiBaseUrl(): string {
   const env = (import.meta as unknown as { env?: { VITE_API_URL?: string } }).env;
   // Ưu tiên biến môi trường VITE_API_URL (dùng cho FE deploy trên Vercel trỏ đến BE Fly.io)
@@ -231,6 +271,61 @@ class ApiClient {
       throw new Error("Không thể tải chi tiết đơn hàng.");
     }
     return res.json() as Promise<OrderDto>;
+  }
+
+  /** Lấy danh sách phản hồi của user đang đăng nhập. */
+  async getMyFeedback(): Promise<FeedbackDto[]> {
+    return this.request<FeedbackDto[]>("/contact/feedback/my");
+  }
+
+  async getReviewsByProduct(productId: number): Promise<ReviewDto[]> {
+    return this.request<ReviewDto[]>(`/reviews/product/${productId}`);
+  }
+
+  async createReview(payload: ReviewCreateRequest): Promise<ReviewDto> {
+    return this.request<ReviewDto>("/reviews", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  /** Tối ưu file .glb (Admin utility). Trả về file blob để tải về. */
+  async optimateGlb(file: File): Promise<{ blob: Blob; headers: Headers }> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập (Admin) để dùng tiện ích này");
+
+    const form = new FormData();
+    form.append("file", file);
+
+    const res = await fetch(`${getApiBaseUrl()}/api/tools/optimate`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn hoặc bạn không có quyền. Vui lòng đăng nhập lại.");
+    }
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? `Tối ưu thất bại (${res.status})`);
+    }
+
+    const blob = await res.blob();
+    return { blob, headers: res.headers };
+  }
+
+  /** Gửi phản hồi từ trang Contact (không cần đăng nhập). */
+  async submitFeedback(data: FeedbackSubmitRequest): Promise<{ message: string }> {
+    // Use the shared request() helper so FE always hits the same base URL + /api prefix logic
+    // (and gets consistent error handling).
+    return this.request<{ message: string }>("/contact/feedback", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
   }
 
   /** Upload ảnh lên R2 (Admin). Trả về URL công khai. */

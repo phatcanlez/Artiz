@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { BarChart2, Users, Package, FileText, ShoppingBag } from "lucide-react";
+import { BarChart2, Users, Package, FileText, ShoppingBag, MessageSquare, Star } from "lucide-react";
 
 const AdminLayout: React.FC = () => {
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
@@ -112,6 +112,26 @@ const AdminLayout: React.FC = () => {
                 >
                   <FileText />
                   <span>Blog</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={isActive("/admin/feedback")}
+                  onClick={() => navigate("/admin/feedback")}
+                  className="text-sm"
+                >
+                  <MessageSquare />
+                  <span>Phản hồi</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={isActive("/admin/reviews")}
+                  onClick={() => navigate("/admin/reviews")}
+                  className="text-sm"
+                >
+                  <Star />
+                  <span>Reviews</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

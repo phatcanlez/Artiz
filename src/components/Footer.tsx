@@ -108,11 +108,6 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-white transition-colors">
-                Scan Ai
-              </a>
-            </li>
-            <li>
               <a
                 href="/products"
                 className="hover:text-white transition-colors"
@@ -314,11 +309,6 @@ const Footer: React.FC = () => {
               <li>
                 <a href="/about" className="hover:text-white transition-colors">
                   About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Scan Ai
                 </a>
               </li>
               <li>

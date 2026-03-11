@@ -64,12 +64,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${
+              outOfStock ? "opacity-60 grayscale" : ""
+            }`}
           />
           {outOfStock && (
-            <div className="absolute top-3 left-3 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-md border border-white/20">
-              HẾT HÀNG
-            </div>
+            <>
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span className="inline-flex items-center justify-center px-6 py-2 border-[3px] border-red-500 text-red-500 font-black uppercase tracking-[0.35em] text-sm sm:text-lg rotate-[-18deg] bg-black/40">
+                  SOLD OUT
+                </span>
+              </div>
+            </>
           )}
         </div>
 

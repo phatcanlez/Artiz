@@ -106,13 +106,11 @@ const NFCHero: React.FC = () => (
       <div className="flex-1" />
 
       {/* Bottom bar: subtitle left — social right */}
-      <div className="flex items-end justify-between px-6 sm:px-10 md:px-16 pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
-        <p className="text-white/60 text-xs sm:text-sm leading-5 max-w-[220px]">
-          Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang
-          <br />
-          phong cách đầy cá tính. Không chỉ là một món phụ kiện,
-          <br />
-          đây là một tuyên ngôn về phong cách riêng biệt.
+      <div className="flex items-end justify-between px-[60px] sm:px-[80px] md:px-[100px] pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
+        <p className="text-white/60 text-xs sm:text-sm leading-6 max-w-xl">
+          Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang <br /> phong
+          cách đầy cá tính. Không chỉ là một món phụ kiện, <br /> đây là một
+          tuyên ngôn về phong cách riêng biệt.
         </p>
 
         <div className="flex items-center gap-4 sm:gap-5">
@@ -364,6 +362,9 @@ const CraftingFuture: React.FC = () => (
           className="w-full h-full object-cover block"
         />
       </div>
+    </div>
+    <div className="mt-10">
+      <StarDivider />
     </div>
   </section>
 );

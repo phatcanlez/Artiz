@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/Spinner";
 import {
   ChartContainer,
   ChartTooltip,
@@ -35,16 +36,22 @@ const AdminDashboard: React.FC = () => {
   });
 
   if (isLoading) {
-    return <div className="text-white/70">Đang tải dashboard...</div>;
-  }
-  if (error || !data) {
     return (
-      <div className="text-red-400">
-        Không thể tải dashboard. {(error as Error | undefined)?.message}
+      <div className="flex items-center justify-center gap-2 text-white/70 py-12">
+        <Spinner sizeClassName="h-6 w-6" />
+        <span>Đang tải dashboard...</span>
       </div>
     );
   }
-  const monthlyData = data.monthlyRevenue.map((m) => ({
+  if (error || !data) {
+    return (
+      <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-red-400">
+        <p className="font-medium">Không thể tải dashboard.</p>
+        <p className="text-sm mt-1">{(error as Error | undefined)?.message ?? "Vui lòng đăng nhập lại với tài khoản Admin."}</p>
+      </div>
+    );
+  }
+  const monthlyData = (data.monthlyRevenue ?? []).map((m) => ({
     name: `${m.month}/${m.year.toString().slice(-2)}`,
     revenue: m.revenue,
     orders: m.ordersCount,
@@ -104,7 +111,7 @@ const AdminDashboard: React.FC = () => {
               </CardHeader>
               <CardContent className="flex items-baseline justify-between pt-0">
                 <span className="text-3xl font-bold">
-                  {data.totalRevenue.toLocaleString("vi-VN")}₫
+                  {Number(data.totalRevenue ?? 0).toLocaleString("vi-VN")}₫
                 </span>
               </CardContent>
             </Card>

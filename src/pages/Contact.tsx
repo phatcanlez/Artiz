@@ -1,9 +1,11 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StarDivider from "@/components/ui/StarDivider";
 import { SparkleIcon } from "@/components/ui/SparkleIcon";
 import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
+import { apiClient } from "@/lib/api";
+import { Spinner } from "@/components/ui/Spinner";
 
 const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
 const ARIAL = "'Arial Black', Impact, sans-serif";
@@ -25,18 +27,35 @@ const Contact: React.FC = () => {
     message: "",
   });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  ) => {
+    setError(null);
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
+    setError(null);
+    setLoading(true);
+    try {
+      await apiClient.submitFeedback({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim() || undefined,
+        message: form.message.trim(),
+      });
+      setSent(true);
       setForm({ name: "", phone: "", email: "", message: "" });
-    }, 3000);
+      setTimeout(() => setSent(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gửi phản hồi thất bại.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -163,11 +182,16 @@ const Contact: React.FC = () => {
             {sent ? (
               <div className="bg-[#e8e8e8] p-8 text-center">
                 <p className="text-green-600 font-semibold text-sm">
-                  {"Gửi thành công! Chúng tôi sẽ liên hệ sớm."}
+                  Gửi thành công! Chúng tôi sẽ liên hệ sớm.
                 </p>
               </div>
             ) : (
               <form onSubmit={submit} className="flex flex-col gap-4">
+                {error && (
+                  <p className="text-red-500 text-sm bg-red-500/10 border border-red-500/30 px-3 py-2">
+                    {error}
+                  </p>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-white font-bold text-sm mb-1 block">
@@ -222,13 +246,15 @@ const Contact: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-1/2 bg-white text-black text-sm font-bold uppercase py-3 hover:bg-white/90 transition-colors tracking-widest"
+                  disabled={loading}
+                  className="w-1/2 bg-white text-black text-sm font-bold uppercase py-3 hover:bg-white/90 transition-colors tracking-widest disabled:opacity-60 flex items-center justify-center gap-2"
                   style={{
                     fontFamily: ARIAL,
                     clipPath:
                       "polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
                   }}
                 >
+                  {loading && <Spinner sizeClassName="h-4 w-4" />}
                   Send a message
                 </button>
               </form>

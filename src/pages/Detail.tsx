@@ -81,14 +81,14 @@ const Detail = () => {
           {/* Reviews Section */}
           <section className="flex flex-col lg:flex-row gap-8 lg:gap-20 min-w-0">
             <div className="flex-1 min-w-0">
-              <ReviewsSection />
+              <ReviewsSection productId={product?.id} />
             </div>
             {/* Divider Vertical on desktop */}
             <div className="hidden lg:block w-px bg-white/20 relative shrink-0">
               <div className="absolute top-0 -left-[5px] w-2 h-full bg-gradient-to-b from-transparent via-white/20 to-transparent opacity-50"></div>
             </div>
             <div className="w-full lg:w-[400px] shrink-0 max-w-full">
-              <ReviewForm />
+              <ReviewForm productId={product?.id} onCreated={() => { /* ReviewsSection uses react-query cache; safe no-op */ }} />
             </div>
           </section>
         </div>

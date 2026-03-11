@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
-import { apiClient, type OrderDto } from "@/lib/api";
+import { apiClient, type FeedbackDto, type OrderDto } from "@/lib/api";
 
 const statusLabel: Record<string, string> = {
   // Trạng thái tiếng Anh cũ
@@ -43,6 +43,10 @@ const Account: React.FC = () => {
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [ordersError, setOrdersError] = useState<string | null>(null);
   const [payingOrderId, setPayingOrderId] = useState<number | null>(null);
+  const [showAllOrders, setShowAllOrders] = useState(false);
+  const [feedback, setFeedback] = useState<FeedbackDto[]>([]);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -61,6 +65,17 @@ const Account: React.FC = () => {
       .finally(() => setOrdersLoading(false));
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    setFeedbackLoading(true);
+    setFeedbackError(null);
+    apiClient
+      .getMyFeedback()
+      .then(setFeedback)
+      .catch((e) => setFeedbackError(e instanceof Error ? e.message : "Không tải được phản hồi"))
+      .finally(() => setFeedbackLoading(false));
+  }, [isAuthenticated]);
+
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -76,6 +91,15 @@ const Account: React.FC = () => {
         hour: "2-digit",
         minute: "2-digit",
       });
+    } catch {
+      return s;
+    }
+  };
+
+  const formatDateTime = (s?: string) => {
+    if (!s) return "";
+    try {
+      return new Date(s).toLocaleString("vi-VN");
     } catch {
       return s;
     }
@@ -212,7 +236,17 @@ const Account: React.FC = () => {
 
           {/* Lịch sử đơn hàng */}
           <section className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-            <h2 className="text-[#F3FAF4] text-xl font-bold mb-4">Lịch sử đơn hàng</h2>
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-[#F3FAF4] text-xl font-bold">Lịch sử đơn hàng</h2>
+              {!ordersLoading && !ordersError && orders.length > 5 && (
+                <button
+                  onClick={() => setShowAllOrders((v) => !v)}
+                  className="px-3 py-1.5 rounded-md border border-white/30 text-[#F3FAF4] text-sm font-semibold hover:bg-white/10 transition-colors"
+                >
+                  {showAllOrders ? "Thu gọn" : "Xem tất cả"}
+                </button>
+              )}
+            </div>
             {ordersLoading ? (
               <p className="text-[#F3FAF4]/70">Đang tải...</p>
             ) : ordersError ? (
@@ -221,7 +255,7 @@ const Account: React.FC = () => {
               <p className="text-[#F3FAF4]/70">Bạn chưa có đơn hàng nào.</p>
             ) : (
               <div className="space-y-4">
-                {orders.map((order) => (
+                {(showAllOrders ? orders : orders.slice(0, 5)).map((order) => (
                   <div
                     key={order.id}
                     className="bg-white/5 border border-white/10 rounded-lg p-4 cursor-pointer hover:border-[#44FF00]/60 transition-colors"
@@ -254,6 +288,68 @@ const Account: React.FC = () => {
                       <p className="text-[#F3FAF4]/50 text-xs mt-2 truncate" title={order.shippingAddress}>
                         {order.shippingAddress}
                       </p>
+                    )}
+                  </div>
+                ))}
+                {!showAllOrders && orders.length > 5 && (
+                  <p className="text-[#F3FAF4]/50 text-xs">
+                    Đang hiển thị 5/{orders.length} đơn gần nhất.
+                  </p>
+                )}
+              </div>
+            )}
+          </section>
+
+          {/* Phản hồi của tôi */}
+          <section className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-[#F3FAF4] text-xl font-bold">Phản hồi của tôi</h2>
+              <button
+                onClick={() => {
+                  setFeedbackLoading(true);
+                  setFeedbackError(null);
+                  apiClient
+                    .getMyFeedback()
+                    .then(setFeedback)
+                    .catch((e) => setFeedbackError(e instanceof Error ? e.message : "Không tải được phản hồi"))
+                    .finally(() => setFeedbackLoading(false));
+                }}
+                className="px-3 py-1.5 rounded-md border border-white/30 text-[#F3FAF4] text-sm font-semibold hover:bg-white/10 transition-colors disabled:opacity-60"
+                disabled={feedbackLoading}
+              >
+                {feedbackLoading ? "Đang tải..." : "Tải lại"}
+              </button>
+            </div>
+
+            {feedbackError ? (
+              <p className="text-red-400">{feedbackError}</p>
+            ) : feedbackLoading ? (
+              <p className="text-[#F3FAF4]/70">Đang tải...</p>
+            ) : feedback.length === 0 ? (
+              <p className="text-[#F3FAF4]/70">Bạn chưa gửi phản hồi nào.</p>
+            ) : (
+              <div className="space-y-4">
+                {feedback.map((f) => (
+                  <div key={f.id} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-[#F3FAF4] font-semibold">
+                        {formatDateTime(f.createdAt)}
+                      </span>
+                      <span className={f.repliedAt ? "text-[#44FF00] text-sm font-semibold" : "text-[#F3FAF4]/60 text-sm"}>
+                        {f.repliedAt ? "Đã được phản hồi" : "Chưa phản hồi"}
+                      </span>
+                    </div>
+                    <div className="mt-3">
+                      <p className="text-[#F3FAF4]/70 text-xs mb-1">Nội dung bạn gửi</p>
+                      <p className="text-[#F3FAF4] whitespace-pre-wrap text-sm">{f.message}</p>
+                    </div>
+                    {f.adminReply && (
+                      <div className="mt-4 border-t border-white/10 pt-3">
+                        <p className="text-[#44FF00] text-xs mb-1">
+                          Phản hồi từ Artiz {f.repliedAt ? `(${formatDateTime(f.repliedAt)})` : ""}
+                        </p>
+                        <p className="text-[#F3FAF4] whitespace-pre-wrap text-sm">{f.adminReply}</p>
+                      </div>
                     )}
                   </div>
                 ))}

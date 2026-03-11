@@ -23,6 +23,7 @@ import Contact from "./pages/Contact";
 import View3D from "./pages/View3D";
 import Test3D from "./pages/Test3D";
 import TestSePay from "./pages/TestSePay";
+import Optimate from "./pages/Optimate";
 import NotFound from "./pages/NotFound";
 import OrderDetail from "./pages/OrderDetail";
 import NFC from "./pages/NFC";
@@ -32,6 +33,8 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AdminFeedback from "./pages/admin/AdminFeedback";
+import AdminReviews from "./pages/admin/AdminReviews";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +66,7 @@ const App = () => (
               <Route path="/view-3d" element={<View3D />} />
               <Route path="/test-3d" element={<Test3D />} />
               <Route path="/test-sepay" element={<TestSePay />} />
+              <Route path="/optimate" element={<Optimate />} />
               <Route path="/nfc/:id" element={<NFC />} />
               <Route path="/nfc" element={<NFC />} />
               <Route path="/admin" element={<AdminLayout />}>
@@ -71,6 +75,8 @@ const App = () => (
                 <Route path="products" element={<AdminProducts />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="blog" element={<AdminBlog />} />
+                <Route path="feedback" element={<AdminFeedback />} />
+                <Route path="reviews" element={<AdminReviews />} />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

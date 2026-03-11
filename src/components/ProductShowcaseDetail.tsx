@@ -7,7 +7,8 @@ interface ProductShowcaseDetailProps {
 }
 
 const ProductShowcaseDetail: React.FC<ProductShowcaseDetailProps> = ({ product }) => {
-  const [viewMode, setViewMode] = useState<"3d" | "image">("3d");
+  // Default to image view on product detail
+  const [viewMode, setViewMode] = useState<"3d" | "image">("image");
   const [activeIndex, setActiveIndex] = useState(0);
 
   const imageList = [

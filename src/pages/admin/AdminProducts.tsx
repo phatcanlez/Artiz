@@ -142,6 +142,18 @@ const AdminProducts: React.FC = () => {
     [allImageUrls, setImageUrls]
   );
 
+  const setAsCover = useCallback(
+    (index: number) => {
+      if (index <= 0) return;
+      const next = [...allImageUrls];
+      const chosen = next[index];
+      next.splice(index, 1);
+      next.unshift(chosen);
+      setImageUrls(next);
+    },
+    [allImageUrls, setImageUrls]
+  );
+
   const handle3DFiles = useCallback(
     async (files: FileList | null) => {
       if (!files?.length) return;
@@ -353,6 +365,16 @@ const AdminProducts: React.FC = () => {
                           <span className="absolute bottom-0 left-0 right-0 text-[10px] bg-black/70 text-emerald-400 text-center rounded-b">
                             Đại diện
                           </span>
+                        )}
+                        {i !== 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setAsCover(i)}
+                            className="absolute bottom-0 left-0 right-0 text-[10px] bg-black/70 text-white/90 text-center rounded-b opacity-0 group-hover:opacity-100 hover:text-emerald-300 transition-opacity"
+                            title="Đặt làm ảnh đại diện"
+                          >
+                            Đặt làm đại diện
+                          </button>
                         )}
                         <button
                           type="button"

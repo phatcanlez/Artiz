@@ -1,21 +1,28 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import { apiClient, type Product } from "@/lib/api";
 import { Spinner } from "@/components/ui/Spinner";
 
 const ProductGrid: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState("new");
-  const [showFilterPanel, setShowFilterPanel] = useState(false);
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get("search") ?? undefined;
+
+  const [activeFilter, setActiveFilter] = useState<
+    "new" | "bestseller" | "custom" | null
+  >(null);
+  const [sortPrice, setSortPrice] = useState<"default" | "asc" | "desc">("default");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showCustomMessage, setShowCustomMessage] = useState(false);
 
   useEffect(() => {
     let mounted = true;
     setLoading(true);
     setError(null);
     apiClient
-      .getProducts()
+      .getProducts(searchTerm)
       .then((data) => {
         if (!mounted) return;
         setProducts(data);
@@ -31,7 +38,7 @@ const ProductGrid: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [searchTerm]);
 
   const cards = useMemo(
     () =>
@@ -40,6 +47,7 @@ const ProductGrid: React.FC = () => {
         image: p.imageUrl,
         title: p.name,
         price: `${new Intl.NumberFormat("vi-VN").format(p.price)} VND`,
+        priceValue: p.price,
         rating: Math.round(p.averageRating ?? 0),
         reviews: p.reviewCount ?? 0,
         outOfStock: (p.stock ?? 0) <= 0,
@@ -47,11 +55,35 @@ const ProductGrid: React.FC = () => {
     [products],
   );
 
-  const filterButtons = [
+  const filterButtons: {
+    id: "new" | "bestseller" | "custom";
+    label: string;
+  }[] = [
     { id: "new", label: "NEW COLLECTION" },
     { id: "bestseller", label: "BEST SELLER" },
     { id: "custom", label: "CUSTOM FOR YOU" },
   ];
+
+  const visibleCards = useMemo(() => {
+    const result = [...cards];
+
+    // Sort theo activeFilter hoặc sort giá
+    if (sortPrice === "asc") {
+      result.sort((a, b) => (a.priceValue ?? 0) - (b.priceValue ?? 0));
+    } else if (sortPrice === "desc") {
+      result.sort((a, b) => (b.priceValue ?? 0) - (a.priceValue ?? 0));
+    } else if (activeFilter === "bestseller") {
+      result.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+    } else if (activeFilter === "new") {
+      result.sort((a, b) => b.id - a.id);
+    }
+    // custom: giữ nguyên thứ tự
+
+    // Luôn đẩy sản phẩm hết hàng xuống cuối (giữ nguyên thứ tự tương đối của từng nhóm)
+    result.sort((a, b) => Number(a.outOfStock) - Number(b.outOfStock));
+
+    return result;
+  }, [cards, sortPrice, activeFilter]);
 
   return (
     <section className="w-full pb-10 sm:pb-16 pt-0 px-4 sm:px-6 lg:px-24 overflow-hidden">
@@ -81,7 +113,15 @@ const ProductGrid: React.FC = () => {
           {filterButtons.map((btn) => (
             <button
               key={btn.id}
-              onClick={() => setActiveFilter(btn.id)}
+              onClick={() => {
+                if (activeFilter === btn.id) {
+                  setActiveFilter(null);
+                  setShowCustomMessage(false);
+                } else {
+                  setActiveFilter(btn.id);
+                  setShowCustomMessage(btn.id === "custom");
+                }
+              }}
               className={`px-6 sm:px-8 py-3 font-bold text-xs sm:text-sm tracking-widest border rounded-md transition-all duration-200 touch-manipulation ${
                 activeFilter === btn.id
                   ? "bg-[#44FF00] text-black border-[#44FF00]"
@@ -92,87 +132,33 @@ const ProductGrid: React.FC = () => {
             </button>
           ))}
         </div>
-      </div>
 
-      {/* Filter & Sort */}
-      <div className="relative flex items-center gap-4 mb-8">
-        {/* FILTER button — pill shape như ảnh */}
-        <button
-          onClick={() => setShowFilterPanel(!showFilterPanel)}
-          className="flex items-center gap-2 px-5 py-2 bg-[#D9D7D7] text-black font-bold text-sm tracking-widest rounded-md hover:bg-[#44FF00] transition-all duration-200"
-        >
-          FILTER
-          <img
-            src="/element/mage_filter-fill.png"
-            alt="filter"
-            className="w-5 h-5 object-contain"
-          />
-        </button>
-
-        {/* Filter Panel dropdown */}
-        {showFilterPanel && (
-          <div className="absolute top-12 left-0 z-50 bg-[#1a1a2e] border border-white/20 rounded-xl p-6 shadow-2xl min-w-[260px]">
-            <h4 className="text-white font-bold text-sm tracking-widest mb-4">
-              BỘ LỌC
-            </h4>
-
-            {/* Category */}
-            <div className="mb-4">
-              <p className="text-white/60 text-xs mb-2 uppercase tracking-wider">
-                Danh mục
-              </p>
-              {["Kính mắt", "Tai nghe", "Ốp lưng", "Phụ kiện"].map((item) => (
-                <label
-                  key={item}
-                  className="flex items-center gap-3 mb-2 cursor-pointer group"
-                >
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 accent-[#44FF00] cursor-pointer"
-                  />
-                  <span className="text-white text-sm transition-colors">
-                    {item}
-                  </span>
-                </label>
-              ))}
-            </div>
-
-            {/* Price Range */}
-            <div className="mb-4">
-              <p className="text-white/60 text-xs mb-2 uppercase tracking-wider">
-                Giá
-              </p>
-              {["Dưới 500K", "500K - 2TR", "2TR - 5TR", "Trên 5TR"].map(
-                (item) => (
-                  <label
-                    key={item}
-                    className="flex items-center gap-3 mb-2 cursor-pointer group"
-                  >
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 accent-[#44FF00] cursor-pointer"
-                    />
-                    <span className="text-white text-sm transition-colors">
-                      {item}
-                    </span>
-                  </label>
-                ),
-              )}
-            </div>
-
-            {/* Apply button */}
-            <button
-              onClick={() => setShowFilterPanel(false)}
-              className="w-full py-2 bg-[#44FF00] text-black font-bold text-sm tracking-widest rounded-md hover:bg-[#33cc00] transition-colors mt-2"
-            >
-              ÁP DỤNG
-            </button>
-          </div>
+        {showCustomMessage && (
+          <p className="relative z-10 mt-4 text-center text-xs sm:text-sm text-[#44FF00] font-semibold tracking-widest">
+            Để custom thiết kế riêng, vui lòng liên hệ trực tiếp với nhà bán hàng.
+          </p>
         )}
       </div>
 
+      {/* Sort */}
+      <div className="relative z-10 flex items-center gap-4 mb-4">
+        <label className="text-white/80 text-sm font-medium">Sắp xếp:</label>
+        <select
+          value={sortPrice}
+          onChange={(e) =>
+            setSortPrice(e.target.value as "default" | "asc" | "desc")
+          }
+          aria-label="Sắp xếp theo giá"
+          className="bg-black border border-white/30 text-white rounded-md px-4 py-2 text-sm font-medium tracking-wide focus:outline-none focus:border-[#44FF00]"
+        >
+          <option value="default">Mới nhất</option>
+          <option value="asc">Giá tăng dần</option>
+          <option value="desc">Giá giảm dần</option>
+        </select>
+      </div>
+
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {loading ? (
           <div className="text-white/70 col-span-full text-center py-10 flex items-center justify-center gap-3">
             <Spinner sizeClassName="h-6 w-6" />
@@ -182,8 +168,12 @@ const ProductGrid: React.FC = () => {
           <div className="text-red-400 col-span-full text-center py-10">
             {error}
           </div>
+        ) : visibleCards.length === 0 ? (
+          <div className="col-span-full text-center py-20 sm:py-24 text-white/60">
+            Không có sản phẩm nào phù hợp với bộ lọc hiện tại.
+          </div>
         ) : (
-          cards.map((product) => (
+          visibleCards.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -197,6 +187,7 @@ const ProductGrid: React.FC = () => {
           ))
         )}
       </div>
+      <div className="py-10"></div>
     </section>
   );
 };
