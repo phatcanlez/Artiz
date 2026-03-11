@@ -254,12 +254,12 @@ const NFCGallery: React.FC = () => (
   <section className="w-full bg-black pb-12">
     <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] grid grid-cols-3 gap-4 sm:gap-6">
       {galleryImages.map((src, i) => (
-        <div key={i} className="relative group">
+        <div key={i} className="relative">
           {/* Photo — fixed aspect so frame fits perfectly */}
           <img
             src={src}
             alt={`Gallery ${i + 1}`}
-            className="w-full object-cover object-center block transition-transform duration-500 group-hover:scale-[1.03]"
+            className="w-full object-cover object-center block"
             style={{ aspectRatio: "16/10" }}
           />
           {/* NFC bracket frame overlay */}
