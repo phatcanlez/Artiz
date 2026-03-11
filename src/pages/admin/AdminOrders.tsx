@@ -56,14 +56,13 @@ const AdminOrders: React.FC = () => {
     queryFn: () => apiClient.request<AdminOrder[]>("/admin/orders"),
   });
 
-  const [statusEditing, setStatusEditing] = useState<Record<number, string>>(
-    {}
-  );
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<AdminOrder | null>(null);
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentJson, setPaymentJson] = useState<string>("");
-  const [paymentSummary, setPaymentSummary] = useState<Record<string, string>>({});
+  const [paymentSummary, setPaymentSummary] = useState<Record<string, string>>(
+    {},
+  );
 
   const pick = (obj: any, paths: string[]): any => {
     for (const p of paths) {
@@ -84,22 +83,56 @@ const AdminOrders: React.FC = () => {
 
   const buildPaymentSummary = (data: any) => {
     const status =
-      pick(data, ["data.order_status", "order_status", "data.status", "status"]) ?? "";
+      pick(data, [
+        "data.order_status",
+        "order_status",
+        "data.status",
+        "status",
+      ]) ?? "";
     const amount =
-      pick(data, ["data.order_amount", "order_amount", "data.amount", "amount"]) ?? "";
-    const currency =
-      pick(data, ["data.currency", "currency"]) ?? "VND";
+      pick(data, [
+        "data.order_amount",
+        "order_amount",
+        "data.amount",
+        "amount",
+      ]) ?? "";
+    const currency = pick(data, ["data.currency", "currency"]) ?? "VND";
     const method =
-      pick(data, ["data.payment_method", "payment_method", "data.method", "method"]) ?? "";
+      pick(data, [
+        "data.payment_method",
+        "payment_method",
+        "data.method",
+        "method",
+      ]) ?? "";
     const paidAt =
-      pick(data, ["data.paid_at", "paid_at", "data.updated_at", "updated_at", "data.created_at", "created_at"]) ?? "";
+      pick(data, [
+        "data.paid_at",
+        "paid_at",
+        "data.updated_at",
+        "updated_at",
+        "data.created_at",
+        "created_at",
+      ]) ?? "";
     const invoice =
-      pick(data, ["data.order_invoice_number", "order_invoice_number", "data.invoice", "invoice"]) ?? "";
+      pick(data, [
+        "data.order_invoice_number",
+        "order_invoice_number",
+        "data.invoice",
+        "invoice",
+      ]) ?? "";
     const txn =
-      pick(data, ["data.transaction_id", "transaction_id", "data.txn_id", "txn_id", "data.order_id", "order_id"]) ?? "";
+      pick(data, [
+        "data.transaction_id",
+        "transaction_id",
+        "data.txn_id",
+        "txn_id",
+        "data.order_id",
+        "order_id",
+      ]) ?? "";
 
     const fmtAmount = (() => {
-      const n = typeof amount === "number" ? amount : parseFloat(String(amount));
+      const n =
+        typeof amount === "number" ? amount : parseFloat(String(amount));
       if (!Number.isFinite(n)) return String(amount);
       return `${new Intl.NumberFormat("vi-VN").format(n)} ${currency}`;
     })();
@@ -120,19 +153,13 @@ const AdminOrders: React.FC = () => {
     return s;
   };
 
-  const updateStatusMutation = useMutation({
-    mutationFn: (payload: { id: number; status: string }) =>
-      apiClient.request<void>(`/admin/orders/${payload.id}/status`, {
-        method: "PUT",
-        body: JSON.stringify({ status: payload.status }),
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
-    },
-  });
-
   const updateInfoMutation = useMutation({
-    mutationFn: (payload: AdminOrder) =>
+    mutationFn: (payload: {
+      id: number;
+      shippingAddress?: string;
+      phone?: string;
+      status: string;
+    }) =>
       apiClient.request<void>(`/admin/orders/${payload.id}`, {
         method: "PUT",
         body: JSON.stringify({
@@ -157,7 +184,9 @@ const AdminOrders: React.FC = () => {
 
   const fetchPayment = useMutation({
     mutationFn: (orderInvoiceNumber: string) =>
-      apiClient.request<any>(`/admin/payments/sepay/order/${orderInvoiceNumber}`),
+      apiClient.request<any>(
+        `/admin/payments/sepay/order/${orderInvoiceNumber}`,
+      ),
     onSuccess: (data) => {
       setPaymentSummary(buildPaymentSummary(data));
       setPaymentJson(JSON.stringify(data, null, 2));
@@ -207,37 +236,7 @@ const AdminOrders: React.FC = () => {
                   <TableCell>
                     {order.totalAmount.toLocaleString("vi-VN")}₫
                   </TableCell>
-                  <TableCell>
-                    <Select
-                      value={statusEditing[order.id] ?? order.status}
-                      onValueChange={(value) =>
-                        setStatusEditing((prev) => ({
-                          ...prev,
-                          [order.id]: value,
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="h-8 w-32 bg-transparent border-white/30 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#020617] text-white border-white/20">
-                        {/* Trạng thái tiếng Việt đang dùng trong BE */}
-                        <SelectItem value="Chờ thanh toán">Chờ thanh toán</SelectItem>
-                        <SelectItem value="Chờ xác nhận">Chờ xác nhận</SelectItem>
-                        <SelectItem value="Đã xác nhận và đang chuẩn bị">Đã xác nhận và đang chuẩn bị</SelectItem>
-                        <SelectItem value="Đang giao hàng">Đang giao hàng</SelectItem>
-                        <SelectItem value="Thành công">Thành công</SelectItem>
-                        <SelectItem value="Đã hủy">Đã hủy</SelectItem>
-
-                        {/* Backward compatibility (trạng thái cũ) */}
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Processing">Processing</SelectItem>
-                        <SelectItem value="Shipped">Shipped</SelectItem>
-                        <SelectItem value="Delivered">Delivered</SelectItem>
-                        <SelectItem value="Cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
+                  <TableCell>{order.status}</TableCell>
                   <TableCell>
                     {new Date(order.createdAt).toLocaleString("vi-VN")}
                   </TableCell>
@@ -245,22 +244,9 @@ const AdminOrders: React.FC = () => {
                     <div className="flex gap-2 justify-end">
                       <Button
                         size="sm"
-                        className="h-8 px-3 bg-emerald-500 hover:bg-emerald-600 text-white text-xs"
-                        disabled={updateStatusMutation.isPending}
-                        onClick={() =>
-                          updateStatusMutation.mutate({
-                            id: order.id,
-                            status: statusEditing[order.id] ?? order.status,
-                          })
-                        }
-                      >
-                        Lưu status
-                      </Button>
-                      <Button
-                        size="sm"
                         className="h-8 px-3 bg-sky-500 hover:bg-sky-600 text-white text-xs"
                         onClick={() => {
-                          setEditing({ ...order, status: statusEditing[order.id] ?? order.status });
+                          setEditing(order);
                           setOpen(true);
                         }}
                       >
@@ -270,10 +256,14 @@ const AdminOrders: React.FC = () => {
                         size="sm"
                         className="h-8 px-3 bg-zinc-700 hover:bg-zinc-600 text-white text-xs"
                         disabled={fetchPayment.isPending}
-                        onClick={() => fetchPayment.mutate(order.orderInvoiceNumber)}
+                        onClick={() =>
+                          fetchPayment.mutate(order.orderInvoiceNumber)
+                        }
                       >
                         <span className="inline-flex items-center gap-2">
-                          {fetchPayment.isPending && <Spinner sizeClassName="h-3 w-3" />}
+                          {fetchPayment.isPending && (
+                            <Spinner sizeClassName="h-3 w-3" />
+                          )}
                           Payment
                         </span>
                       </Button>
@@ -308,22 +298,46 @@ const AdminOrders: React.FC = () => {
                   <Label>Địa chỉ giao hàng</Label>
                   <Input
                     value={editing.shippingAddress ?? ""}
-                    onChange={(e) => setEditing((p) => (p ? { ...p, shippingAddress: e.target.value } : p))}
+                    onChange={(e) =>
+                      setEditing((p) =>
+                        p ? { ...p, shippingAddress: e.target.value } : p,
+                      )
+                    }
                   />
                 </div>
                 <div>
                   <Label>Số điện thoại</Label>
                   <Input
                     value={editing.phone ?? ""}
-                    onChange={(e) => setEditing((p) => (p ? { ...p, phone: e.target.value } : p))}
+                    onChange={(e) =>
+                      setEditing((p) =>
+                        p ? { ...p, phone: e.target.value } : p,
+                      )
+                    }
                   />
                 </div>
                 <div>
                   <Label>Trạng thái</Label>
-                  <Input
+                  <Select
                     value={editing.status}
-                    onChange={(e) => setEditing((p) => (p ? { ...p, status: e.target.value } : p))}
-                  />
+                    onValueChange={(value) =>
+                      setEditing((p) => (p ? { ...p, status: value } : p))
+                    }
+                  >
+                    <SelectTrigger className="mt-1 h-9 w-48 bg-transparent border-white/30 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#020617] text-white border-white/20">
+                      <SelectItem value="Chờ thanh toán">Chờ thanh toán</SelectItem>
+                      <SelectItem value="Chờ xác nhận">Chờ xác nhận</SelectItem>
+                      <SelectItem value="Đã xác nhận và đang chuẩn bị">
+                        Đang chuẩn bị
+                      </SelectItem>
+                      <SelectItem value="Đang giao hàng">Đang giao hàng</SelectItem>
+                      <SelectItem value="Thành công">Thành công</SelectItem>
+                      <SelectItem value="Đã hủy">Đã hủy</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             )}
@@ -338,10 +352,20 @@ const AdminOrders: React.FC = () => {
               <Button
                 className="bg-sky-500 hover:bg-sky-600"
                 disabled={!editing || updateInfoMutation.isPending}
-                onClick={() => editing && updateInfoMutation.mutate(editing)}
+                onClick={() =>
+                  editing &&
+                  updateInfoMutation.mutate({
+                    id: editing.id,
+                    shippingAddress: editing.shippingAddress,
+                    phone: editing.phone,
+                    status: editing.status,
+                  })
+                }
               >
                 <span className="inline-flex items-center gap-2">
-                  {updateInfoMutation.isPending && <Spinner sizeClassName="h-4 w-4" />}
+                  {updateInfoMutation.isPending && (
+                    <Spinner sizeClassName="h-4 w-4" />
+                  )}
                   Lưu
                 </span>
               </Button>
