@@ -9,6 +9,7 @@ const CheckoutSuccess: React.FC = () => {
   const location = useLocation();
   const { clearCart } = useCart();
   const [order, setOrder] = useState<OrderDto | null>(null);
+  const [statusUpdateError, setStatusUpdateError] = useState<string | null>(null);
 
   useEffect(() => {
     clearCart(); // Xóa giỏ khi vào trang success (từ COD hoặc quay lại từ SePay)
@@ -33,9 +34,10 @@ const CheckoutSuccess: React.FC = () => {
     if (!orderInvoiceNumber) return;
     if (paymentFromQuery?.toLowerCase() === "success") {
       // Update order status in BE: "Chờ thanh toán" -> "Chờ xác nhận"
-      apiClient.markOrderPaid(orderInvoiceNumber).catch(() => {
-        // ignore (user not logged / token expired)
-      });
+      apiClient
+        .markOrderPaid(orderInvoiceNumber)
+        .then(() => setStatusUpdateError(null))
+        .catch((e) => setStatusUpdateError(e instanceof Error ? e.message : "Không thể cập nhật trạng thái đơn"));
     }
     // Nếu user đang đăng nhập, lấy đơn theo danh sách "my orders" để hiển thị thêm thông tin.
     (async () => {
@@ -47,7 +49,7 @@ const CheckoutSuccess: React.FC = () => {
         // ignore (chưa đăng nhập / token hết hạn / không fetch được)
       }
     })();
-  }, [orderInvoiceNumber]);
+  }, [orderInvoiceNumber, paymentFromQuery]);
 
   return (
     <div className="flex flex-col overflow-x-hidden items-stretch bg-black min-h-screen">
@@ -87,6 +89,11 @@ const CheckoutSuccess: React.FC = () => {
           {paymentFromQuery && (
             <p className="text-[#F3FAF4]/50 text-sm mb-6">
               Trạng thái thanh toán: <strong className="text-[#F3FAF4]">{paymentFromQuery}</strong>
+            </p>
+          )}
+          {statusUpdateError && (
+            <p className="text-red-400 text-sm mb-6">
+              Không thể cập nhật trạng thái đơn hàng tự động. {statusUpdateError}
             </p>
           )}
 
