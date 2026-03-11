@@ -238,6 +238,14 @@ class ApiClient {
     return res.json() as Promise<SePayCheckoutResponse>;
   }
 
+  /** Sau khi payment success, cập nhật trạng thái đơn -> "Chờ xác nhận". */
+  async markOrderPaid(orderInvoiceNumber: string): Promise<{ message: string; status?: string }> {
+    return this.request<{ message: string; status?: string }>("/payments/sepay/mark-paid", {
+      method: "POST",
+      body: JSON.stringify({ orderInvoiceNumber }),
+    });
+  }
+
   async getMyOrders(): Promise<OrderDto[]> {
     const token = this.getAuthToken();
     if (!token) throw new Error("Bạn cần đăng nhập");
@@ -377,6 +385,7 @@ class ApiClient {
   // Product endpoints
   async getProducts(search?: string): Promise<Product[]> {
     const url = new URL(`${getApiBaseUrl()}/api/products`);
+    url.searchParams.set("lite", "true");
     if (search) url.searchParams.set("search", search);
     const res = await fetch(url.toString());
     if (!res.ok) throw new Error("Không thể tải danh sách sản phẩm");

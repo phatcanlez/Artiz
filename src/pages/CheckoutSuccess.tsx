@@ -31,6 +31,12 @@ const CheckoutSuccess: React.FC = () => {
 
   useEffect(() => {
     if (!orderInvoiceNumber) return;
+    if (paymentFromQuery?.toLowerCase() === "success") {
+      // Update order status in BE: "Chờ thanh toán" -> "Chờ xác nhận"
+      apiClient.markOrderPaid(orderInvoiceNumber).catch(() => {
+        // ignore (user not logged / token expired)
+      });
+    }
     // Nếu user đang đăng nhập, lấy đơn theo danh sách "my orders" để hiển thị thêm thông tin.
     (async () => {
       try {
