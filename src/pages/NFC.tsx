@@ -5,7 +5,15 @@ import Footer from "@/components/Footer";
 import StarDivider from "@/components/ui/StarDivider";
 import { SparkleIcon } from "@/components/ui/SparkleIcon";
 import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
-import { Facebook, Youtube, Instagram } from "lucide-react";
+import {
+  Facebook,
+  Youtube,
+  Instagram,
+  Sun,
+  Shield,
+  Droplets,
+  Baby,
+} from "lucide-react";
 
 const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
 const ARIAL = "'Arial Black', Impact, sans-serif";
@@ -35,39 +43,53 @@ const nfcFrames = [
 // ── Makers data ───────────────────────────────────────────────
 const makers = [
   {
-    name: "THE MAKERS",
-    role: "Art Director",
-    image: "/images/col1.jpg",
+    name: "Giang",
+    role: "Art director",
+    image: "/images/Leader -Giang 1.png",
   },
   {
-    name: "THE MAKERS",
-    role: "Lead Designer",
-    image: "/images/col2.jpg",
+    name: "Duyên",
+    role: "Marketing director",
+    image: "/images/Duyên 1.png",
   },
   {
-    name: "THE MAKERS",
-    role: "3D Artist",
-    image: "/images/col3.jpg",
+    name: "Khang",
+    role: "Visual designer",
+    image: "/images/Khang 1.png",
+  },
+  {
+    name: "Phát",
+    role: "Developer",
+    image: "/images/Phát 1.png",
+  },
+  {
+    name: "Phong",
+    role: "UI/UX designer",
+    image: "/images/Phong 1.png",
+  },
+  {
+    name: "Thương",
+    role: "Marketing manager",
+    image: "/images/Thương 1.png",
   },
 ];
 
 // ── Section: Hero ────────────────────────────────────────────
 const NFCHero: React.FC = () => (
   <section className="relative w-full bg-black overflow-hidden">
-    {/* ── Background banner image ── */}
-    <img
-      src="/images/nfc banner.png"
-      alt=""
-      aria-hidden="true"
-      className="absolute inset-0 w-full h-full object-cover object-center"
-    />
-    {/* Subtle dark veil so text stays legible */}
-    <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-
     {/* ── Inner content wrapper ── */}
-    <div className="relative z-10 w-full min-h-[480px] sm:min-h-[560px] md:min-h-[640px] flex flex-col">
-      {/* Title row — behind product image vertically */}
-      <div className="w-full text-center pt-10 sm:pt-14 px-4">
+    <div className="relative w-full min-h-[480px] sm:min-h-[560px] md:min-h-[640px] flex flex-col">
+      {/* Product image — z-10, sits BEHIND the title text */}
+      <div className="absolute inset-0 flex items-center justify-center z-10 pt-8">
+        <img
+          src="/images/airpodAtNfc.png"
+          alt="Sản phẩm"
+          className="w-[340px] sm:w-[500px] md:w-[650px] lg:w-[780px] object-contain"
+        />
+      </div>
+
+      {/* Title row — z-20, sits ON TOP of the product image */}
+      <div className="w-full text-center pt-6 sm:pt-10 px-2 relative z-20">
         <h1
           className="text-white font-black uppercase leading-none tracking-tighter select-none"
           style={{
@@ -76,26 +98,21 @@ const NFCHero: React.FC = () => (
             letterSpacing: "-0.02em",
           }}
         >
-          Airpods Pro Case
+          AIRPOD CASE
         </h1>
       </div>
 
-      {/* Product image — removed-bg, layered on top of title */}
-      <div className="flex-1 flex items-center justify-center -mt-10 sm:-mt-16 md:-mt-24">
-        <img
-          src="/images/tải_xuống__8_-removebg-preview 1.png"
-          alt="Sản phẩm"
-          className="relative z-20 w-[360px] sm:w-[520px] md:w-[680px] lg:w-[820px] object-contain drop-shadow-2xl"
-          style={{ filter: "drop-shadow(0 8px 60px rgba(0,0,0,0.7))" }}
-        />
-      </div>
+      {/* Spacer to push bottom bar down */}
+      <div className="flex-1" />
 
       {/* Bottom bar: subtitle left — social right */}
-      <div className="flex items-end justify-between px-6 sm:px-10 md:px-16 pb-6 sm:pb-8 mt-auto gap-4">
-        <p className="text-white/60 text-xs sm:text-sm leading-5 max-w-[200px]">
-          Chúng tôi cung cấp dịch vụ in 3D chất lượng
+      <div className="flex items-end justify-between px-6 sm:px-10 md:px-16 pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
+        <p className="text-white/60 text-xs sm:text-sm leading-5 max-w-[220px]">
+          Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang
           <br />
-          Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D
+          phong cách đầy cá tính. Không chỉ là một món phụ kiện,
+          <br />
+          đây là một tuyên ngôn về phong cách riêng biệt.
         </p>
 
         <div className="flex items-center gap-4 sm:gap-5">
@@ -336,15 +353,17 @@ const CraftingFuture: React.FC = () => (
   <section className="w-full bg-black py-0">
     {/* Inset container — same margins as StarDivider */}
     <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] relative overflow-hidden">
-      <video
-        src="/video/quá trình.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full h-full object-cover block"
-        style={{ minHeight: "clamp(260px, 40vw, 500px)" }}
-      />
+      {/* Giữ tỉ lệ video, không ép height cố định */}
+      <div className="w-full aspect-video">
+        <video
+          src="/video/quá trình.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover block"
+        />
+      </div>
     </div>
   </section>
 );
@@ -389,7 +408,7 @@ const TheMakers: React.FC = () => {
           <div className="relative z-10 py-4">
             <h2
               className="text-white font-black uppercase"
-              style={{ fontFamily: ARIAL, fontSize: "clamp(28px, 5vw, 60px)" }}
+              style={{ fontFamily: SVN, fontSize: "clamp(28px, 5vw, 60px)" }}
             >
               THE MAKERS
             </h2>
@@ -419,7 +438,7 @@ const TheMakers: React.FC = () => {
         </div>
 
         {/* 3-card carousel */}
-        <div className="flex items-center gap-3 sm:gap-5">
+        <div className="mx-auto w-full max-w-7xl flex items-center gap-2 sm:gap-4">
           {/* Prev button */}
           <button
             onClick={prev}
@@ -431,44 +450,44 @@ const TheMakers: React.FC = () => {
 
           {/* Left card — smaller */}
           <div className="flex-1 opacity-50 transition-all duration-300">
-            <div
-              className="overflow-hidden"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)",
-              }}
-            >
+            <div className="relative overflow-hidden bg-black aspect-[3/4]">
+              <img
+                src="/images/Mask group.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-70"
+              />
               <img
                 src={makers[prevIdx].image}
                 alt={makers[prevIdx].name}
-                className="w-full aspect-[3/4] object-cover object-center"
+                className="relative z-10 w-full h-full object-cover object-center"
               />
             </div>
           </div>
 
           {/* Center card — larger */}
-          <div className="flex-[1.5] transition-all duration-300">
-            <div
-              className="overflow-hidden"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%)",
-              }}
-            >
+          <div className="flex-[1.25] transition-all duration-300">
+            <div className="relative overflow-hidden bg-black aspect-[3/4]">
+              <img
+                src="/images/Mask group.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-70"
+              />
               <img
                 src={makers[idx].image}
                 alt={makers[idx].name}
-                className="w-full aspect-[3/4] object-cover object-center"
+                className="relative z-10 w-full h-full object-cover object-center"
               />
             </div>
             <div className="text-center mt-4">
               <p
-                className="text-white font-black uppercase text-base"
-                style={{ fontFamily: ARIAL }}
+                className="text-white font-black uppercase text-lg sm:text-2xl"
+                style={{ fontFamily: SVN, letterSpacing: "-0.02em" }}
               >
                 {makers[idx].name}
               </p>
-              <p className="text-white/50 text-xs tracking-widest uppercase mt-1">
+              <p className="text-white/50 text-xs sm:text-sm tracking-widest uppercase mt-1">
                 {makers[idx].role}
               </p>
             </div>
@@ -476,17 +495,17 @@ const TheMakers: React.FC = () => {
 
           {/* Right card — smaller */}
           <div className="flex-1 opacity-50 transition-all duration-300">
-            <div
-              className="overflow-hidden"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)",
-              }}
-            >
+            <div className="relative overflow-hidden bg-black aspect-[3/4]">
+              <img
+                src="/images/Mask group.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-70"
+              />
               <img
                 src={makers[nextIdx].image}
                 alt={makers[nextIdx].name}
-                className="w-full aspect-[3/4] object-cover object-center"
+                className="relative z-10 w-full h-full object-cover object-center"
               />
             </div>
           </div>
@@ -547,24 +566,32 @@ const SmartStewardship: React.FC = () => (
             "polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%)",
         }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
           {[
             {
-              title: "Warranty Tracking",
-              desc: "Theo dõi bảo hành qua NFC chip tích hợp, đảm bảo chính sách sau bán hàng minh bạch.",
+              title: 'Né "nắng gắt"',
+              desc: "Giảm tác động của ánh nắng/UV lên bề mặt, giúp giữ màu và độ bền theo thời gian.",
+              Icon: Sun,
             },
             {
-              title: "Authentication",
-              desc: "Xác thực nguồn gốc sản phẩm tức thì bằng một lần chạm điện thoại vào chip NFC.",
+              title: 'Né "va đập"',
+              desc: "Chất liệu và kết cấu tối ưu để hạn chế trầy xước, móp méo khi rơi hoặc va chạm.",
+              Icon: Shield,
             },
             {
-              title: "Ownership Transfer",
-              desc: "Chuyển nhượng quyền sở hữu kỹ thuật số an toàn giữa các collectors.",
+              title: 'Né "nước"',
+              desc: "Hạn chế tiếp xúc với nước để tránh ố bề mặt và ảnh hưởng chất lượng theo thời gian.",
+              Icon: Droplets,
+            },
+            {
+              title: 'Né "tầm tay trẻ em"',
+              desc: "Để xa tầm tay trẻ em để tránh rơi vỡ hoặc nuốt phải chi tiết nhỏ.",
+              Icon: Baby,
             },
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center gap-3">
-              <div className="w-10 h-10 rounded-full border border-[#44FF00]/50 flex items-center justify-center">
-                <div className="w-3 h-3 rounded-full bg-[#44FF00]" />
+              <div className="w-10 h-10 rounded-full border border-[#44FF00]/50 flex items-center justify-center text-[#44FF00]">
+                <item.Icon className="w-5 h-5" aria-hidden="true" />
               </div>
               <h3 className="text-white font-bold text-sm uppercase tracking-wide">
                 {item.title}
