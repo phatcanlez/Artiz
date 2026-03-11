@@ -106,7 +106,7 @@ const NFCHero: React.FC = () => (
       <div className="flex-1" />
 
       {/* Bottom bar: subtitle left — social right */}
-      <div className="flex items-end justify-between px-[60px] sm:px-[80px] md:px-[100px] pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
+      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between px-4 sm:px-[60px] md:px-[80px] lg:px-[100px] pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
         <p className="text-white/60 text-xs sm:text-sm leading-6 max-w-xl">
           Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang <br /> phong
           cách đầy cá tính. Không chỉ là một món phụ kiện, <br /> đây là một
@@ -174,7 +174,7 @@ const UniqueIdentity: React.FC = () => (
       </div>
 
       {/* Title + badge — centred, inside StarDivider margin */}
-      <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] relative z-10 text-center ">
+      <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px] relative z-10 text-center ">
         <h2
           className="text-white font-black uppercase leading-tight"
           style={{ fontFamily: SVN, fontSize: "clamp(26px, 4vw, 56px)" }}
@@ -200,7 +200,7 @@ const UniqueIdentity: React.FC = () => (
     </div>
 
     {/* Two-column text with vertical divider */}
-    <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+    <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px]">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] gap-0 text-white/60 text-sm leading-7">
         <p className="pr-0 md:pr-10">
           Every ARTIZ masterpiece carries more than just a serial number. It
@@ -252,7 +252,7 @@ const UniqueIdentity: React.FC = () => (
 // ── Section: Gallery ─────────────────────────────────────────
 const NFCGallery: React.FC = () => (
   <section className="w-full bg-black pb-12">
-    <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] grid grid-cols-3 gap-4 sm:gap-6">
+    <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px] grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
       {galleryImages.map((src, i) => (
         <div key={i} className="relative">
           {/* Photo — fixed aspect so frame fits perfectly */}
@@ -279,7 +279,7 @@ const NFCGallery: React.FC = () => (
 const PulseOfMatter: React.FC = () => (
   <section className="w-full bg-black py-10">
     <StarDivider />
-    <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] mt-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px] mt-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
       {/* Left — 2 images side by side */}
       <div className="grid grid-cols-2 gap-3">
         <img
@@ -350,7 +350,7 @@ const PulseOfMatter: React.FC = () => (
 const CraftingFuture: React.FC = () => (
   <section className="w-full bg-black py-0">
     {/* Inset container — same margins as StarDivider */}
-    <div className="mx-[60px] sm:mx-[80px] md:mx-[100px] relative overflow-hidden">
+    <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px] relative overflow-hidden">
       {/* Giữ tỉ lệ video, không ép height cố định */}
       <div className="w-full aspect-video">
         <video
@@ -397,7 +397,7 @@ const TheMakers: React.FC = () => {
   return (
     <section className="w-full bg-black py-16">
       {/* ── Inset wrapper — same width as StarDivider ── */}
-      <div className="mx-[60px] sm:mx-[80px] md:mx-[100px]">
+      <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px]">
         {/* Header */}
         <div className="relative text-center mb-10">
           <div className="hidden sm:block absolute top-0 left-0 pointer-events-none">
@@ -439,7 +439,7 @@ const TheMakers: React.FC = () => {
         </div>
 
         {/* 3-card carousel */}
-        <div className="mx-auto w-full max-w-7xl flex items-center gap-2 sm:gap-4">
+        <div className="mx-auto w-full max-w-7xl flex items-center gap-1 sm:gap-4">
           {/* Prev button */}
           <button
             onClick={prev}
@@ -450,7 +450,7 @@ const TheMakers: React.FC = () => {
           </button>
 
           {/* Left card — smaller */}
-          <div className="flex-1 opacity-50 transition-all duration-300">
+          <div className="flex-[0.6] sm:flex-1 opacity-50 transition-all duration-300">
             <div className="relative overflow-hidden bg-black aspect-[3/4]">
               <img
                 src="/images/Mask group.png"
@@ -467,7 +467,7 @@ const TheMakers: React.FC = () => {
           </div>
 
           {/* Center card — larger */}
-          <div className="flex-[1.25] transition-all duration-300">
+          <div className="flex-1 sm:flex-[1.25] transition-all duration-300">
             <div className="relative overflow-hidden bg-black aspect-[3/4]">
               <img
                 src="/images/Mask group.png"
@@ -495,7 +495,7 @@ const TheMakers: React.FC = () => {
           </div>
 
           {/* Right card — smaller */}
-          <div className="flex-1 opacity-50 transition-all duration-300">
+          <div className="flex-[0.6] sm:flex-1 opacity-50 transition-all duration-300">
             <div className="relative overflow-hidden bg-black aspect-[3/4]">
               <img
                 src="/images/Mask group.png"
@@ -531,7 +531,7 @@ const TheMakers: React.FC = () => {
 
 // ── Section: Smart Stewardship ────────────────────────────────
 const SmartStewardship: React.FC = () => (
-  <section className="w-full bg-black py-16 px-4 sm:px-8">
+  <section className="w-full bg-black py-16 px-0">
     <div className="relative text-center mb-10">
       <div
         className="hidden sm:block absolute top-0 pointer-events-none"
@@ -559,15 +559,15 @@ const SmartStewardship: React.FC = () => (
     </div>
 
     {/* Service card */}
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-4 sm:mx-auto">
       <div
-        className="bg-white/5 border border-white/10 p-8 sm:p-12"
+        className="bg-white/5 border border-white/10 p-6 sm:p-8 md:p-12"
         style={{
           clipPath:
             "polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%)",
         }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
           {[
             {
               title: 'Né "nắng gắt"',
