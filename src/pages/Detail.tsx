@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "@/components/Header";
 import ProductShowcaseDetail from "@/components/ProductShowcaseDetail";
 import ProductInfo from "@/components/ProductInfo";
@@ -65,6 +65,14 @@ const Detail = () => {
             <ProductShowcaseDetail product={product ?? undefined} />
             <div className="flex-1 min-w-0 lg:max-w-[500px] mt-6 lg:mt-0">
               <ProductInfo product={productForInfo} />
+              <div className="mt-4">
+                <Link
+                  to={id ? `/nfc/${id}` : "/nfc"}
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-[#44FF00] text-black font-black tracking-[0.2em] text-[10px] uppercase hover:opacity-90 transition-opacity"
+                >
+                  Xem NFC (Digital ID)
+                </Link>
+              </div>
             </div>
           </div>
 

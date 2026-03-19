@@ -75,21 +75,17 @@ const makers = [
 ];
 
 // ── Section: Hero ────────────────────────────────────────────
-const NFCHero: React.FC = () => (
-  <section className="relative w-full bg-black overflow-hidden">
-    {/* ── Inner content wrapper ── */}
-    <div className="relative w-full min-h-[480px] sm:min-h-[560px] md:min-h-[640px] flex flex-col">
-      {/* Product image — z-10, sits BEHIND the title text */}
-      <div className="absolute inset-0 flex items-center justify-center z-10 pt-8">
-        <img
-          src="/images/airpodAtNfc.png"
-          alt="Sản phẩm"
-          className="w-[340px] sm:w-[500px] md:w-[650px] lg:w-[780px] object-contain"
-        />
-      </div>
+interface NFCHeroProps {
+  modelSrc: string;
+  title: string;
+  subtitle: string;
+}
 
-      {/* Title row — z-20, sits ON TOP of the product image */}
-      <div className="w-full text-center pt-6 sm:pt-10 px-2 relative z-20">
+const NFCHero: React.FC<NFCHeroProps> = ({ modelSrc, title, subtitle }) => (
+  <section className="w-full bg-black overflow-hidden">
+    <div className="w-full flex flex-col items-center pt-8 px-4 sm:px-6 md:px-10 lg:px-[100px] gap-6 sm:gap-8">
+      {/* Title */}
+      <div className="w-full text-center">
         <h1
           className="text-white font-black uppercase leading-none tracking-tighter select-none"
           style={{
@@ -98,22 +94,44 @@ const NFCHero: React.FC = () => (
             letterSpacing: "-0.02em",
           }}
         >
-          AIRPOD CASE
+          {title}
         </h1>
       </div>
 
-      {/* Spacer to push bottom bar down */}
-      <div className="flex-1" />
+      {/* 3D model */}
+      <div className="w-full flex items-center justify-center pb-4 sm:pb-6">
+        <model-viewer
+          key={modelSrc}
+          src={modelSrc}
+          alt="NFC product 3D model"
+          auto-rotate
+          camera-controls
+          interaction-prompt="none"
+          shadow-intensity="1"
+          environment-image="neutral"
+          loading="eager"
+          reveal="auto"
+          style={{
+            width: "min(480px, 90vw)",
+            height: "min(480px, 90vw)",
+            display: "block",
+          }}
+        >
+          <div
+            slot="poster"
+            className="flex items-center justify-center h-full text-white/50 text-xs"
+          >
+            Đang tải mô hình 3D...
+          </div>
+        </model-viewer>
+      </div>
 
-      {/* Bottom bar: subtitle left — social right */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between px-4 sm:px-[60px] md:px-[80px] lg:px-[100px] pb-6 sm:pb-8 mt-auto gap-4 relative z-30">
-        <p className="text-white/60 text-xs sm:text-sm leading-6 max-w-xl">
-          Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang <br /> phong
-          cách đầy cá tính. Không chỉ là một món phụ kiện, <br /> đây là một
-          tuyên ngôn về phong cách riêng biệt.
+      {/* Bottom row: subtitle left, social right */}
+      <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 sm:pb-8 gap-4">
+        <p className="text-white/60 text-xs sm:text-sm leading-6 max-w-xl whitespace-pre-line">
+          {subtitle}
         </p>
-
-        <div className="flex items-center gap-4 sm:gap-5">
+        <div className="flex items-center gap-4 sm:gap-5 justify-start sm:justify-end">
           <a
             href="#"
             className="text-white hover:text-[#44FF00] transition-colors"
@@ -603,13 +621,52 @@ const SmartStewardship: React.FC = () => (
 
 // ── Main NFC Page ─────────────────────────────────────────────
 const NFC: React.FC = () => {
-  useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
+
+  const numericId = id ? parseInt(id, 10) : NaN;
+  const modelById: Record<number, string> = {
+    1: "/3d/airpod.glb",
+    2: "/3d/lighter.glb",
+    3: "/3d/smartkey.glb",
+  };
+  const modelSrc = Number.isFinite(numericId)
+    ? modelById[numericId] ?? "/3d/airpod.glb"
+    : "/3d/airpod.glb";
+
+  const heroCopyById: Record<
+    number,
+    { title: string; subtitle: string }
+  > = {
+    1: {
+      title: "AIRPODS CASE",
+      subtitle:
+        "Nâng tầm chiếc AirPods của bạn với thiết kế in 3D mang\nphong cách đầy cá tính. Không chỉ là phụ kiện,\nđây là tuyên ngôn cho phong cách riêng.",
+    },
+    2: {
+      title: "LIGHTER",
+      subtitle:
+        "Thiết kế bật lửa in 3D tối giản nhưng nổi bật.\nTừng đường nét được tối ưu để vừa đẹp khi trưng bày,\nvừa “đã tay” khi sử dụng hằng ngày.",
+    },
+    3: {
+      title: "SMART KEY",
+      subtitle:
+        "Smart Key in 3D với form gọn, chắc tay và giàu chất liệu.\nChạm một lần để mở Digital ID, xác thực phiên bản\nvà lưu lại dấu ấn sở hữu của bạn.",
+    },
+  };
+
+  const heroCopy = Number.isFinite(numericId)
+    ? heroCopyById[numericId] ?? heroCopyById[1]
+    : heroCopyById[1];
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
       <Header />
       <main>
-        <NFCHero />
+        <NFCHero
+          modelSrc={modelSrc}
+          title={heroCopy.title}
+          subtitle={heroCopy.subtitle}
+        />
         <UniqueIdentity />
         <NFCGallery />
         <PulseOfMatter />
