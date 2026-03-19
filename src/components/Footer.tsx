@@ -1,7 +1,7 @@
 import React from "react";
 import { Facebook, Twitter, Youtube, Instagram } from "lucide-react";
 
-const ARIAL = "'Arial Black', Impact, sans-serif";
+const ARIAL = "'Hubot Sans', sans-serif";
 
 const socialIcons = (size: number) => [
   <a
@@ -62,32 +62,32 @@ const Footer: React.FC = () => {
             className="font-black uppercase text-base mb-3"
             style={{ fontFamily: ARIAL }}
           >
-            POLICY
+            CHÍNH SÁCH
           </h3>
           <ul className="text-gray-300 text-sm space-y-2">
             <li>
               <a href="/login" className="hover:text-white transition-colors">
-                Login
+                Đăng nhập
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-white transition-colors">
-                Privacy Policy
+                Chính sách bảo mật
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-white transition-colors">
-                Exchange Policy
+                Chính sách đổi trả
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-white transition-colors">
-                Shipping Policy
+                Chính sách vận chuyển
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-white transition-colors">
-                Payment
+                Thanh toán
               </a>
             </li>
           </ul>
@@ -99,12 +99,12 @@ const Footer: React.FC = () => {
             className="font-black uppercase text-base mb-3"
             style={{ fontFamily: ARIAL }}
           >
-            LINK
+            LIÊN KẾT
           </h3>
           <ul className="text-gray-300 text-sm space-y-2">
             <li>
               <a href="/about" className="hover:text-white transition-colors">
-                About Us
+                Về chúng tôi
               </a>
             </li>
             <li>
@@ -112,17 +112,17 @@ const Footer: React.FC = () => {
                 href="/products"
                 className="hover:text-white transition-colors"
               >
-                Products
+                Sản phẩm
               </a>
             </li>
             <li>
               <a href="/contact" className="hover:text-white transition-colors">
-                Contact Us
+                Liên hệ
               </a>
             </li>
             <li>
               <a href="/news" className="hover:text-white transition-colors">
-                News
+                Tin tức
               </a>
             </li>
           </ul>
@@ -134,17 +134,17 @@ const Footer: React.FC = () => {
             className="font-black uppercase text-base mb-3"
             style={{ fontFamily: ARIAL }}
           >
-            CUSTOMER SUPPORT
+            HỖ TRỢ KHÁCH HÀNG
           </h3>
           <ul className="text-gray-300 text-sm space-y-2">
             <li>
               <a href="#" className="hover:text-white transition-colors">
-                Ordering Guide
+                Hướng dẫn đặt hàng
               </a>
             </li>
             <li>
               <a href="/contact" className="hover:text-white transition-colors">
-                Contact
+                Liên hệ
               </a>
             </li>
             <li>
@@ -253,7 +253,7 @@ const Footer: React.FC = () => {
                 letterSpacing: "0.05em",
               }}
             >
-              POLICY
+              CHÍNH SÁCH
             </h3>
             <ul
               className="text-gray-300"
@@ -261,27 +261,27 @@ const Footer: React.FC = () => {
             >
               <li>
                 <a href="/login" className="hover:text-white transition-colors">
-                  Login
+                  Đăng nhập
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Privacy Policy
+                  Chính sách bảo mật
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Exchange Policy
+                  Chính sách đổi trả
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Shipping Policy
+                  Chính sách vận chuyển
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Payment
+                  Thanh toán
                 </a>
               </li>
             </ul>
@@ -300,7 +300,7 @@ const Footer: React.FC = () => {
                 letterSpacing: "0.05em",
               }}
             >
-              LINK
+              LIÊN KẾT
             </h3>
             <ul
               className="text-gray-300"
@@ -308,7 +308,7 @@ const Footer: React.FC = () => {
             >
               <li>
                 <a href="/about" className="hover:text-white transition-colors">
-                  About Us
+                  Về chúng tôi
                 </a>
               </li>
               <li>
@@ -316,7 +316,7 @@ const Footer: React.FC = () => {
                   href="/products"
                   className="hover:text-white transition-colors"
                 >
-                  Products
+                  Sản phẩm
                 </a>
               </li>
               <li>
@@ -324,12 +324,12 @@ const Footer: React.FC = () => {
                   href="/contact"
                   className="hover:text-white transition-colors"
                 >
-                  Contact Us
+                  Liên hệ
                 </a>
               </li>
               <li>
                 <a href="/news" className="hover:text-white transition-colors">
-                  News
+                  Tin tức
                 </a>
               </li>
             </ul>
@@ -348,7 +348,7 @@ const Footer: React.FC = () => {
                 letterSpacing: "0.05em",
               }}
             >
-              CUSTOMER SUPPORT
+              HỖ TRỢ KHÁCH HÀNG
             </h3>
             <ul
               className="text-gray-300"
@@ -356,7 +356,7 @@ const Footer: React.FC = () => {
             >
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Ordering Guide
+                  Hướng dẫn đặt hàng
                 </a>
               </li>
               <li>
@@ -364,7 +364,7 @@ const Footer: React.FC = () => {
                   href="/contact"
                   className="hover:text-white transition-colors"
                 >
-                  Contact
+                  Liên hệ
                 </a>
               </li>
               <li>

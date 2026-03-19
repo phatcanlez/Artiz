@@ -8,12 +8,12 @@ const HeroProductList: React.FC = () => {
       <h1
         className="text-white text-center uppercase leading-none w-full"
         style={{
-          fontFamily: "'SVN-Redzone', 'Arial Black', 'Impact', sans-serif",
+          fontFamily: "'SVN-Redzone', sans-serif",
           fontSize: "clamp(60px, 14vw, 160px)",
           letterSpacing: "-0.02em",
         }}
       >
-        ACCESSORIES
+        PHỤ KIỆN
       </h1>
 
       {/* StarDivider */}

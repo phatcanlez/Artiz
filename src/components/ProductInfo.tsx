@@ -72,7 +72,7 @@ const StarRating = ({
     {[1, 2, 3, 4, 5].map((i) => (
       <StarIcon key={i} fill={Math.min(1, Math.max(0, rating - (i - 1)))} />
     ))}
-    <span className="text-xs text-white/70 ml-2">( {reviews} reviews )</span>
+    <span className="text-xs text-white/70 ml-2">( {reviews} đánh giá )</span>
   </div>
 );
 
@@ -112,12 +112,12 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
   };
 
   const sections = [
-    "Product Description",
-    "Size",
-    "Material",
-    "Product policy",
-    "Product Preservation",
-    "Delivery & TAX",
+    "Mô tả sản phẩm",
+    "Kích thước",
+    "Chất liệu",
+    "Chính sách sản phẩm",
+    "Bảo quản sản phẩm",
+    "Giao hàng & Thuế",
   ];
 
   const rating = product.averageRating ?? 0;
@@ -125,22 +125,22 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
   const isOutOfStock = (product.stock ?? 0) <= 0;
 
   const sectionContent: Record<string, React.ReactNode> = {
-    "Product Description": (
+    "Mô tả sản phẩm": (
       <p>{product.description || "Chưa có mô tả sản phẩm."}</p>
     ),
-    Size: (
+    "Kích thước": (
       <p>{product.size || "Chưa có thông tin kích thước."}</p>
     ),
-    Material: (
+    "Chất liệu": (
       <p>{product.material || "Chưa có thông tin chất liệu."}</p>
     ),
-    "Product policy": (
+    "Chính sách sản phẩm": (
       <p>{product.productPolicy || "Chưa có chính sách sản phẩm."}</p>
     ),
-    "Product Preservation": (
+    "Bảo quản sản phẩm": (
       <p>{product.productPreservation || "Chưa có hướng dẫn bảo quản."}</p>
     ),
-    "Delivery & TAX": (
+    "Giao hàng & Thuế": (
       <p>{product.deliveryTax || "Chưa có thông tin giao hàng & thuế."}</p>
     ),
   };
@@ -209,7 +209,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
           className="flex-1 bg-[#D9D9D9] text-black font-extrabold text-sm tracking-wide hover:bg-white transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#D9D9D9]"
           style={{ marginLeft: "3px" }}
         >
-          {isOutOfStock ? "Hết hàng" : "Add to Cart"}
+          {isOutOfStock ? "Hết hàng" : "Thêm vào giỏ"}
         </button>
       </div>
 
@@ -218,7 +218,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
         disabled={isOutOfStock}
         className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#D9D9D9]"
       >
-        {isOutOfStock ? "Hết hàng" : "Buy it now"}
+        {isOutOfStock ? "Hết hàng" : "Mua ngay"}
       </button>
 
       {/* Accordion List */}

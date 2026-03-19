@@ -73,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <span className="inline-flex items-center justify-center px-6 py-2 border-[3px] border-red-500 text-red-500 font-black uppercase tracking-[0.35em] text-sm sm:text-lg rotate-[-18deg] bg-black/40">
-                  SOLD OUT
+                  HẾT HÀNG
                 </span>
               </div>
             </>
@@ -111,7 +111,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating */}
         <div className="flex items-center gap-1 mt-2">
           {renderStars()}
-          <span className="text-white text-xs ml-2">( {reviews} reviews )</span>
+          <span className="text-white text-xs ml-2">( {reviews} đánh giá )</span>
         </div>
 
         {/* Quick View Button — dùng quick view button.png có sẵn chữ */}

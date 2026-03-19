@@ -44,7 +44,7 @@ const CheckoutFail: React.FC = () => {
           {/* Error Message */}
           <div className="flex items-center justify-center gap-4 mb-4">
             <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
-              Payment Failed
+              Thanh Toán Thất Bại
             </h1>
           </div>
           <p className="text-[#F3FAF4]/70 text-lg mb-4">
@@ -93,14 +93,14 @@ const CheckoutFail: React.FC = () => {
                 alt=""
               />
               <span className="relative z-10 text-xl font-bold text-[#102314] group-hover:opacity-90 transition-opacity">
-                TRY AGAIN
+                THỬ LẠI
               </span>
             </button>
             <Link
               to="/cart"
               className="px-12 py-5 rounded-lg border-2 border-white text-white font-bold text-xl hover:bg-white transition-colors"
             >
-              BACK TO CART
+              QUAY LẠI GIỎ HÀNG
             </Link>
           </div>
 

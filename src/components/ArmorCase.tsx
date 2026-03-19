@@ -1,6 +1,6 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 
-const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
+const SVN = "'SVN-Redzone', sans-serif";
 
 const models = [
   {

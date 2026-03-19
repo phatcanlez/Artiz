@@ -1,12 +1,12 @@
-﻿import React from "react";
+import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StarDivider from "@/components/ui/StarDivider";
 import { SparkleIcon } from "@/components/ui/SparkleIcon";
 import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
 
-const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
-const ARIAL = "'Arial Black', Impact, sans-serif";
+const SVN = "'SVN-Redzone', sans-serif";
+const ARIAL = "'Hubot Sans', sans-serif";
 
 const S = ({ style }: { style?: React.CSSProperties }) => (
   <img
@@ -22,19 +22,19 @@ const clip = "polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)";
 const AboutUs: React.FC = () => {
   const values = [
     {
-      title: "Quality",
+      title: "Chất Lượng",
       desc: "Chất lượng là ưu tiên hàng đầu trong mọi sản phẩm chúng tôi tạo ra.",
     },
     {
-      title: "Innovation",
+      title: "Đổi Mới",
       desc: "Luôn tìm kiếm và áp dụng công nghệ mới nhất để cải thiện sản phẩm.",
     },
     {
-      title: "Customer Focus",
+      title: "Khách Hàng Là Trọng Tâm",
       desc: "Khách hàng là trung tâm của mọi quyết định và hoạt động của chúng tôi.",
     },
     {
-      title: "Sustainability",
+      title: "Bền Vững",
       desc: "Cam kết sử dụng vật liệu thân thiện với môi trường và quy trình bền vững.",
     },
   ];
@@ -53,7 +53,7 @@ const AboutUs: React.FC = () => {
             letterSpacing: "-0.02em",
           }}
         >
-          About Us
+          Về Chúng Tôi
         </h1>
       </div>
 
@@ -72,7 +72,7 @@ const AboutUs: React.FC = () => {
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl"
             style={{ fontFamily: SVN }}
           >
-            Our Story
+            Câu Chuyện Của Chúng Tôi
           </h2>
         </div>
 
@@ -121,17 +121,17 @@ const AboutUs: React.FC = () => {
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl"
             style={{ fontFamily: SVN }}
           >
-            Mission &amp; Vision
+            Sứ Mệnh &amp; Tầm Nhìn
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {[
             {
-              label: "Mission",
+              label: "Sứ Mệnh",
               text: "Mang đến những sản phẩm in 3D chất lượng cao, đáp ứng mọi nhu cầu từ sản phẩm có sẵn đến custom theo yêu cầu, với giá cả hợp lý và dịch vụ chuyên nghiệp.",
             },
             {
-              label: "Vision",
+              label: "Tầm Nhìn",
               text: "Trở thành thương hiệu hàng đầu trong lĩnh vực in 3D tại Việt Nam, được biết đến với sự sáng tạo, chất lượng và dịch vụ khách hàng xuất sắc.",
             },
           ].map((item, i) => (
@@ -173,7 +173,7 @@ const AboutUs: React.FC = () => {
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl"
             style={{ fontFamily: SVN }}
           >
-            Our Values
+            Giá Trị Của Chúng Tôi
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-4xl mx-auto">
@@ -270,7 +270,7 @@ const AboutUs: React.FC = () => {
           className="text-white uppercase leading-none"
           style={{ fontFamily: SVN, fontSize: "clamp(48px, 8vw, 100px)" }}
         >
-          Ready to Create?
+          Sẵn Sàng Sáng Tạo?
         </h2>
         <p className="text-white/60 text-sm max-w-md leading-relaxed">
           Hãy liên hệ với chúng tôi để bắt đầu dự án in 3D của bạn — từ mẫu có
@@ -285,7 +285,7 @@ const AboutUs: React.FC = () => {
               "polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px))",
           }}
         >
-          Contact Us
+          Liên Hệ Chúng Tôi
         </a>
       </section>
 

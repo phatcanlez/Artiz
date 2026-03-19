@@ -67,7 +67,7 @@ const ReviewsSection: React.FC<{ productId?: number }> = ({ productId }) => {
   return (
     <section className="flex-1">
       <h2 className="text-[#F3FAF4] text-xl sm:text-2xl md:text-[32px] font-bold mb-4 sm:mb-[30px]">
-        Recent Reviews
+        Đánh Giá Gần Đây
       </h2>
       {!productId ? (
         <p className="text-white/60">Đang tải sản phẩm...</p>

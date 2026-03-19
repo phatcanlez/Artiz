@@ -7,8 +7,8 @@ import { RightSparkleIcon } from "@/components/ui/RightSparkleIcon";
 import { apiClient } from "@/lib/api";
 import { Spinner } from "@/components/ui/Spinner";
 
-const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
-const ARIAL = "'Arial Black', Impact, sans-serif";
+const SVN = "'SVN-Redzone', sans-serif";
+const ARIAL = "'Hubot Sans', sans-serif";
 
 const S = ({ style }: { style?: React.CSSProperties }) => (
   <img
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
             letterSpacing: "-0.02em",
           }}
         >
-          Contact
+          Liên Hệ
         </h1>
       </div>
 
@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl mb-4"
             style={{ fontFamily: SVN }}
           >
-            Contact Us
+            Liên Hệ Chúng Tôi
           </h2>
           <p className="text-white/60 text-sm leading-relaxed max-w-xl">
             {
@@ -172,7 +172,7 @@ const Contact: React.FC = () => {
             className="text-white uppercase text-4xl sm:text-5xl md:text-6xl leading-none"
             style={{ fontFamily: SVN }}
           >
-            Join As A Partner
+            Trở Thành Đối Tác
           </h2>
         </div>
 
@@ -195,7 +195,7 @@ const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-white font-bold text-sm mb-1 block">
-                      Name:
+                      Họ và tên:
                     </label>
                     <input
                       name="name"
@@ -207,13 +207,13 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <label className="text-white font-bold text-sm mb-1 block">
-                      Phone :
+                      Số điện thoại:
                     </label>
                     <input
                       name="phone"
                       value={form.phone}
                       onChange={handle}
-                      placeholder="Phone..."
+                      placeholder="Số điện thoại..."
                       className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none border border-black/20 focus:border-black/50 placeholder:text-black/40"
                     />
                   </div>
@@ -233,13 +233,13 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <label className="text-white font-bold text-sm mb-1 block">
-                    Message:
+                    Tin nhắn:
                   </label>
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handle}
-                    placeholder="Massege..."
+                    placeholder="Nội dung tin nhắn..."
                     rows={5}
                     className="w-full bg-[#e8e8e8] text-black text-sm px-3 py-2.5 outline-none border border-black/20 focus:border-black/50 placeholder:text-black/40 resize-none"
                   />
@@ -255,7 +255,7 @@ const Contact: React.FC = () => {
                   }}
                 >
                   {loading && <Spinner sizeClassName="h-4 w-4" />}
-                  Send a message
+                  Gửi tin nhắn
                 </button>
               </form>
             )}
@@ -267,7 +267,7 @@ const Contact: React.FC = () => {
               className="text-black font-black text-xl leading-snug"
               style={{ fontFamily: ARIAL }}
             >
-              {"Grow With Us \u2013 See What You'll Gain"}
+              {"Phát Triển Cùng Chúng Tôi \u2013 Quyền Lợi Đối Tác"}
             </h3>
             {[
               {

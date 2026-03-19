@@ -33,9 +33,9 @@ const SocialProof: React.FC = () => {
           <div className="relative z-10 px-4 sm:px-24 md:px-40 lg:px-48">
             <h2
               className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
-              style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}
+              style={{ fontFamily: "'Hubot Sans', sans-serif" }}
             >
-              Social Proof
+              Cộng Đồng Chia Sẻ
             </h2>
             <p className="text-white/70 text-sm mt-4 leading-6">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
@@ -97,7 +97,7 @@ const SocialProof: React.FC = () => {
                       className="text-white font-black tracking-widest whitespace-nowrap"
                       style={{
                         fontFamily:
-                          "'SVN-Redzone', 'Arial Black', Impact, sans-serif",
+                          "'SVN-Redzone', sans-serif",
                         fontSize: "32px",
                       }}
                     >

@@ -4,10 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
-  { to: "/about", label: "About Us" },
-  { to: "/products", label: "Shop" },
-  { to: "/news", label: "News" },
-  { to: "/contact", label: "Contact" },
+  { to: "/about", label: "Về chúng tôi" },
+  { to: "/products", label: "Cửa hàng" },
+  { to: "/news", label: "Tin tức" },
+  { to: "/contact", label: "Liên hệ" },
 ];
 
 const Header: React.FC = () => {
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
                 to="/admin"
                 className="hover:opacity-60 transition-opacity whitespace-nowrap text-black font-medium"
               >
-                Admin
+                Quản trị
               </Link>
             )}
           </nav>
@@ -177,7 +177,7 @@ const Header: React.FC = () => {
               onClick={() => setMenuOpen(false)}
               className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors"
             >
-              Admin
+              Quản trị
             </Link>
           )}
           {/* Search on mobile */}

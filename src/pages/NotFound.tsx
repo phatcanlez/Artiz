@@ -18,10 +18,10 @@ const NotFound = () => {
           <h1 className="text-4xl font-bold">404</h1>
         </div>
         <p className="mb-4 text-xl text-muted-foreground">
-          Oops! Page not found
+          Không tìm thấy trang!
         </p>
         <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
+          Quay về trang chủ
         </a>
       </div>
     </div>

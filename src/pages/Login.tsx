@@ -68,7 +68,7 @@ const Login: React.FC = () => {
         <div className="w-full max-w-[500px] min-w-0">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-[#F3FAF4] text-3xl sm:text-4xl md:text-[48px] font-bold mb-2">
-              Login
+              Đăng nhập
             </h1>
             <p className="text-[#F3FAF4]/70 text-base">
               Đăng nhập để tiếp tục mua sắm
@@ -127,7 +127,7 @@ const Login: React.FC = () => {
                     type="checkbox"
                     className="w-4 h-4 rounded accent-[#44FF00]"
                   />
-                  <span className="text-[#F3FAF4] text-sm">Remember me</span>
+                  <span className="text-[#F3FAF4] text-sm">Ghi nhớ tôi</span>
                 </label>
                 <Link
                   to="/forgot-password"

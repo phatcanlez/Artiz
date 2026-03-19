@@ -27,12 +27,12 @@ const Cart: React.FC = () => {
           <div className="mb-6 sm:mb-10 text-center">
             <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 px-2">
               <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
-                Shopping Cart
+                Giỏ Hàng
               </h1>
             </div>
             <p className="text-[#F3FAF4]/70 text-base">
-              {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in
-              your cart
+              {cartItems.length} {cartItems.length === 1 ? "sản phẩm" : "sản phẩm"} trong
+              giỏ hàng của bạn
             </p>
           </div>
 
@@ -52,16 +52,16 @@ const Cart: React.FC = () => {
                 />
               </svg>
               <h2 className="text-[#F3FAF4] text-2xl font-bold mb-4">
-                Your cart is empty
+                Giỏ hàng trống
               </h2>
               <p className="text-[#F3FAF4]/70 mb-8">
-                Start shopping to add items to your cart
+                Bắt đầu mua sắm để thêm sản phẩm vào giỏ hàng
               </p>
               <Link
                 to="/products"
                 className="inline-block px-12 py-5 rounded-lg bg-black border border-white/30 text-white text-xl font-bold hover:bg-[#44FF00] hover:text-[#102314] hover:border-[#44FF00] transition-colors"
               >
-                CONTINUE SHOPPING
+                TIẾP TỤC MUA SẮM
               </Link>
             </div>
           ) : (
@@ -183,7 +183,7 @@ const Cart: React.FC = () => {
                           </p>
                           {item.quantity > 1 && (
                             <p className="text-[#F3FAF4]/50 text-sm">
-                              {formatPrice(item.price)} each
+                              {formatPrice(item.price)} / cái
                             </p>
                           )}
                         </div>
@@ -197,25 +197,25 @@ const Cart: React.FC = () => {
               <div className="lg:col-span-1">
                 <div className="bg-white/5 border border-white/10 rounded-lg p-6 sticky top-4">
                   <h2 className="text-[#F3FAF4] text-2xl font-bold mb-6">
-                    Order Summary
+                    Tóm Tắt Đơn Hàng
                   </h2>
 
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-[#F3FAF4]/70">
-                      <span>Subtotal</span>
+                      <span>Tạm tính</span>
                       <span className="text-[#F3FAF4]">
                         {formatPrice(subtotal)} VND
                       </span>
                     </div>
                     <div className="flex justify-between text-[#F3FAF4]/70">
-                      <span>Shipping</span>
+                      <span>Vận chuyển</span>
                       <span className="text-[#F3FAF4]">
                         {formatPrice(shipping)} VND
                       </span>
                     </div>
                     <div className="border-t border-white/10 pt-4 flex justify-between">
                       <span className="text-[#F3FAF4] text-xl font-bold">
-                        Total
+                        Tổng cộng
                       </span>
                       <span className="text-[#F3FAF4] text-xl font-bold">
                         {formatPrice(total)} VND
@@ -234,7 +234,7 @@ const Cart: React.FC = () => {
                     to="/products"
                     className="block text-center text-[#F3FAF4]/70 transition-colors text-sm"
                   >
-                    ← Continue Shopping
+                    ← Tiếp tục mua sắm
                   </Link>
                 </div>
               </div>

@@ -347,7 +347,7 @@ const Checkout: React.FC = () => {
                     />
                     <div className="flex-1">
                       <span className="text-[#F3FAF4] text-lg font-medium">
-                        Cash on Delivery
+                        Thanh toán khi nhận hàng (COD)
                       </span>
                       <p className="text-[#F3FAF4]/70 text-sm">
                         Thanh toán khi nhận hàng
@@ -366,7 +366,7 @@ const Checkout: React.FC = () => {
                     />
                     <div className="flex-1">
                       <span className="text-[#F3FAF4] text-lg font-medium">
-                        Bank Transfer
+                        Chuyển khoản ngân hàng
                       </span>
                       <p className="text-[#F3FAF4]/70 text-sm">
                         Chuyển khoản ngân hàng
@@ -386,20 +386,20 @@ const Checkout: React.FC = () => {
 
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-[#F3FAF4]/70">
-                    <span>Subtotal</span>
+                    <span>Tạm tính</span>
                     <span className="text-[#F3FAF4]">
                       {formatPrice(subtotal)} VND
                     </span>
                   </div>
                   <div className="flex justify-between text-[#F3FAF4]/70">
-                    <span>Shipping</span>
+                    <span>Vận chuyển</span>
                     <span className="text-[#F3FAF4]">
                       {formatPrice(shipping)} VND
                     </span>
                   </div>
                   <div className="border-t border-white/10 pt-4 flex justify-between">
                     <span className="text-[#F3FAF4] text-xl font-bold">
-                      Total
+                      Tổng cộng
                     </span>
                     <span className="text-[#F3FAF4] text-xl font-bold">
                       {formatPrice(total)} VND
@@ -417,7 +417,7 @@ const Checkout: React.FC = () => {
                 >
                   <span className="inline-flex items-center justify-center gap-2">
                     {submitting && <Spinner sizeClassName="h-6 w-6" />}
-                    {submitting ? "Đang xử lý..." : "PLACE ORDER"}
+                    {submitting ? "Đang xử lý..." : "ĐẶT HÀNG"}
                   </span>
                 </button>
               </div>

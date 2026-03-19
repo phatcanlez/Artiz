@@ -79,7 +79,7 @@ const CheckoutSuccess: React.FC = () => {
           {/* Success Message */}
           <div className="flex items-center justify-center gap-4 mb-4">
             <h1 className="text-[#F3FAF4] text-2xl sm:text-4xl md:text-[48px] font-bold">
-              Order Successful!
+              Đặt Hàng Thành Công!
             </h1>
           </div>
           <p className="text-[#F3FAF4]/70 text-lg mb-8">
@@ -101,7 +101,7 @@ const CheckoutSuccess: React.FC = () => {
           {(orderData || orderInvoiceNumber) && (
             <div className="bg-white/5 border border-white/10 rounded-lg p-6 mb-8 text-left">
               <h2 className="text-[#F3FAF4] text-xl font-bold mb-4">
-                Order Details
+                Chi Tiết Đơn Hàng
               </h2>
               {(orderInvoiceNumber || orderId) && (
                 <p className="text-[#F3FAF4]/80 mb-2">
@@ -120,7 +120,7 @@ const CheckoutSuccess: React.FC = () => {
                   </h2>
                   <div className="space-y-2 text-[#F3FAF4]/70">
                     <p>
-                      <span className="text-[#F3FAF4]">Name:</span>{" "}
+                      <span className="text-[#F3FAF4]">Họ và tên:</span>{" "}
                       {(orderData as Record<string, unknown>).fullName as string}
                     </p>
                     <p>
@@ -128,22 +128,22 @@ const CheckoutSuccess: React.FC = () => {
                       {(orderData as Record<string, unknown>).email as string}
                     </p>
                     <p>
-                      <span className="text-[#F3FAF4]">Phone:</span>{" "}
+                      <span className="text-[#F3FAF4]">SĐT:</span>{" "}
                       {(orderData as Record<string, unknown>).phone as string}
                     </p>
                     <p>
-                      <span className="text-[#F3FAF4]">Address:</span>{" "}
+                      <span className="text-[#F3FAF4]">Địa chỉ:</span>{" "}
                       {(orderData as Record<string, unknown>).address as string}
                     </p>
                     <p>
-                      <span className="text-[#F3FAF4]">City:</span>{" "}
+                      <span className="text-[#F3FAF4]">Thành phố:</span>{" "}
                       {(orderData as Record<string, unknown>).city as string}
                     </p>
                     <p>
-                      <span className="text-[#F3FAF4]">Payment:</span>{" "}
+                      <span className="text-[#F3FAF4]">Thanh toán:</span>{" "}
                       {(orderData as Record<string, unknown>).paymentMethod === "cod"
-                        ? "Cash on Delivery"
-                        : "Bank Transfer"}
+                        ? "Thanh toán khi nhận hàng"
+                        : "Chuyển khoản ngân hàng"}
                     </p>
                   </div>
                 </>
@@ -163,14 +163,14 @@ const CheckoutSuccess: React.FC = () => {
                 alt=""
               />
               <span className="relative z-10 text-xl font-bold text-[#102314] group-hover:opacity-90 transition-opacity">
-                CONTINUE SHOPPING
+                TIẾP TỤC MUA SẮM
               </span>
             </Link>
             <Link
               to="/"
               className="px-12 py-5 rounded-lg border-2 border-white text-white font-bold text-xl hover:bg-white transition-colors"
             >
-              BACK TO HOME
+              VỀ TRANG CHỦ
             </Link>
           </div>
 

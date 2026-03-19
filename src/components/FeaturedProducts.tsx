@@ -4,9 +4,9 @@ import { RightSparkleIcon } from "./ui/RightSparkleIcon";
 import StarDivider from "./ui/StarDivider";
 
 const categories = [
-  { id: "bestseller", label: "BEST SELLER", image: "/images/col1.jpg" },
-  { id: "myproduct", label: "MY PRODUCT", image: "/images/col2.jpg" },
-  { id: "3dprint", label: "3D PRINT", image: "/images/col3.jpg" },
+  { id: "bestseller", label: "BÁN CHẠY", image: "/images/col1.jpg" },
+  { id: "myproduct", label: "SẢN PHẨM", image: "/images/col2.jpg" },
+  { id: "3dprint", label: "IN 3D", image: "/images/col3.jpg" },
 ];
 
 interface FeaturedProductsProps {
@@ -39,9 +39,9 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
           <div className="relative z-10 px-4 sm:px-24 md:px-40 lg:px-48">
             <h2
               className="text-white font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight"
-              style={{ fontFamily: "'Arial Black', Impact, sans-serif" }}
+              style={{ fontFamily: "'Hubot Sans', sans-serif" }}
             >
-              Featured Products
+              Sản Phẩm Nổi Bật
             </h2>
             <p className="text-white/70 text-sm mt-4 leading-6">
               Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai
@@ -105,7 +105,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
                       className="text-white font-black uppercase tracking-widest whitespace-nowrap"
                       style={{
                         fontFamily:
-                          "'SVN-Redzone', 'Arial Black', Impact, sans-serif",
+                          "'SVN-Redzone', sans-serif",
                         fontSize: "32px",
                       }}
                     >

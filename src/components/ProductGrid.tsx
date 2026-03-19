@@ -59,9 +59,9 @@ const ProductGrid: React.FC = () => {
     id: "new" | "bestseller" | "custom";
     label: string;
   }[] = [
-    { id: "new", label: "NEW COLLECTION" },
-    { id: "bestseller", label: "BEST SELLER" },
-    { id: "custom", label: "CUSTOM FOR YOU" },
+    { id: "new", label: "BỘ SƯU TẬP MỚI" },
+    { id: "bestseller", label: "BÁN CHẠY NHẤT" },
+    { id: "custom", label: "THIẾT KẾ RIÊNG" },
   ];
 
   const visibleCards = useMemo(() => {
@@ -99,13 +99,13 @@ const ProductGrid: React.FC = () => {
         <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
           {/* <SparkleIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0" /> */}
           <h2 className="text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-            Suggestions For You
+            Gợi Ý Dành Cho Bạn
           </h2>
           {/* <RightSparkleIcon className="h-8 w-auto sm:h-10 md:h-14 shrink-0" /> */}
         </div>
         <p className="relative z-10 text-white/80 text-center text-sm max-w-xl mx-auto mb-6">
-          We have a lot of options for you here. If you are having trouble, we
-          have some suggestions for you.
+          Chúng tôi có nhiều lựa chọn cho bạn. Nếu bạn đang phân vân, hãy tham khảo
+          những gợi ý của chúng tôi.
         </p>
 
         {/* Filter Buttons — bên trong banner */}

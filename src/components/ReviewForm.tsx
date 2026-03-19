@@ -85,7 +85,7 @@ const ReviewForm: React.FC<{ productId?: number; onCreated?: () => void }> = ({
   return (
     <aside className="flex flex-col text-[#F3FAF4] w-full max-w-full">
       <h2 className="text-xl sm:text-2xl md:text-[32px] font-bold mb-4">
-        Your review
+        Đánh giá của bạn
       </h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -95,7 +95,7 @@ const ReviewForm: React.FC<{ productId?: number; onCreated?: () => void }> = ({
           </p>
         )}
         <div>
-          <label className="block text-xl mb-2">Add your review *</label>
+          <label className="block text-xl mb-2">Thêm đánh giá của bạn *</label>
           <StarPicker />
         </div>
 
@@ -104,7 +104,7 @@ const ReviewForm: React.FC<{ productId?: number; onCreated?: () => void }> = ({
             htmlFor="reviewer-name"
             className="block mb-2 text-sm font-bold"
           >
-            Name*
+            Họ và tên*
           </label>
           <input
             type="text"
@@ -137,14 +137,14 @@ const ReviewForm: React.FC<{ productId?: number; onCreated?: () => void }> = ({
 
         <div>
           <label htmlFor="review-text" className="block mb-2 text-sm font-bold">
-            Rate us *
+            Đánh giá *
           </label>
           <textarea
             id="review-text"
             name="review"
             value={formData.review}
             onChange={handleInputChange}
-            placeholder="Write here"
+            placeholder="Viết đánh giá của bạn"
             required
             rows={5}
             className="w-full bg-white text-black px-4 py-3 rounded-md outline-none resize-none focus:ring-2 focus:ring-gray-400 placeholder:text-gray-400"
@@ -159,7 +159,7 @@ const ReviewForm: React.FC<{ productId?: number; onCreated?: () => void }> = ({
           {createMutation.isPending && (
             <Spinner sizeClassName="h-4 w-4 inline-block mr-2" />
           )}
-          Submit a review
+          Gửi đánh giá
         </button>
       </form>
     </aside>

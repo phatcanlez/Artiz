@@ -15,15 +15,15 @@ import {
   Baby,
 } from "lucide-react";
 
-const SVN = "'SVN-Redzone', 'Arial Black', Impact, sans-serif";
-const ARIAL = "'Arial Black', Impact, sans-serif";
+const SVN = "'SVN-Redzone', sans-serif";
+const ARIAL = "'Hubot Sans', sans-serif";
 
 // ── Stats data ──────────────────────────────────────────────
 const stats = [
-  { value: "10+", label: "Chứng từ cung cấp\ndịch vụ in 3D nhỏ lẻ" },
-  { value: "10+", label: "Chứng từ cung cấp\ndịch vụ theo 3D nhỏ lẻ" },
-  { value: "10+", label: "Chứng từ cung cấp\ndịch vụ in 3D nhỏ lẻ" },
-  { value: "10+", label: "Chứng từ cung cấp\ndịch vụ in 3D nhỏ lẻ" },
+  { value: "01", label: "Chứng nhận\nDigital ID độc bản" },
+  { value: "24/7", label: "Theo dõi\nxác thực theo thời gian thực" },
+  { value: "AES", label: "Mã hoá\nchống sao chép" },
+  { value: "1 chạm", label: "Mở khoá\nhồ sơ sản phẩm" },
 ];
 
 // ── Gallery images ───────────────────────────────────────────
@@ -179,10 +179,10 @@ const UniqueIdentity: React.FC = () => (
           className="text-white font-black uppercase leading-tight"
           style={{ fontFamily: SVN, fontSize: "clamp(26px, 4vw, 56px)" }}
         >
-          UNIQUE IDENTITY IN THE
+          ĐỊNH DANH ĐỘC BẢN TRONG
           <br />
           <span className="inline-flex flex-wrap items-center justify-center gap-4">
-            DIGITAL ERA
+            KỶ NGUYÊN SỐ
             <span className="inline-flex items-center border-2 border-white px-6 py-2 rounded-lg align-middle">
               <span
                 className="text-white font-bold tracking-wider normal-case"
@@ -191,7 +191,7 @@ const UniqueIdentity: React.FC = () => (
                   fontSize: "clamp(14px, 1.6vw, 22px)",
                 }}
               >
-                Digital Birth Certificate
+                “Giấy khai sinh” số
               </span>
             </span>
           </span>
@@ -203,21 +203,18 @@ const UniqueIdentity: React.FC = () => (
     <div className="mx-4 sm:mx-[60px] md:mx-[80px] lg:mx-[100px]">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] gap-0 text-white/60 text-sm leading-7">
         <p className="pr-0 md:pr-10">
-          Every ARTIZ masterpiece carries more than just a serial number. It
-          possesses a unique Digital ID integrated via an NFC chip embedded
-          beneath the solid resin surface. We establish the highest security
-          standard for collectors through a Real-time Tracking system, recording
-          the origin, creation date, and specific position within each limited
-          batch.
+          Mỗi tác phẩm ARTIZ không chỉ có một mã số. Bên dưới lớp resin đặc là
+          một chip NFC tích hợp Digital ID độc bản. Hệ thống theo dõi theo thời
+          gian thực giúp ghi nhận xuất xứ, thời điểm tạo tác và vị trí cụ thể
+          trong từng lô giới hạn.
         </p>
         {/* vertical divider */}
         <div className="hidden md:block w-px bg-white/20 mx-2" />
         <p className="pl-0 md:pl-10 mt-6 md:mt-0">
-          By applying Anti-Counterfeit encryption algorithms, ARTIZ ensures
-          absolute protection of collectible value and prevents any duplication
-          efforts. With a simple tap of your phone, you can instantly unlock
-          your personal heritage and verify the authentic proof of your unique
-          possession.
+          Với các thuật toán mã hoá chống làm giả, ARTIZ bảo vệ trọn vẹn giá trị
+          sưu tầm và ngăn mọi nỗ lực sao chép. Chỉ một chạm điện thoại, bạn có
+          thể mở khoá hồ sơ của phiên bản mình sở hữu và xác minh bằng chứng xác
+          thực ngay lập tức.
         </p>
       </div>
 
@@ -318,24 +315,23 @@ const PulseOfMatter: React.FC = () => (
             className="text-white font-black uppercase leading-tight mb-2"
             style={{ fontFamily: SVN, fontSize: "clamp(26px, 4vw, 52px)" }}
           >
-            THE PULSE OF MATTER
+            NHỊP ĐẬP CỦA CHẤT LIỆU
           </h2>
           <p className="text-white/70 text-sm font-semibold tracking-widest mb-4">
-            Where Sculptural Form Meets Soul
+            Nơi hình khối gặp gỡ “linh hồn”
           </p>
           <p className="text-white/60 text-sm leading-7 mb-4">
-            ARTIZ redefines personal accessories through the philosophy of
-            Physical Sculpture — a convergence of physical form and digital
-            soul. We do not mass-produce utility; we create functional art based
-            on Brutalist Aesthetics, utilizing bold lines and Hard Shadow
-            effects to create dramatic visual depth.
+            ARTIZ tái định nghĩa phụ kiện cá nhân bằng triết lý Điêu khắc Vật
+            thể — nơi hình khối vật lý hội tụ cùng “linh hồn” số. Chúng tôi
+            không sản xuất hàng loạt đồ dùng; chúng tôi tạo nên nghệ thuật ứng
+            dụng dựa trên thẩm mỹ Brutalist, với đường nét táo bạo và hiệu ứng
+            Hard Shadow để tạo chiều sâu thị giác mạnh mẽ.
           </p>
           <p className="text-white/50 text-sm leading-7">
-            The Solid Resin Structure provides a substantial and premium tactile
-            feel, standing as an artistic rebellion against the hollow nature of
-            industrial plastics. Every detail is meticulously engineered to
-            achieve perfect weight balance, ensuring comfort and fluidity in
-            your everyday carry experience.
+            Kết cấu resin đặc mang lại cảm giác cầm nắm đầm tay và cao cấp — như
+            một tuyên ngôn đối lập với sự “rỗng” của nhựa công nghiệp. Từng chi
+            tiết được tính toán để cân bằng trọng lượng tối ưu, giúp bạn sử dụng
+            thoải mái và linh hoạt trong trải nghiệm hằng ngày.
           </p>
         </div>
       </div>
@@ -411,10 +407,10 @@ const TheMakers: React.FC = () => {
               className="text-white font-black uppercase"
               style={{ fontFamily: SVN, fontSize: "clamp(28px, 5vw, 60px)" }}
             >
-              THE MAKERS
+              ĐỘI NGŨ SÁNG TẠO
             </h2>
             <p className="text-white text-sm font-semibold tracking-widest uppercase mt-1">
-              The Passion Behind The Atelier
+              Đam mê phía sau xưởng chế tác
             </p>
           </div>
         </div>
@@ -422,19 +418,18 @@ const TheMakers: React.FC = () => {
         {/* Two-column text */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] gap-0 text-white/60 text-sm leading-7 mb-12">
           <p className="pr-0 md:pr-10">
-            Behind every concept is a collective of disciplined and passionate
-            creators. Our strategic team includes a Creative Director who
-            defines the aesthetic rhythms, a Technical Architect maintaining
-            print structures, and Master Artisans who personally infuse emotion
-            into the finished surfaces.
+            Đằng sau mỗi concept là một tập thể kỷ luật và đầy đam mê. Đội ngũ
+            chiến lược bao gồm Creative Director định hình nhịp điệu thẩm mỹ,
+            Technical Architect tối ưu cấu trúc in 3D và các nghệ nhân hoàn
+            thiện bề mặt bằng cảm xúc và tay nghề.
           </p>
           <div className="hidden md:block w-px bg-white/20 mx-2" />
           <p className="pl-0 md:pl-10 mt-6 md:mt-0">
-            Operational excellence is ensured by our Systems Management team
-            handling digital infrastructure, UI/UX Designers optimizing user
-            journeys, and our Marketing and Editorial department crafting the
-            brand narrative. We believe that only human devotion can breathe
-            warmth and vitality into inanimate surfaces.
+            Vận hành được đảm bảo bởi đội Systems quản trị hạ tầng số, UI/UX
+            Designers tối ưu hành trình trải nghiệm, cùng Marketing & Editorial
+            xây dựng câu chuyện thương hiệu. Chúng tôi tin rằng chỉ có sự tận
+            tâm của con người mới thổi được hơi ấm và sức sống vào những bề mặt
+            vô tri.
           </p>
         </div>
 
@@ -550,10 +545,10 @@ const SmartStewardship: React.FC = () => (
           className="text-white font-black uppercase"
           style={{ fontFamily: ARIAL, fontSize: "clamp(28px, 5vw, 60px)" }}
         >
-          SMART STEWARDSHIP
+          BẢO QUẢN THÔNG MINH
         </h2>
-        <p className="text-[#44FF00] text-sm font-semibold tracking-widest uppercase mt-1">
-          Comprehensive After-Sales Management
+        <p className="text-white text-sm font-semibold tracking-widest uppercase mt-1">
+          Hướng dẫn bảo quản & hậu mãi toàn diện
         </p>
       </div>
     </div>
@@ -608,7 +603,7 @@ const SmartStewardship: React.FC = () => (
 
 // ── Main NFC Page ─────────────────────────────────────────────
 const NFC: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  useParams<{ id: string }>();
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
