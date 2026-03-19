@@ -60,7 +60,7 @@ const Product3DViewer: React.FC<Product3DViewerProps> = ({
 
   // Sử dụng model mẫu từ internet nếu không có modelPath
   // Model mẫu từ Google - Astronaut
-  const defaultModel = modelPath || "/3d/hộp .glb";
+  const defaultModel = modelPath || "/3d/airpod.glb";
 
   // Các model mẫu khác có thể dùng:
   // 'https://modelviewer.dev/shared-assets/models/RobotExpressive.glb'

@@ -4,14 +4,19 @@ const SVN = "'SVN-Redzone', sans-serif";
 
 const models = [
   {
-    src: "/3d/hộp .glb",
-    name: "Armor Case",
-    desc: "Chúng tôi cung cấp dịch vụ in 3D chất lượng cao, đáp ứng cả hai nhu cầu: Sản phẩm có sẵn: Bộ sưu tập các mẫu in 3D độc quyền, thiết kế tinh tế, sẵn sàng giao ngay. Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.",
+    src: "/3d/airpod.glb",
+    name: "AirPods Case",
+    desc: "AirPods Case phiên bản in 3D độc bản. Bề mặt được gia công tinh gọn, tối ưu độ bám cảm giác cầm nắm và độ bền theo thời gian.",
   },
   {
-    src: "/3d/NeilArmstrong.glb",
-    name: "Neil Armstrong",
-    desc: "Mô hình phi hành gia độc quyền, thiết kế tinh tế. Sản phẩm custom: Nhận thiết kế và in theo yêu cầu riêng – từ mô hình, phụ kiện, đến vật dụng cá nhân hoá.",
+    src: "/3d/lighter.glb",
+    name: "Lighter",
+    desc: "Mô hình bật lửa in 3D theo phong cách tối giản nhưng nổi bật. Thiết kế nhấn vào tỷ lệ và chiều sâu chi tiết để tạo cảm giác “chạm là thấy khác”.",
+  },
+  {
+    src: "/3d/smartkey.glb",
+    name: "Smart Key",
+    desc: "Smart Key in 3D độc quyền, hướng tới trải nghiệm sử dụng chắc tay và thẩm mỹ bền vững. Phù hợp để cá nhân hoá theo bộ sưu tập của bạn.",
   },
 ];
 

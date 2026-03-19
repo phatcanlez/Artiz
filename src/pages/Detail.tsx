@@ -13,12 +13,26 @@ const Detail = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
 
+  const localModelByDetailId: Record<number, string> = {
+    1: "/3d/airpod.glb",
+    2: "/3d/lighter.glb",
+    3: "/3d/smartkey.glb",
+  };
+
   useEffect(() => {
     const numId = id ? parseInt(id, 10) : NaN;
     if (!Number.isFinite(numId)) return;
     apiClient
       .getProduct(numId)
-      .then((p) => setProduct(p))
+      .then((p) => {
+        // Override 3D model for the 3 local detail pages (no Cloudflare / remote URLs)
+        const localModel = localModelByDetailId[numId];
+        if (!localModel) return setProduct(p);
+        return setProduct({
+          ...p,
+          model3DUrls: [localModel],
+        });
+      })
       .catch(() => setProduct(null));
   }, [id]);
 
