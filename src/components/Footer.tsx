@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
         {/* Logo + social */}
         <div className="flex flex-col items-center gap-4">
           <img
-            src="/element/Asset 8 1.png"
+            src="/icon/logoWhite.svg"
             className="w-28 object-contain"
             alt="Artiz Logo"
           />
