@@ -94,7 +94,7 @@ const News: React.FC = () => {
             letterSpacing: "-0.02em",
           }}
         >
-          THE BLOG
+          TIN TỨC
         </h1>
         <StarDivider />
       </section>
@@ -117,109 +117,109 @@ const News: React.FC = () => {
         {/* ── Grid 2 cột: trái bài 1, phải bài 2+3 ── */}
         {featured && wideCard && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-          {/* Cột trái: featured lớn */}
-          <Link to={`/news/${featured.id}`} className="group flex flex-col">
-            <div className="overflow-hidden">
+            {/* Cột trái: featured lớn */}
+            <Link to={`/news/${featured.id}`} className="group flex flex-col">
+              <div className="overflow-hidden">
+                <img
+                  src={featured.image}
+                  alt={featured.title}
+                  className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="pt-4 flex flex-col">
+                <p className="text-white/50 text-xs mb-2">{featured.date}</p>
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="text-white font-bold text-2xl leading-snug group-hover:opacity-80">
+                    {featured.title}
+                  </h3>
+                  <ArrowIcon />
+                </div>
+                <p className="text-white/60 text-sm line-clamp-3">
+                  {featured.excerpt}
+                </p>
+                {featured.tags && (
+                  <div className="flex gap-2 mt-3 flex-wrap">
+                    {featured.tags.map((t) => (
+                      <TagBadge key={t} tag={t} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Link>
+
+            {/* Cột phải: bài 2 + bài 3, mỗi bài ảnh trái + text phải */}
+            <div className="flex flex-col divide-y divide-white/20">
+              {sideCards.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/news/${post.id}`}
+                  className="group flex gap-4 py-4 first:pt-0 last:pb-0"
+                >
+                  <div className="w-[120px] sm:w-[180px] md:w-[240px] flex-shrink-0 overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-start min-w-0 pt-1">
+                    <p className="text-white/50 text-xs mb-1.5">{post.date}</p>
+                    <div className="flex items-start justify-between gap-2 mb-1.5">
+                      <h3 className="text-white font-bold text-base leading-snug line-clamp-2 group-hover:opacity-80">
+                        {post.title}
+                      </h3>
+                      <ArrowIcon />
+                    </div>
+                    <p className="text-white/60 text-sm line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    {post.tags && (
+                      <div className="flex gap-1.5 mt-2 flex-wrap">
+                        {post.tags.map((t) => (
+                          <TagBadge key={t} tag={t} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Bài 5: full width, ảnh trái + text phải ── */}
+        {wideCard && (
+          <Link
+            to={`/news/${wideCard.id}`}
+            className="group flex flex-col sm:flex-row gap-6 border-t border-white/20 pt-6 mt-2 mb-10"
+          >
+            <div className="w-full sm:w-[48%] flex-shrink-0 overflow-hidden">
               <img
-                src={featured.image}
-                alt={featured.title}
-                className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
+                src={wideCard.image}
+                alt={wideCard.title}
+                className="w-full aspect-[21/9] object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="pt-4 flex flex-col">
-              <p className="text-white/50 text-xs mb-2">{featured.date}</p>
+            <div className="flex flex-col justify-center flex-1 min-w-0">
+              <p className="text-white/50 text-xs mb-2">{wideCard.date}</p>
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="text-white font-bold text-2xl leading-snug group-hover:opacity-80">
-                  {featured.title}
+                  {wideCard.title}
                 </h3>
                 <ArrowIcon />
               </div>
-              <p className="text-white/60 text-sm line-clamp-3">
-                {featured.excerpt}
+              <p className="text-white/60 text-sm line-clamp-4">
+                {wideCard.excerpt}
               </p>
-              {featured.tags && (
+              {wideCard.tags && (
                 <div className="flex gap-2 mt-3 flex-wrap">
-                  {featured.tags.map((t) => (
+                  {wideCard.tags.map((t) => (
                     <TagBadge key={t} tag={t} />
                   ))}
                 </div>
               )}
             </div>
           </Link>
-
-          {/* Cột phải: bài 2 + bài 3, mỗi bài ảnh trái + text phải */}
-          <div className="flex flex-col divide-y divide-white/20">
-            {sideCards.map((post) => (
-              <Link
-                key={post.id}
-                to={`/news/${post.id}`}
-                className="group flex gap-4 py-4 first:pt-0 last:pb-0"
-              >
-                <div className="w-[120px] sm:w-[180px] md:w-[240px] flex-shrink-0 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="flex flex-col justify-start min-w-0 pt-1">
-                  <p className="text-white/50 text-xs mb-1.5">{post.date}</p>
-                  <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <h3 className="text-white font-bold text-base leading-snug line-clamp-2 group-hover:opacity-80">
-                      {post.title}
-                    </h3>
-                    <ArrowIcon />
-                  </div>
-                  <p className="text-white/60 text-sm line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  {post.tags && (
-                    <div className="flex gap-1.5 mt-2 flex-wrap">
-                      {post.tags.map((t) => (
-                        <TagBadge key={t} tag={t} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-        )}
-
-        {/* ── Bài 5: full width, ảnh trái + text phải ── */}
-        {wideCard && (
-          <Link
-          to={`/news/${wideCard.id}`}
-          className="group flex flex-col sm:flex-row gap-6 border-t border-white/20 pt-6 mt-2 mb-10"
-        >
-          <div className="w-full sm:w-[48%] flex-shrink-0 overflow-hidden">
-            <img
-              src={wideCard.image}
-              alt={wideCard.title}
-              className="w-full aspect-[21/9] object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-          <div className="flex flex-col justify-center flex-1 min-w-0">
-            <p className="text-white/50 text-xs mb-2">{wideCard.date}</p>
-            <div className="flex items-start justify-between gap-2 mb-2">
-              <h3 className="text-white font-bold text-2xl leading-snug group-hover:opacity-80">
-                {wideCard.title}
-              </h3>
-              <ArrowIcon />
-            </div>
-            <p className="text-white/60 text-sm line-clamp-4">
-              {wideCard.excerpt}
-            </p>
-            {wideCard.tags && (
-              <div className="flex gap-2 mt-3 flex-wrap">
-                {wideCard.tags.map((t) => (
-                  <TagBadge key={t} tag={t} />
-                ))}
-              </div>
-            )}
-          </div>
-        </Link>
         )}
 
         {/* ── StarDivider ── */}
