@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCartFly } from "@/hooks/useCartFly";
 import { useCart } from "@/contexts/CartContext";
 
@@ -100,6 +101,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
   const addToCartRef = useRef<HTMLButtonElement>(null);
   const { flyToCart } = useCartFly();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const product = productProp ?? {
     id: 1,
     name: "Men Armor Black Silver",
@@ -216,6 +218,17 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product: productProp }) => {
       {/* Buy Now — cắt góc trên-trái + dưới-phải (đối xứng với 2 nút trên) */}
       <button
         disabled={isOutOfStock}
+        onClick={() => {
+          if (isOutOfStock) return;
+          addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.imageUrl,
+            quantity,
+          });
+          navigate("/checkout");
+        }}
         className="w-full h-[56px] mb-6 bg-[#D9D9D9] text-black font-extrabold text-base hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#D9D9D9]"
       >
         {isOutOfStock ? "Hết hàng" : "Mua ngay"}
