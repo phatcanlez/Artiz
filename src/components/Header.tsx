@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import { NavLink } from "@/components/NavLink";
 
 const navLinks = [
   { to: "/about", label: "Về chúng tôi" },
@@ -9,6 +10,9 @@ const navLinks = [
   { to: "/news", label: "Tin tức" },
   { to: "/contact", label: "Liên hệ" },
 ];
+
+const navLinkBaseClass =
+  "relative inline-flex whitespace-nowrap pb-1 transition-opacity hover:opacity-60 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200";
 
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,21 +72,23 @@ const Header: React.FC = () => {
           {/* Nav links — desktop only */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-8 text-base lg:text-lg font-medium text-black">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.to}
                 to={link.to}
-                className="hover:opacity-60 transition-opacity whitespace-nowrap"
+                className={navLinkBaseClass}
+                activeClassName="after:scale-x-100"
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
             {isAdmin && (
-              <Link
+              <NavLink
                 to="/admin"
-                className="hover:opacity-60 transition-opacity whitespace-nowrap text-black font-medium"
+                className={navLinkBaseClass}
+                activeClassName="after:scale-x-100"
               >
                 Quản trị
-              </Link>
+              </NavLink>
             )}
           </nav>
         </div>
@@ -162,23 +168,25 @@ const Header: React.FC = () => {
       {menuOpen && (
         <nav className="md:hidden bg-white border-t border-black flex flex-col">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.to}
               to={link.to}
               onClick={() => setMenuOpen(false)}
-              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors"
+              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors relative"
+              activeClassName="bg-black/5 after:content-[''] after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-black"
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
           {isAdmin && (
-            <Link
+            <NavLink
               to="/admin"
               onClick={() => setMenuOpen(false)}
-              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors"
+              className="px-6 py-4 text-black font-medium text-base border-b border-black/10 hover:bg-black/5 transition-colors relative"
+              activeClassName="bg-black/5 after:content-[''] after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-black"
             >
               Quản trị
-            </Link>
+            </NavLink>
           )}
           {/* Search on mobile */}
           <form
