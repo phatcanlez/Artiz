@@ -118,14 +118,17 @@ const Contact: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 max-w-4xl mx-auto">
           {[
             {
-              value: "+8969921233",
+              icon: "/icon/Giao hàng đúng hẹn.svg",
+              value: "0931451801",
               desc: "Đây là số điện thoại chính thức của Artiz Studio",
             },
             {
-              value: "quocphong1@gmail.com",
+              icon: "/icon/Bảo mật.svg",
+              value: "artizstudio@gmail.com",
               desc: "Đây là email chính thức của Artiz Studio",
             },
             {
+              icon: "/icon/Vị trí.svg",
               value: "TP. HCM, Việt Nam",
               desc: "Vincom MeGa Mall, Vinhomes Grand Park TP Thủ Đức, TP.HCM",
             },
@@ -138,12 +141,12 @@ const Contact: React.FC = () => {
                   "polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)",
               }}
             >
-              <p
-                className="font-black text-2xl uppercase tracking-wide"
-                style={{ fontFamily: ARIAL }}
-              >
-                ICON
-              </p>
+              <img
+                src={item.icon}
+                alt=""
+                aria-hidden="true"
+                className="w-14 h-14 object-contain"
+              />
               <p className="font-bold text-sm">{item.value}</p>
               <p className="text-black/60 text-sm leading-relaxed">
                 {item.desc}
