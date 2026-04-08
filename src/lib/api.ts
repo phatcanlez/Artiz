@@ -138,6 +138,20 @@ export interface ReviewCreateRequest {
   comment: string;
 }
 
+export interface BlogPostDto {
+  id: number;
+  title: string;
+  slug: string;
+  summary: string;
+  content: string;
+  thumbnailUrl?: string | null;
+  createdAt: string;
+  updatedAt?: string | null;
+  isPublished: boolean;
+  isDeleted?: boolean;
+  deletedAt?: string | null;
+}
+
 function getApiBaseUrl(): string {
   const env = (import.meta as unknown as { env?: { VITE_API_URL?: string } }).env;
   // Ưu tiên biến môi trường VITE_API_URL (dùng cho FE deploy trên Vercel trỏ đến BE Fly.io)
@@ -297,6 +311,14 @@ class ApiClient {
     });
   }
 
+  async getBlogPosts(): Promise<BlogPostDto[]> {
+    return this.request<BlogPostDto[]>("/blog");
+  }
+
+  async getBlogPost(id: number): Promise<BlogPostDto> {
+    return this.request<BlogPostDto>(`/blog/${id}`);
+  }
+
   /** Tối ưu file .glb (Admin utility). Trả về file blob để tải về. */
   async optimateGlb(file: File): Promise<{ blob: Blob; headers: Headers }> {
     const token = this.getAuthToken();
@@ -343,6 +365,29 @@ class ApiClient {
     const form = new FormData();
     form.append("file", file);
     const res = await fetch(`${getApiBaseUrl()}/api/storage/upload/image?folder=products`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
+      throw new Error("Phiên đăng nhập đã hết hạn.");
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { message?: string }).message ?? "Tải ảnh lên thất bại");
+    }
+    return res.json() as Promise<{ url: string }>;
+  }
+
+  /** Upload ảnh thumbnail cho blog lên R2 (Admin). Trả về URL công khai. */
+  async uploadBlogImage(file: File): Promise<{ url: string }> {
+    const token = this.getAuthToken();
+    if (!token) throw new Error("Bạn cần đăng nhập");
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`${getApiBaseUrl()}/api/storage/upload/image?folder=blog`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: form,

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -56,6 +56,7 @@ const emptyBlogForm: BlogFormState = {
 
 const AdminBlog: React.FC = () => {
   const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, isLoading, error } = useQuery<BlogPost[]>({
     queryKey: ["admin-blog"],
     queryFn: () => apiClient.request<BlogPost[]>("/admin/blog"),
@@ -66,6 +67,7 @@ const AdminBlog: React.FC = () => {
   const [form, setForm] = useState<BlogFormState>(emptyBlogForm);
   const [showDeleted, setShowDeleted] = useState(false);
   const [loadingPost, setLoadingPost] = useState(false);
+  const [uploadingThumb, setUploadingThumb] = useState(false);
 
   const openCreate = () => {
     setEditing(false);
@@ -91,6 +93,26 @@ const AdminBlog: React.FC = () => {
       setLoadingPost(false);
     }
     setDialogOpen(true);
+  };
+
+  const handlePickThumb = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleThumbFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setUploadingThumb(true);
+      const { url } = await apiClient.uploadBlogImage(file);
+      setForm((prev) => ({ ...prev, thumbnailUrl: url }));
+    } finally {
+      setUploadingThumb(false);
+      // allow re-select same file
+      e.target.value = "";
+    }
   };
 
   const createMutation = useMutation({
@@ -245,18 +267,58 @@ const AdminBlog: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm mb-1">
-                  Ảnh thumbnail (URL)
-                </label>
-                <Input
-                  value={form.thumbnailUrl}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      thumbnailUrl: e.target.value,
-                    }))
-                  }
-                />
+                <label className="block text-sm mb-2">Ảnh thumbnail</label>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      aria-label="Chọn ảnh thumbnail"
+                      onChange={handleThumbFileChange}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="border-white/40 text-white hover:bg-white/10"
+                      onClick={handlePickThumb}
+                      disabled={uploadingThumb}
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        {uploadingThumb && <Spinner sizeClassName="h-3 w-3" />}
+                        Chọn ảnh từ máy
+                      </span>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-white/70"
+                      onClick={() => setForm((prev) => ({ ...prev, thumbnailUrl: "" }))}
+                      disabled={!form.thumbnailUrl}
+                    >
+                      Xóa ảnh
+                    </Button>
+                  </div>
+
+                  {/* Preview */}
+                  {form.thumbnailUrl ? (
+                    <div className="border border-white/10 rounded-md p-2 bg-black/20">
+                      <img
+                        src={form.thumbnailUrl}
+                        alt="Thumbnail preview"
+                        className="w-full max-h-[220px] object-contain rounded"
+                      />
+                      <p className="mt-2 text-[11px] text-white/50 break-all">
+                        {form.thumbnailUrl}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-white/50">
+                      Chưa có ảnh thumbnail. Hãy chọn ảnh từ máy để upload.
+                    </p>
+                  )}
+                </div>
               </div>
               <DialogFooter className="mt-4">
                 <Button

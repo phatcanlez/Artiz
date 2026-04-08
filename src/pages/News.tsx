@@ -1,142 +1,21 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StarDivider from "@/components/ui/StarDivider";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient, type BlogPostDto } from "@/lib/api";
 
-interface NewsItem {
+type NewsItem = {
   id: number;
   title: string;
   excerpt: string;
   image: string;
   date: string;
-  category: string;
+  category?: string;
   tags?: string[];
-}
-
-const allPosts: NewsItem[] = [
-  {
-    id: 1,
-    title: "Migrating to Linear 101",
-    excerpt:
-      "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here's how to get started.",
-    image: "/images/col1.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-  {
-    id: 2,
-    title: "Building your API Stack",
-    excerpt:
-      "The rise of RESTful APIs has been met by a new era in tooling for creating, testing, and managing...",
-    image: "/images/col2.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-  {
-    id: 3,
-    title: "Grid system for better Design User Interface",
-    excerpt:
-      "A grid system is a design tool used to arrange content on a webpage. It is a series of vertical and horizontal lines that create a matrix of intersecting points...",
-    image: "/images/HK_1.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-  {
-    id: 4,
-    title: "UX review presentations",
-    excerpt:
-      "How do you create compelling presentations that wow your colleagues and impress your managers?",
-    image: "/images/banner.png",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-  {
-    id: 5,
-    title: "Climate Endgame: Exploring catastrophic climate change scenarios",
-    excerpt:
-      "Exploring worst-case climate scenarios and what they mean for the future of our planet.",
-    image: "/images/col3.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-  {
-    id: 6,
-    title: "Bill Walsh leadership lessons",
-    excerpt:
-      "Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?",
-    image: "/images/col1.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Leadership", "Management", "Presentation"],
-  },
-  {
-    id: 7,
-    title: "PM mental models",
-    excerpt:
-      "Mental models are simple expressions of complex processes or relationships.",
-    image: "/images/col2.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Product", "Research", "Frameworks"],
-  },
-  {
-    id: 8,
-    title: "What is Wireframing?",
-    excerpt:
-      "Introduction to Wireframing and its Principles. Learn from the best in the industry.",
-    image: "/images/col3.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Design", "Research", "Presentation"],
-  },
-  {
-    id: 9,
-    title: "How collaboration makes us better designers",
-    excerpt:
-      "Collaboration can make our teams stronger, and our individual designs better.",
-    image: "/images/airmax.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Design", "Research", "Presentation"],
-  },
-  {
-    id: 10,
-    title: "Our top 10 Javascript frameworks to use",
-    excerpt:
-      "JavaScript frameworks make development easy with extensive features and functionalities.",
-    image: "/images/airpod.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Software Development", "Tools", "SaaS"],
-  },
-  {
-    id: 11,
-    title: "Podcast: Creating a better CX Community",
-    excerpt:
-      "Starting a community doesn't need to be complicated, but how do you get started?",
-    image: "/images/lipstick.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "",
-    tags: ["Podcasts", "Customer Success", "Presentation"],
-  },
-  {
-    id: 12,
-    title: "UX review presentations",
-    excerpt:
-      "How do you create compelling presentations that wow your colleagues and impress your managers?",
-    image: "/images/iphone.jpg",
-    date: "Sunday, 1 Jan 2023",
-    category: "Design",
-    tags: ["Design"],
-  },
-];
+};
 
 const POSTS_PER_PAGE = 6;
 const TAG_COLOR = "bg-[#ECFDF3] text-[#027A48]";
@@ -157,6 +36,28 @@ const ArrowIcon = () => (
 
 const News: React.FC = () => {
   const [page, setPage] = useState(1);
+  const { data, isLoading } = useQuery<BlogPostDto[]>({
+    queryKey: ["blog-public"],
+    queryFn: () => apiClient.getBlogPosts(),
+  });
+
+  const allPosts: NewsItem[] = useMemo(() => {
+    const list = data ?? [];
+    return list.map((p) => ({
+      id: p.id,
+      title: p.title,
+      excerpt: p.summary,
+      image: p.thumbnailUrl ?? "/images/banner.png",
+      date: new Date(p.createdAt).toLocaleDateString("vi-VN", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      }),
+      category: "Blog",
+      tags: undefined,
+    }));
+  }, [data]);
+
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
   const recentPosts = allPosts.slice(0, 5);
@@ -199,6 +100,12 @@ const News: React.FC = () => {
       </section>
 
       <main className="flex-1 px-4 sm:px-6 md:px-8 lg:px-10 py-6 w-full">
+        {isLoading && (
+          <p className="text-white/60 text-sm">Đang tải bài viết...</p>
+        )}
+        {!isLoading && allPosts.length === 0 && (
+          <p className="text-white/60 text-sm">Chưa có bài viết nào.</p>
+        )}
         {/* ── RECENT BLOG POSTS ── */}
         <h2
           className="text-white text-base font-black uppercase mb-4 tracking-wide"
@@ -208,7 +115,8 @@ const News: React.FC = () => {
         </h2>
 
         {/* ── Grid 2 cột: trái bài 1, phải bài 2+3 ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+        {featured && wideCard && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           {/* Cột trái: featured lớn */}
           <Link to={`/news/${featured.id}`} className="group flex flex-col">
             <div className="overflow-hidden">
@@ -277,9 +185,11 @@ const News: React.FC = () => {
             ))}
           </div>
         </div>
+        )}
 
         {/* ── Bài 5: full width, ảnh trái + text phải ── */}
-        <Link
+        {wideCard && (
+          <Link
           to={`/news/${wideCard.id}`}
           className="group flex flex-col sm:flex-row gap-6 border-t border-white/20 pt-6 mt-2 mb-10"
         >
@@ -310,6 +220,7 @@ const News: React.FC = () => {
             )}
           </div>
         </Link>
+        )}
 
         {/* ── StarDivider ── */}
         <StarDivider />
