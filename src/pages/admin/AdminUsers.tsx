@@ -95,7 +95,9 @@ const AdminUsers: React.FC = () => {
                 <TableHead className="text-white/70">Số điện thoại</TableHead>
                 <TableHead className="text-white/70">Vai trò</TableHead>
                 <TableHead className="text-white/70">Trạng thái</TableHead>
-                <TableHead className="text-white/70 text-right">Hành động</TableHead>
+                <TableHead className="text-white/70 text-right">
+                  Hành động
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -105,8 +107,12 @@ const AdminUsers: React.FC = () => {
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phone || "-"}</TableCell>
-                  <TableCell>{user.isAdmin ? "Admin" : "User"}</TableCell>
-                  <TableCell>{user.isActive ? "Active" : "Disabled"}</TableCell>
+                  <TableCell>
+                    {user.isAdmin ? "Quản trị viên" : "Người dùng"}
+                  </TableCell>
+                  <TableCell>
+                    {user.isActive ? "Đang hoạt động" : "Đã khóa"}
+                  </TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button
                       size="sm"
@@ -126,8 +132,10 @@ const AdminUsers: React.FC = () => {
                       onClick={() => deleteMutation.mutate(user.id)}
                     >
                       <span className="inline-flex items-center gap-2">
-                        {deleteMutation.isPending && <Spinner sizeClassName="h-3 w-3" />}
-                        Xóa (mềm)
+                        {deleteMutation.isPending && (
+                          <Spinner sizeClassName="h-3 w-3" />
+                        )}
+                        Xóa
                       </span>
                     </Button>
                   </TableCell>
@@ -148,21 +156,27 @@ const AdminUsers: React.FC = () => {
                   <Label>Tên</Label>
                   <Input
                     value={form.name}
-                    onChange={(e) => setForm((p) => (p ? { ...p, name: e.target.value } : p))}
+                    onChange={(e) =>
+                      setForm((p) => (p ? { ...p, name: e.target.value } : p))
+                    }
                   />
                 </div>
                 <div>
                   <Label>Email</Label>
                   <Input
                     value={form.email}
-                    onChange={(e) => setForm((p) => (p ? { ...p, email: e.target.value } : p))}
+                    onChange={(e) =>
+                      setForm((p) => (p ? { ...p, email: e.target.value } : p))
+                    }
                   />
                 </div>
                 <div>
                   <Label>Số điện thoại</Label>
                   <Input
                     value={form.phone ?? ""}
-                    onChange={(e) => setForm((p) => (p ? { ...p, phone: e.target.value } : p))}
+                    onChange={(e) =>
+                      setForm((p) => (p ? { ...p, phone: e.target.value } : p))
+                    }
                   />
                 </div>
                 <div className="flex items-center gap-4 text-sm">
@@ -170,17 +184,25 @@ const AdminUsers: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={form.isAdmin}
-                      onChange={(e) => setForm((p) => (p ? { ...p, isAdmin: e.target.checked } : p))}
+                      onChange={(e) =>
+                        setForm((p) =>
+                          p ? { ...p, isAdmin: e.target.checked } : p,
+                        )
+                      }
                     />
-                    Admin
+                    Quản trị viên
                   </label>
                   <label className="flex items-center gap-2">
                     <input
                       type="checkbox"
                       checked={form.isActive}
-                      onChange={(e) => setForm((p) => (p ? { ...p, isActive: e.target.checked } : p))}
+                      onChange={(e) =>
+                        setForm((p) =>
+                          p ? { ...p, isActive: e.target.checked } : p,
+                        )
+                      }
                     />
-                    Active
+                    Đang hoạt động
                   </label>
                 </div>
               </div>
@@ -199,7 +221,9 @@ const AdminUsers: React.FC = () => {
                 onClick={() => form && updateMutation.mutate(form)}
               >
                 <span className="inline-flex items-center gap-2">
-                  {updateMutation.isPending && <Spinner sizeClassName="h-4 w-4" />}
+                  {updateMutation.isPending && (
+                    <Spinner sizeClassName="h-4 w-4" />
+                  )}
                   Lưu
                 </span>
               </Button>

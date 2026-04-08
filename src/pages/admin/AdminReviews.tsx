@@ -39,17 +39,25 @@ const AdminReviews: React.FC = () => {
   const [includeHidden, setIncludeHidden] = useState(true);
 
   const queryKey = useMemo(
-    () => ["admin-reviews", productId || "all", includeHidden ? "all" : "visible"],
-    [productId, includeHidden]
+    () => [
+      "admin-reviews",
+      productId || "all",
+      includeHidden ? "all" : "visible",
+    ],
+    [productId, includeHidden],
   );
 
-  const { data, isLoading, error, refetch, isFetching } = useQuery<AdminReviewDto[]>({
+  const { data, isLoading, error, refetch, isFetching } = useQuery<
+    AdminReviewDto[]
+  >({
     queryKey,
     queryFn: () => {
       const params = new URLSearchParams();
       if (productId.trim()) params.set("productId", productId.trim());
       params.set("includeHidden", includeHidden ? "true" : "false");
-      return apiClient.request<AdminReviewDto[]>(`/admin/reviews?${params.toString()}`);
+      return apiClient.request<AdminReviewDto[]>(
+        `/admin/reviews?${params.toString()}`,
+      );
     },
     refetchOnMount: "always",
   });
@@ -78,16 +86,18 @@ const AdminReviews: React.FC = () => {
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="text-2xl font-bold text-white mb-2">Đánh giá sản phẩm</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">
+          Đánh giá sản phẩm
+        </h2>
         <p className="text-sm text-white/60">
-          Xem, ẩn/hiện hoặc xóa review của người dùng theo từng sản phẩm.
+          Xem, ẩn/hiện hoặc xóa đánh giá của người dùng theo từng sản phẩm.
         </p>
       </section>
 
       <Card className="bg-[#020617] border-white/10 text-white">
         <CardHeader className="space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <CardTitle className="text-lg">Danh sách review</CardTitle>
+            <CardTitle className="text-lg">Danh sách đánh giá</CardTitle>
             <Button
               size="sm"
               variant="outline"
@@ -95,14 +105,16 @@ const AdminReviews: React.FC = () => {
               onClick={() => refetch()}
               disabled={isFetching}
             >
-              {isFetching && <Spinner sizeClassName="h-4 w-4" className="mr-2" />}
+              {isFetching && (
+                <Spinner sizeClassName="h-4 w-4" className="mr-2" />
+              )}
               Tải lại
             </Button>
           </div>
 
           <div className="flex flex-col md:flex-row gap-3 md:items-center">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-white/70">ProductId:</span>
+              <span className="text-sm text-white/70">Mã sản phẩm:</span>
               <input
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
@@ -116,7 +128,7 @@ const AdminReviews: React.FC = () => {
                 checked={includeHidden}
                 onChange={(e) => setIncludeHidden(e.target.checked)}
               />
-              Hiển thị cả review đã ẩn
+              Hiển thị cả đánh giá đã ẩn
             </label>
           </div>
         </CardHeader>
@@ -129,10 +141,10 @@ const AdminReviews: React.FC = () => {
             </div>
           ) : error ? (
             <p className="text-red-400 py-4">
-              Không thể tải review. {(error as Error).message}
+              Không thể tải đánh giá. {(error as Error).message}
             </p>
           ) : !data || data.length === 0 ? (
-            <p className="text-white/50 py-8">Chưa có review nào.</p>
+            <p className="text-white/50 py-8">Chưa có đánh giá nào.</p>
           ) : (
             <Table>
               <TableHeader>
@@ -143,7 +155,9 @@ const AdminReviews: React.FC = () => {
                   <TableHead className="text-white/70">Sao</TableHead>
                   <TableHead className="text-white/70">Nội dung</TableHead>
                   <TableHead className="text-white/70">Trạng thái</TableHead>
-                  <TableHead className="text-white/70 text-right">Thao tác</TableHead>
+                  <TableHead className="text-white/70 text-right">
+                    Thao tác
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -155,20 +169,30 @@ const AdminReviews: React.FC = () => {
                     <TableCell className="text-white/90">
                       <div className="flex flex-col">
                         <span className="font-semibold">{r.productName}</span>
-                        <span className="text-xs text-white/50">#{r.productId}</span>
+                        <span className="text-xs text-white/50">
+                          Mã: #{r.productId}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className="text-white/80 text-sm">
                       <div className="flex flex-col">
                         <span className="text-white/90">{r.reviewerName}</span>
-                        <span className="text-white/50 text-xs">{r.reviewerEmail}</span>
+                        <span className="text-white/50 text-xs">
+                          {r.reviewerEmail}
+                        </span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-white/80 text-sm">{r.rating}/5</TableCell>
+                    <TableCell className="text-white/80 text-sm">
+                      {r.rating}/5
+                    </TableCell>
                     <TableCell className="max-w-[260px] truncate text-white/80 text-sm">
                       {r.comment}
                     </TableCell>
-                    <TableCell className={r.isHidden ? "text-yellow-300" : "text-emerald-400"}>
+                    <TableCell
+                      className={
+                        r.isHidden ? "text-yellow-300" : "text-emerald-400"
+                      }
+                    >
                       {r.isHidden ? "Đã ẩn" : "Hiển thị"}
                     </TableCell>
                     <TableCell className="text-right space-x-2">
@@ -176,7 +200,12 @@ const AdminReviews: React.FC = () => {
                         size="sm"
                         variant="outline"
                         className="border-white/30 text-white hover:bg-white/10"
-                        onClick={() => setHiddenMutation.mutate({ id: r.id, isHidden: !r.isHidden })}
+                        onClick={() =>
+                          setHiddenMutation.mutate({
+                            id: r.id,
+                            isHidden: !r.isHidden,
+                          })
+                        }
                         disabled={setHiddenMutation.isPending}
                       >
                         {r.isHidden ? "Hiện" : "Ẩn"}
@@ -185,7 +214,8 @@ const AdminReviews: React.FC = () => {
                         size="sm"
                         variant="destructive"
                         onClick={() => {
-                          if (confirm("Xóa review này?")) deleteMutation.mutate(r.id);
+                          if (confirm("Xóa đánh giá này?"))
+                            deleteMutation.mutate(r.id);
                         }}
                         disabled={deleteMutation.isPending}
                       >
@@ -204,4 +234,3 @@ const AdminReviews: React.FC = () => {
 };
 
 export default AdminReviews;
-

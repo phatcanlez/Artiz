@@ -73,26 +73,23 @@ const AdminProducts: React.FC = () => {
     ? [form.imageUrl, ...form.thumbnailUrls]
     : form.thumbnailUrls;
 
-  const setImageUrls = useCallback(
-    (urls: string[]) => {
-      if (urls.length === 0) {
-        setForm((prev) => ({ ...prev, imageUrl: "", thumbnailUrls: [] }));
-        return;
-      }
-      setForm((prev) => ({
-        ...prev,
-        imageUrl: urls[0],
-        thumbnailUrls: urls.slice(1),
-      }));
-    },
-    []
-  );
+  const setImageUrls = useCallback((urls: string[]) => {
+    if (urls.length === 0) {
+      setForm((prev) => ({ ...prev, imageUrl: "", thumbnailUrls: [] }));
+      return;
+    }
+    setForm((prev) => ({
+      ...prev,
+      imageUrl: urls[0],
+      thumbnailUrls: urls.slice(1),
+    }));
+  }, []);
 
   const handleFiles = useCallback(
     async (files: FileList | null) => {
       if (!files?.length) return;
       const imageFiles = Array.from(files).filter((f) =>
-        /^image\/(jpeg|png|gif|webp)$/i.test(f.type)
+        /^image\/(jpeg|png|gif|webp)$/i.test(f.type),
       );
       if (imageFiles.length === 0) {
         alert("Vui lòng chọn file ảnh (JPEG, PNG, GIF, WebP).");
@@ -112,7 +109,7 @@ const AdminProducts: React.FC = () => {
         setUploading(false);
       }
     },
-    [allImageUrls, setImageUrls]
+    [allImageUrls, setImageUrls],
   );
 
   const handleDrop = useCallback(
@@ -121,7 +118,7 @@ const AdminProducts: React.FC = () => {
       setDragActive(false);
       handleFiles(e.dataTransfer.files);
     },
-    [handleFiles]
+    [handleFiles],
   );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -139,7 +136,7 @@ const AdminProducts: React.FC = () => {
       const next = allImageUrls.filter((_, i) => i !== index);
       setImageUrls(next);
     },
-    [allImageUrls, setImageUrls]
+    [allImageUrls, setImageUrls],
   );
 
   const setAsCover = useCallback(
@@ -151,39 +148,36 @@ const AdminProducts: React.FC = () => {
       next.unshift(chosen);
       setImageUrls(next);
     },
-    [allImageUrls, setImageUrls]
+    [allImageUrls, setImageUrls],
   );
 
-  const handle3DFiles = useCallback(
-    async (files: FileList | null) => {
-      if (!files?.length) return;
-      const valid = Array.from(files).filter((f) => {
-        const n = f.name.toLowerCase();
-        return n.endsWith(".glb") || n.endsWith(".gltf");
-      });
-      if (valid.length === 0) {
-        alert("Vui lòng chọn file .glb hoặc .gltf");
-        return;
+  const handle3DFiles = useCallback(async (files: FileList | null) => {
+    if (!files?.length) return;
+    const valid = Array.from(files).filter((f) => {
+      const n = f.name.toLowerCase();
+      return n.endsWith(".glb") || n.endsWith(".gltf");
+    });
+    if (valid.length === 0) {
+      alert("Vui lòng chọn file .glb hoặc .gltf");
+      return;
+    }
+    setUploading3D(true);
+    try {
+      const newUrls: string[] = [];
+      for (const file of valid) {
+        const { url } = await apiClient.uploadProduct3D(file);
+        newUrls.push(url);
       }
-      setUploading3D(true);
-      try {
-        const newUrls: string[] = [];
-        for (const file of valid) {
-          const { url } = await apiClient.uploadProduct3D(file);
-          newUrls.push(url);
-        }
-        setForm((prev) => ({
-          ...prev,
-          model3DUrls: [...prev.model3DUrls, ...newUrls],
-        }));
-      } catch (e) {
-        alert((e as Error).message ?? "Tải file 3D lên thất bại");
-      } finally {
-        setUploading3D(false);
-      }
-    },
-    []
-  );
+      setForm((prev) => ({
+        ...prev,
+        model3DUrls: [...prev.model3DUrls, ...newUrls],
+      }));
+    } catch (e) {
+      alert((e as Error).message ?? "Tải file 3D lên thất bại");
+    } finally {
+      setUploading3D(false);
+    }
+  }, []);
 
   const remove3D = useCallback((index: number) => {
     setForm((prev) => ({
@@ -301,7 +295,8 @@ const AdminProducts: React.FC = () => {
         <div>
           <CardTitle className="text-lg">Quản lý sản phẩm</CardTitle>
           <p className="text-xs text-white/60 mt-1">
-            Thêm mới, chỉnh sửa và quản lý danh sách sản phẩm. Kéo thả ảnh hoặc chọn nhiều ảnh cùng lúc.
+            Thêm mới, chỉnh sửa và quản lý danh sách sản phẩm. Kéo thả ảnh hoặc
+            chọn nhiều ảnh cùng lúc.
           </p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -329,7 +324,9 @@ const AdminProducts: React.FC = () => {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-                    dragActive ? "border-emerald-500 bg-white/5" : "border-white/30"
+                    dragActive
+                      ? "border-emerald-500 bg-white/5"
+                      : "border-white/30"
                   } ${uploading ? "opacity-70 pointer-events-none" : ""}`}
                 >
                   <input
@@ -347,10 +344,19 @@ const AdminProducts: React.FC = () => {
                     htmlFor="product-images-input"
                     className="cursor-pointer block text-sm text-white/80"
                   >
-                    Kéo thả ảnh vào đây hoặc <span className="text-emerald-400 underline">chọn nhiều ảnh</span>
+                    Kéo thả ảnh vào đây hoặc{" "}
+                    <span className="text-emerald-400 underline">
+                      chọn nhiều ảnh
+                    </span>
                   </label>
-                  <p className="text-xs text-white/50 mt-1">JPEG, PNG, GIF, WebP. Ảnh đầu tiên = ảnh đại diện.</p>
-                  {uploading && <p className="text-xs text-emerald-400 mt-2">Đang tải lên...</p>}
+                  <p className="text-xs text-white/50 mt-1">
+                    JPEG, PNG, GIF, WebP. Ảnh đầu tiên = ảnh đại diện.
+                  </p>
+                  {uploading && (
+                    <p className="text-xs text-emerald-400 mt-2">
+                      Đang tải lên...
+                    </p>
+                  )}
                 </div>
                 {allImageUrls.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -407,7 +413,9 @@ const AdminProducts: React.FC = () => {
                     setDragActive3D(false);
                   }}
                   className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors ${
-                    dragActive3D ? "border-cyan-500 bg-white/5" : "border-white/30"
+                    dragActive3D
+                      ? "border-cyan-500 bg-white/5"
+                      : "border-white/30"
                   } ${uploading3D ? "opacity-70 pointer-events-none" : ""}`}
                 >
                   <input
@@ -425,10 +433,17 @@ const AdminProducts: React.FC = () => {
                     htmlFor="product-3d-input"
                     className="cursor-pointer block text-sm text-white/80"
                   >
-                    Kéo thả file 3D vào đây hoặc <span className="text-cyan-400 underline">chọn file</span>
+                    Kéo thả file 3D vào đây hoặc{" "}
+                    <span className="text-cyan-400 underline">chọn file</span>
                   </label>
-                  <p className="text-xs text-white/50 mt-1">Chỉ hỗ trợ .glb, .gltf. Có thể thêm nhiều file.</p>
-                  {uploading3D && <p className="text-xs text-cyan-400 mt-2">Đang tải lên...</p>}
+                  <p className="text-xs text-white/50 mt-1">
+                    Chỉ hỗ trợ .glb, .gltf. Có thể thêm nhiều tệp.
+                  </p>
+                  {uploading3D && (
+                    <p className="text-xs text-cyan-400 mt-2">
+                      Đang tải lên...
+                    </p>
+                  )}
                 </div>
                 {form.model3DUrls.length > 0 && (
                   <ul className="flex flex-wrap gap-2 mt-2">
@@ -458,7 +473,9 @@ const AdminProducts: React.FC = () => {
                 <Input
                   id="name"
                   value={form.name}
-                  onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
                   required
                   className="mt-1"
                 />
@@ -472,7 +489,10 @@ const AdminProducts: React.FC = () => {
                     min={0}
                     value={form.price || ""}
                     onChange={(e) =>
-                      setForm((prev) => ({ ...prev, price: Number(e.target.value) || 0 }))
+                      setForm((prev) => ({
+                        ...prev,
+                        price: Number(e.target.value) || 0,
+                      }))
                     }
                     required
                     className="mt-1"
@@ -486,7 +506,10 @@ const AdminProducts: React.FC = () => {
                     min={0}
                     value={form.stock}
                     onChange={(e) =>
-                      setForm((prev) => ({ ...prev, stock: Number(e.target.value) || 0 }))
+                      setForm((prev) => ({
+                        ...prev,
+                        stock: Number(e.target.value) || 0,
+                      }))
                     }
                     required
                     className="mt-1"
@@ -499,7 +522,12 @@ const AdminProducts: React.FC = () => {
                 <Textarea
                   id="description"
                   value={form.description}
-                  onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
                   rows={4}
                   required
                   className="mt-1"
@@ -511,7 +539,9 @@ const AdminProducts: React.FC = () => {
                 <Textarea
                   id="size"
                   value={form.size}
-                  onChange={(e) => setForm((prev) => ({ ...prev, size: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, size: e.target.value }))
+                  }
                   placeholder="VD: Phù hợp: AirPods Pro 1 & 2. Kích thước: 60 x 45 x 25 mm. Trọng lượng: ~18g"
                   rows={2}
                   className="mt-1"
@@ -519,12 +549,14 @@ const AdminProducts: React.FC = () => {
               </div>
 
               <div>
-                <Label htmlFor="material">Chất liệu (Material)</Label>
+                <Label htmlFor="material">Chất liệu</Label>
                 <Textarea
                   id="material"
                   value={form.material}
-                  onChange={(e) => setForm((prev) => ({ ...prev, material: e.target.value }))}
-                  placeholder="VD: Chất liệu chính: TPU cao cấp. Lớp phủ: Sơn mờ chống vân tay. Màu sắc: Đen & Bạc"
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, material: e.target.value }))
+                  }
+                  placeholder="Ví dụ: Chất liệu chính: TPU cao cấp. Lớp phủ: Sơn mờ chống vân tay. Màu sắc: Đen & Bạc"
                   rows={2}
                   className="mt-1"
                 />
@@ -535,7 +567,12 @@ const AdminProducts: React.FC = () => {
                 <Textarea
                   id="productPolicy"
                   value={form.productPolicy}
-                  onChange={(e) => setForm((prev) => ({ ...prev, productPolicy: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      productPolicy: e.target.value,
+                    }))
+                  }
                   rows={2}
                   className="mt-1"
                 />
@@ -546,18 +583,28 @@ const AdminProducts: React.FC = () => {
                 <Textarea
                   id="productPreservation"
                   value={form.productPreservation}
-                  onChange={(e) => setForm((prev) => ({ ...prev, productPreservation: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      productPreservation: e.target.value,
+                    }))
+                  }
                   rows={2}
                   className="mt-1"
                 />
               </div>
 
               <div>
-                <Label htmlFor="deliveryTax">Giao hàng & Thuế</Label>
+                <Label htmlFor="deliveryTax">Giao hàng và thuế</Label>
                 <Textarea
                   id="deliveryTax"
                   value={form.deliveryTax}
-                  onChange={(e) => setForm((prev) => ({ ...prev, deliveryTax: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      deliveryTax: e.target.value,
+                    }))
+                  }
                   rows={2}
                   className="mt-1"
                 />
@@ -575,7 +622,9 @@ const AdminProducts: React.FC = () => {
                 <Button
                   type="submit"
                   className="bg-emerald-500 hover:bg-emerald-600 text-white"
-                  disabled={createMutation.isPending || updateMutation.isPending}
+                  disabled={
+                    createMutation.isPending || updateMutation.isPending
+                  }
                 >
                   {editing ? "Lưu thay đổi" : "Tạo sản phẩm"}
                 </Button>
@@ -586,7 +635,9 @@ const AdminProducts: React.FC = () => {
       </CardHeader>
       <CardContent>
         {isLoading && (
-          <p className="text-sm text-white/70">Đang tải danh sách sản phẩm...</p>
+          <p className="text-sm text-white/70">
+            Đang tải danh sách sản phẩm...
+          </p>
         )}
         {error && (
           <p className="text-sm text-red-400">
@@ -602,7 +653,9 @@ const AdminProducts: React.FC = () => {
                 <TableHead className="text-white/70">Giá</TableHead>
                 <TableHead className="text-white/70">Tồn kho</TableHead>
                 <TableHead className="text-white/70">Đánh giá</TableHead>
-                <TableHead className="text-white/70 text-right">Hành động</TableHead>
+                <TableHead className="text-white/70 text-right">
+                  Hành động
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -16,7 +16,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { BarChart2, Users, Package, FileText, ShoppingBag, MessageSquare, Star } from "lucide-react";
+import {
+  BarChart2,
+  Users,
+  Package,
+  FileText,
+  ShoppingBag,
+  MessageSquare,
+  Star,
+} from "lucide-react";
 
 const AdminLayout: React.FC = () => {
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
@@ -58,7 +66,7 @@ const AdminLayout: React.FC = () => {
                 Artiz Admin
               </span>
               <Badge variant="secondary" className="text-xs">
-                Dashboard
+                Bảng điều khiển
               </Badge>
             </div>
           </SidebarHeader>
@@ -71,7 +79,7 @@ const AdminLayout: React.FC = () => {
                   className="text-sm"
                 >
                   <BarChart2 />
-                  <span>Dashboard</span>
+                  <span>Tổng quan</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -131,7 +139,7 @@ const AdminLayout: React.FC = () => {
                   className="text-sm"
                 >
                   <Star />
-                  <span>Reviews</span>
+                  <span>Đánh giá</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -141,7 +149,7 @@ const AdminLayout: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="truncate">{user?.email || "Khách"}</span>
                 <span className="text-[10px] uppercase tracking-wide text-emerald-400">
-                  Admin
+                  Quản trị
                 </span>
               </div>
               <div className="flex gap-2 mt-1">
@@ -151,7 +159,7 @@ const AdminLayout: React.FC = () => {
                   className="h-7 px-3 text-xs border-white/30 text-white bg-transparent hover:bg-white/10"
                   onClick={() => navigate("/")}
                 >
-                  Về trang khách
+                  Về trang người dùng
                 </Button>
                 {isAuthenticated && (
                   <Button
@@ -174,7 +182,7 @@ const AdminLayout: React.FC = () => {
               <SidebarTrigger className="text-white border border-white/10 bg-transparent hover:bg-white/10" />
               <div>
                 <h1 className="text-xl font-semibold tracking-wide">
-                  Dashboard Admin
+                  Bảng điều khiển quản trị
                 </h1>
                 <p className="text-xs text-white/60">
                   Quản lý tài khoản, sản phẩm, đơn hàng, blog và xem doanh thu.
