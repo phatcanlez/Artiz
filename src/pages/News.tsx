@@ -41,7 +41,7 @@ const allPosts: NewsItem[] = [
     title: "Grid system for better Design User Interface",
     excerpt:
       "A grid system is a design tool used to arrange content on a webpage. It is a series of vertical and horizontal lines that create a matrix of intersecting points...",
-    image: "/images/airmax.jpg",
+    image: "/images/HK_1.jpg",
     date: "Sunday, 1 Jan 2023",
     category: "Design",
     tags: ["Design"],

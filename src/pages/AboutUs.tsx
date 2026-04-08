@@ -79,7 +79,7 @@ const AboutUs: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl mx-auto items-center">
           <div className="overflow-hidden" style={{ clipPath: clip }}>
             <img
-              src="/images/iphone.jpg"
+              src="/images/lighter.png"
               alt="Our Story"
               className="w-full h-72 lg:h-96 object-cover"
             />
