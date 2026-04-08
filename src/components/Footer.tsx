@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
             className="w-28 object-contain"
             alt="Artiz Logo"
           />
-          <div className="flex gap-5">{socialIcons(20)}</div>
+          ?
         </div>
 
         {/* POLICY */}
@@ -186,7 +186,7 @@ const Footer: React.FC = () => {
           >
             <div className="relative mb-4" style={{ width: "28%" }}>
               <img
-                src="/element/Asset 8 1.png"
+                src="/icon/logoWhite.svg"
                 className="object-contain w-full"
                 alt="Artiz Logo"
               />
